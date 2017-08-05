@@ -1,0 +1,37 @@
+{
+  "name": "connapp-web-cms",
+  "version": "0.1.0",
+  "description": "Web CMS for the ConnApp",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha test/unit/**/*.spec.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ConnApp/connapp-web-cms.git"
+  },
+  "keywords": [
+    "javascript",
+    "node",
+    "MEAN",
+    "mongodb",
+    "angular",
+    "cms",
+    "express"
+  ],
+  "author": [
+    "Diego Leal",
+    "Yan Nunes"
+  ],
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ConnApp/connapp-web-cms/issues"
+  },
+  "homepage": "https://github.com/ConnApp/connapp-web-cms#readme",
+  "dependencies": {
+    "body-parser": "^1.17.2",
+    "consign": "^0.1.6",
+    "express": "^4.15.3",
+    "pug": "^2.0.0-rc.3"
+  }
+}
