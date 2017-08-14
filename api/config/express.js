@@ -1,6 +1,5 @@
 const
   express = require( 'express' ),
-  pug = require( 'pug' ),
   path = require( 'path' ),
   consign = require( 'consign' )
   bodyParser = require( 'body-parser' );
@@ -13,14 +12,14 @@ module.exports = (function() {
   let app = express();
 
   // ===# Set engine and views directory #=== //
-  app.set( 'views', path.join( ROOT_PATH, 'app/views' ) );
-  app.set ( 'view engine', 'pug' );
+  app.set( 'views', path.join( ROOT_PATH, 'app/src' ) );
+  app.set ( 'view engine', 'html' );
 
   // ===# Set port #=== //
   app.set( 'port', PORT );
 
   // ===# Set public directory #=== //
-  app.use( express.static( path.join( ROOT_PATH, 'app' ) ) );
+  app.use( express.static( path.join( ROOT_PATH, 'app/src' ) ) );
 
   // ===# Middlewares setup #=== //
   app.use( bodyParser.urlencoded( { extended: true } ) );
