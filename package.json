@@ -4,6 +4,7 @@
   "description": "Web CMS for the ConnApp",
   "main": "index.js",
   "scripts": {
+    "setup-dev": "npm install; cd app; bower install && npm install",
     "test": "mocha test/unit/**/*.spec.js"
   },
   "repository": {
@@ -19,8 +20,8 @@
     "cms",
     "express"
   ],
-  "author": [
-    "Diego Leal",
+  "authors": [
+    "Diego Leal <leal.banks@gmail.com>",
     "Yan Nunes"
   ],
   "license": "MIT",
@@ -31,7 +32,6 @@
   "dependencies": {
     "body-parser": "^1.17.2",
     "consign": "^0.1.6",
-    "express": "^4.15.3",
-    "pug": "^2.0.0-rc.3"
+    "express": "^4.15.3"
   }
 }
