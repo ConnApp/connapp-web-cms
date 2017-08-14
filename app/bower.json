@@ -1,0 +1,16 @@
+{
+  "name": "cdo-informativo",
+  "description": "",
+  "main": "index.js",
+  "authors": [
+    "Walter Gandarella <jebinha@gmail.com>"
+  ],
+  "license": "ISC",
+  "homepage": "",
+  "private": true,
+  "dependencies": {
+    "angular": "^1.5.8",
+    "angular-route": "^1.5.8",
+    "angular-sanitize": "^1.5.8"
+  }
+}
