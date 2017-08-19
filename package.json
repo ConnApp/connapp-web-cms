@@ -4,20 +4,17 @@
   "description": "Web CMS for the ConnApp",
   "main": "index.js",
   "scripts": {
-    "setup-dev": "npm install; cd app; bower install && npm install",
+    "setup-dev": "npm install && yarn install",
     "test": "mocha test/unit/**/*.spec.js"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/ConnApp/connapp-web-cms.git"
-  },
+  "repository": "git+https://github.com/ConnApp/connapp-web-cms.git",
   "keywords": [
     "javascript",
     "node",
     "MEAN",
     "mongodb",
     "angular",
-    "cms",
+    "CMS",
     "express"
   ],
   "authors": [
@@ -32,6 +29,10 @@
   "dependencies": {
     "body-parser": "^1.17.2",
     "consign": "^0.1.6",
-    "express": "^4.15.3"
-  }
+    "debug": "^3.0.0",
+    "express": "^4.15.3",
+    "mongoose": "^4.11.7"
+  },
+  "devDependencies": {},
+  "author": "Diego Leal <leal.banks@gmail.com>"
 }
