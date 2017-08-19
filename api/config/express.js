@@ -2,7 +2,8 @@ const
   express = require( 'express' ),
   path = require( 'path' ),
   consign = require( 'consign' )
-  bodyParser = require( 'body-parser' );
+  bodyParser = require( 'body-parser' ),
+  database = require( './mongoose' );
 
 module.exports = (function() {
   const
@@ -30,6 +31,9 @@ module.exports = (function() {
     .then( 'controllers' )
     .then( 'routes' )
     .into( app );
+
+  // ===# Connect database #=== //
+  database( 'mongodb://super:admin@ds149763.mlab.com:49763/connapp-web-cms' );
 
   return app;
 })();
