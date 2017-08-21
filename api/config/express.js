@@ -13,14 +13,14 @@ module.exports = (function() {
   let app = express();
 
   // ===# Set engine and views directory #=== //
-  app.set( 'views', path.join( ROOT_PATH, 'app/src' ) );
+  app.set( 'views', path.join( ROOT_PATH, 'app' ) );
   app.set ( 'view engine', 'html' );
 
   // ===# Set port #=== //
   app.set( 'port', PORT );
 
   // ===# Set public directory #=== //
-  app.use( express.static( path.join( ROOT_PATH, 'app/src' ) ) );
+  app.use( express.static( path.join( ROOT_PATH, 'app' ) ) );
 
   // ===# Middlewares setup #=== //
   app.use( bodyParser.urlencoded( { extended: true } ) );
