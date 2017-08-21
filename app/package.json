@@ -1,0 +1,13 @@
+{
+  "name": "connapp-web-cms",
+  "version": "0.1.0",
+  "description": "Web CMS for the ConnApp",
+  "main": "src/app.js",
+  "repository": "\"git+https://github.com/ConnApp/connapp-web-cms.git\"",
+  "author": "Diego Leal",
+  "license": "MIT",
+  "dependencies": {
+    "bootstrap": "^3.3.7",
+    "font-awesome": "^4.7.0"
+  }
+}
