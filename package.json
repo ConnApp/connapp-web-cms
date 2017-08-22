@@ -4,7 +4,7 @@
   "description": "Web CMS for the ConnApp",
   "main": "index.js",
   "scripts": {
-    "setup-dev": "npm install && yarn install",
+    "build": "./node_modules/webpack-cli/bin/webpack.js",
     "test": "mocha test/unit/**/*.spec.js"
   },
   "repository": "git+https://github.com/ConnApp/connapp-web-cms.git",
