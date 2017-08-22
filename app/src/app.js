@@ -1,7 +1,11 @@
-(function(){
-  'use strict';
+import angular from 'angular';
+import ngRoute from 'angular-route';
 
-  angular.module( 'app', [] )
-    .config()
-    .run();
-})();
+import auth from './js/controllers/auth';
+import routeProvider from './js/providers/route-provider';
+
+'use strict';
+angular.module( 'app', [ 'ngRoute' ] );
+
+angular.module( 'app' )
+  .config( routeProvider );
