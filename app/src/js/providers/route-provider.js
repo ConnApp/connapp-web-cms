@@ -1,10 +1,12 @@
-export default function routeProvider( $routeProvider ) {
-  $routeProvider.when( '/test', {
-    template: '<h1> {{ message }} </h1>',
-    controllers: function( $scope ) {
-      const vm = this;
-      $scope.message = 'hello world';
-    }
+import app from '../app';
+
+angular.module( 'app' )
+  .config( routeProvider );
+
+function routeProvider( $routeProvider ) {
+  $routeProvider.when( '/user/new', {
+    templateUrl: './src/partials/new-user.html',
+    controller: 'newUserController as user'
   })
   .otherwise({
     redirectTo: '/'
