@@ -2,7 +2,7 @@
   "name": "connapp-web-cms-app",
   "version": "0.1.0",
   "description": "Web CMS for the ConnApp",
-  "main": "src/entry.js",
+  "main": "src/index.js",
   "repository": "\"git+https://github.com/ConnApp/connapp-web-cms.git\"",
   "author": "Diego Leal",
   "license": "MIT",
