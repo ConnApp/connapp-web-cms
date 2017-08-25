@@ -1,5 +1,5 @@
 {
-  "name": "connapp-web-cms",
+  "name": "connapp-web-cms-app",
   "version": "0.1.0",
   "description": "Web CMS for the ConnApp",
   "main": "src/entry.js",
