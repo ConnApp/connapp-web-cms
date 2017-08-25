@@ -5,11 +5,11 @@ angular.module( 'app' )
 
 /**
 * Controller para criar novos usuários
-* @memberof Users
+* @memberof app.users
 */
-function newUser( $scope ) {
+function newUser( $log ) {
   'use strict';
 
-  const vm = this;
-  vm.hello = 'Hello John Doe';
+  const userVm = this;
+  userVm.hello = 'Hello John Doe';
 }
