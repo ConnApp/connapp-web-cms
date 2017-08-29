@@ -21,10 +21,6 @@
     "CMS",
     "express"
   ],
-  "authors": [
-    "Diego Leal <leal.banks@gmail.com>",
-    "Yan Nunes"
-  ],
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/ConnApp/connapp-web-cms/issues"
