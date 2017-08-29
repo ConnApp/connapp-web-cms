@@ -5,8 +5,9 @@ angular.module( 'app' )
 
 function routeProvider( $routeProvider ) {
   $routeProvider.when( '/user/new', {
-    templateUrl: './src/partials/new-user.html',
-    controller: 'newUserController as user'
+    templateUrl: '../src/partials/user-form.html',
+    controller: 'newUserController',
+    controllerAs: 'user'
   })
   .otherwise({
     redirectTo: '/'
