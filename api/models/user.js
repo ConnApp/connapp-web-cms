@@ -1,13 +1,11 @@
 const
-    mongoose = require( 'mongoose' )
+    mongoose = require( 'mongoose' ),
     Schema = mongoose.Schema;
 
 module.exports = function() {
   const
     collectionName = 'user',
-    userSchema;
-
-  userSchema = new Schema({
+    userSchema = new Schema({
     /**
     * Primeiro nome do usuário.
     * @type {String}
