@@ -9,7 +9,7 @@
     "start-dev-server": "npm run start-api-watch && npm run start-webpack-server",
     "start-webpack-server": "./node_modules/webpack-dev-server/bin/webpack-dev-server.js --inline",
     "start-api-watch": "./node_modules/nodemon/bin/nodemon.js",
-    "test": "mocha test/unit/**/*.spec.js"
+    "test": "./node_modules/jest/bin/jest.js"
   },
   "repository": "git+https://github.com/ConnApp/connapp-web-cms.git",
   "keywords": [
@@ -34,7 +34,9 @@
     "mongoose": "^4.11.9"
   },
   "devDependencies": {
+    "jest": "^20.0.4",
     "nodemon": "^1.11.0",
+    "superagent": "^3.6.0",
     "webpack": "^3.5.5",
     "webpack-dev-server": "^2.7.1"
   },
