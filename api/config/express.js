@@ -27,7 +27,7 @@ module.exports = (function() {
   app.use ( bodyParser.json() );
 
   consign( { cwd: path.join( ROOT_PATH, 'api' ) } )
-    .include( 'models' )
+    .then( 'models' )
     .then( 'controllers' )
     .then( 'routes' )
     .into( app );
