@@ -1,4 +1,7 @@
-const request = require( 'superagent' );
+const
+  request = require( 'superagent' ),
+  path = require( 'path' ),
+  HOST = 'http://localhost:3000';
 
 
 test( 'Teste para o endpoint /user/new', done => {
@@ -6,18 +9,17 @@ test( 'Teste para o endpoint /user/new', done => {
     firstName: 'John',
     lastName: 'Doe',
     email: 'johndoe@email.com',
-    password: '123456',
+    password: '12345678',
     group: 'admin'
   };
 
   request
-    .post( 'http://localhost:3000/user/new' )
+    .post( `${ HOST }/user/new` )
     .send( user )
     .set( 'Accept', 'application/json' )
     .end(( error, res ) => {
       if ( error ) throw error;
 
-      console.log( res );
-      done()
-    })
+      done();
+    });
 });
