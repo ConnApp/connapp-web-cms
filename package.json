@@ -27,6 +27,7 @@
   },
   "homepage": "https://github.com/ConnApp/connapp-web-cms#readme",
   "dependencies": {
+    "bcrypt": "^1.0.3",
     "body-parser": "^1.17.2",
     "consign": "^0.1.6",
     "debug": "^3.0.0",
