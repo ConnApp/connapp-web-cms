@@ -48,9 +48,9 @@ module.exports = function() {
     group: {
       type: String,
       enum: [ 'user', 'admin' ],
-      required: true
+      default: 'user'
     }
-  });
+  }, { collection: collectionName } );
 
   return mongoose.model( collectionName, userSchema );
 }
