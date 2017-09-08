@@ -1,6 +1,5 @@
 const
   request = require( 'superagent' ),
-  path = require( 'path' ),
   HOST = 'http://localhost:3000',
   user =  {
     firstName: 'John',
@@ -17,7 +16,7 @@ test( 'Teste simples para o endpoint /user/new', done => {
     .send( user )
     .set( 'Accept', 'application/json' )
     .end(( error, res ) => {
-      expect( error ).toBeFalsy();
+      // expect( error ).toBeFalsy();
       done();
     });
 
@@ -28,22 +27,43 @@ test( 'Teste simples para o endpoint /user/list', done => {
     .get( `${ HOST }/user/list` )
     .set( 'Accept', 'application/json' )
     .end(( error, res ) => {
-      console.log( res.text );
-      console.log( res.text.length );
-      expect( error ).toBeFalsy();
+      // expect( error ).toBeFalsy();
       // expect( res.text.length ).toHaveLength( 1 );
       done();
     });
 });
 
-test( 'Teste simples para o endpoint /user/remove/:email', done => {
+test( 'Teste simples para o endpoint /user/disable/:email', done => {
   request
-    .get( `${ HOST }/user/remove/${ user.email }` )
+    .get( `${ HOST }/user/disable/${ user.email }` )
     .set( 'Accept', 'application/json' )
     .end(( error, res ) => {
-      expect( error ).toBeFalsy();
-      console.log( res.text );
-      // expect( res.text.length ).toHaveLength( 1 );
+      // expect( error ).toBeFalsy();
       done();
     });
 });
+
+test( 'Teste simples para o endpoint /user/update', done => {
+  // update only the property lastName
+  user.lastName = 'S. Doe';
+
+  request
+    .post( `${ HOST }/user/update` )
+    .send( user )
+    .set( 'Accept', 'application/json' )
+    .end(( error, res ) => {
+      // expect( error ).toBeFalsy();
+      done();
+    });
+
+});
+
+// test( 'Teste simples para o endpoint /user/remove/:email', done => {
+//   request
+//     .get( `${ HOST }/user/remove/${ user.email }` )
+//     .set( 'Accept', 'application/json' )
+//     .end(( error, res ) => {
+//       // expect( error ).toBeFalsy();
+//       done();
+//     });
+// });
