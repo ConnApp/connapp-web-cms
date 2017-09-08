@@ -1,9 +1,10 @@
 const
   express = require( 'express' ),
+  session = require( 'express-session' ),
   path = require( 'path' ),
-  consign = require( 'consign' )
+  consign = require( 'consign' ),
   bodyParser = require( 'body-parser' ),
-  database = require( './mongoose' );
+  databaseConnection = require( './mongoose' );
 
 module.exports = (function() {
   const
@@ -25,6 +26,7 @@ module.exports = (function() {
   // ===# Middlewares setup #=== //
   app.use( bodyParser.urlencoded( { extended: true } ) );
   app.use ( bodyParser.json() );
+  app.use( session( { name: 'connapp', secret: 'super_secret', saveUninitialized: false } ) );
 
   consign( { cwd: path.join( ROOT_PATH, 'api' ) } )
     .then( 'models' )
@@ -33,7 +35,7 @@ module.exports = (function() {
     .into( app );
 
   // ===# Connect database #=== //
-  database( 'mongodb://super:admin@ds149763.mlab.com:49763/connapp-web-cms' );
+  databaseConnection( 'mongodb://super:admin@ds149763.mlab.com:49763/connapp-web-cms' );
 
   return app;
 })();
