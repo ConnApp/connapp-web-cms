@@ -58,6 +58,24 @@ test( 'Teste simples para o endpoint /user/update', done => {
 
 });
 
+test( 'Teste simples para o endpoint /auth/signin', done => {
+  // update only the property lastName
+  const authData = {
+    email: user.email,
+    password: user.password
+  }
+
+  request
+    .post( `${ HOST }/auth/signin` )
+    .send( authData )
+    .set( 'Accept', 'application/json' )
+    .end(( error, res ) => {
+      console.log( res.text );
+      done();
+    });
+
+});
+
 // test( 'Teste simples para o endpoint /user/remove/:email', done => {
 //   request
 //     .get( `${ HOST }/user/remove/${ user.email }` )
