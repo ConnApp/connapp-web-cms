@@ -8,7 +8,8 @@ module.exports = function( app ) {
   /**
   * Responde a requisição com status de sucesso e envia um json com os dados do usuário.
   * @memberof User
-  * @type {Method} - private
+  * @type {Method}
+  * @private
   * @param {Object} _doc - Dados do usuário
   */
   function _resolveResponse( res, data ) {
@@ -17,7 +18,8 @@ module.exports = function( app ) {
   /**
   * Responde a requisição com status de error e envia um json com o objeto do erro.
   * @memberof User
-  * @type {Method} - private
+  * @type {Method}
+  * @private
   * @param {Object} error - Objeto com messagem e stack de erro.
   */
   function _rejectResponse( res, error ) {
@@ -78,18 +80,18 @@ module.exports = function( app ) {
     * @memberof User.create
     * @type {Method}
     * @param {Object} _doc - Dados do usuário
-    * @return {Object} _doc - Dados do usuário
+    * @return {Promise} _doc - Dados do usuário
     */
     function validateEmail( _doc ) {
       return new Promise( ( resolve, reject ) => {
         user.get( { email: _doc.email } )
-        .then( userDoc => {
-          if ( userDoc ) {
-            return reject( new Error( 'O email informada já está sendo usado por outro usuário' ) );
-          }
+          .then( userDoc => {
+            if ( userDoc ) {
+              return reject( new Error( 'O email informada já está sendo usado por outro usuário' ) );
+            }
 
-          resolve( _doc );
-        });
+            resolve( _doc );
+          });
       });
     }
     /**
@@ -127,7 +129,8 @@ module.exports = function( app ) {
     function save( _doc ) {
       return new Promise( ( resolve, reject ) => {
         user.save( _doc )
-          .then( _user => resolve( _user ) );
+          .then( _user => resolve( _user ) )
+          .catch( error => reject( error  ) );
       });
     }
   }
@@ -148,24 +151,97 @@ module.exports = function( app ) {
     * @return {Promise} Promise - Promise resolvida com um array de usuários.
     */
     function query() {
-      return new Promise( ( resolve, reject ) => user.query( {} ).then( _users => resolve( _users ) ) );
+      return new Promise( ( resolve ) => user.query( {} ).then( _users => resolve( _users ) ) );
     }
   }
   /**
-  * Desativa o usuário.
+  * Remove um usuário fazendo uma busca pelo email.
   * @memberof User
   * @method GET
   */
   function remove( req, res ) {
-    const email = req.params;
-    Model.remove( { email: email } )
-      .then( status => _resolveResponse.bind( null, res ) )
-      .catch( error => _rejectResponse.bind( null, res ) );
+    const email = req.params.email;
+    
+    if ( !email ) return _rejectResponse( new Error( 'Não foi possivel remover o usuário' ) );
+
+    Model.remove( { email } )
+      .then( _resolveResponse.bind( null, res ) )
+      .catch( _rejectResponse.bind( null, res ) );
+  }
+  /**
+  * Desativa o usuário fazendo uma busca pelo email.
+  * @memberof User
+  * @method GET
+  */
+  function disable( req, res ) {
+    const email = req.params.email;
+
+    if ( !email ) return _rejectResponse( new Error( 'Não foi possivel remover o usuário' ) );
+
+    user.logicalRemove( { email } )
+      .then( _resolveResponse.bind( null, res ) )
+      .catch( _rejectResponse.bind( null, res ) );
+  }
+  /**
+  * Desativa o usuário fazendo uma busca pelo email.
+  * @memberof User
+  * @method POST
+  */
+  function update( req, res ) {
+    const doc = req.body;
+
+    Promise.resolve( doc )
+      .then( validateEmail )
+      .then( updateDate )
+      .then( setNewData )
+      .then( _resolveResponse.bind( null, res ) )
+      .catch( _rejectResponse.bind( null, res) );
+    
+    /**
+    * Verifica se o email existe.
+    * @memberof User.update
+    * @type {Function}
+    * @private
+    * @param {Object} _doc Dados do usuário que serão atualizados.
+    * @return {Object}
+    */
+    function validateEmail( _doc ) {
+      if ( !_doc.email ) {
+        throw new Error( 'Email do usuário não é valido.' );
+      }
+
+      return _doc;
+    }
+    /**
+    * Atualiza da data da propriedade lastUpdate.
+    * @memberof User.update
+    * @type {Function}
+    * @private
+    * @param {Object} _doc Dados do usuário que serão atualizados.
+    * @return {Object}
+    */
+    function updateDate( _doc ) {
+      _doc.lastUpdate = Date.now();
+      return _doc;
+    }
+    /**
+    * Atualiza os dados do usuário no banco.
+    * @memberof User.update
+    * @type {Function}
+    * @private
+    * @param {Object} _doc Dados do usuário que serão atualizados.
+    * @return {Promise}
+    */
+    function setNewData( _doc ) {
+      return user.update( { email: _doc.email }, _doc );
+    }
   }
 
   return {
     create,
     list,
-    remove
+    remove,
+    disable,
+    update
   };
 };
