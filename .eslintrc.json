@@ -27,6 +27,7 @@
     "globals": {
       "describe": true,
       "it": true,
-      "test": true
+      "test": true,
+      "expect": true
     }
 }
