@@ -1,4 +1,5 @@
 const
+  Promise = require( 'promise' ),
   path = require( 'path' ),
   bcrypt = require( 'bcrypt' ),
   debug = require( 'debug' )( 'authController' );
@@ -21,9 +22,9 @@ module.exports = function( app ) {
       .then( validatePassword )
       .then( findUser )
       .then( authUser )
-      .then( createSession.bind( req ) )
-      .then( res.status( 200 ).json )
-      .catch( res.status( 500 ).json );
+      .then( createSession.bind( null, req ) )
+      .then( _user => res.status( 200 ).json( _user ) )
+      .catch( error => res.status( 500 ).send( { message: error.message, stack: error.stack } ) );
 
     function validateEmail( _authData ) {
       if ( !( _authData && _authData.email ) ) {
@@ -43,13 +44,13 @@ module.exports = function( app ) {
 
     function findUser( _authData ) {
       return new Promise(( resolve, reject ) => {
-        user.get( { email: _authData.email } )
+        user.get( { email: _authData.email, active: true } )
           .then( _user => {
             if ( !_user ) throw new Error( 'Usuário não existe' );
 
             resolve( _user );
           })
-          .catch( error => reject( error ) );
+          .catch( reject );
       });
     }
     /**
@@ -57,11 +58,15 @@ module.exports = function( app ) {
      * @param {Object} _user 
      */
     function authUser( _user ) {
-      const isAuthenticated = bcrypt.compareSync( authData.password, _user.password );
-      if ( !isAuthenticated ) throw new Error( 'Senha do usuário está incorreta.' );
-
-      _user.isAuthenticated = isAuthenticated;
-      return _user;
+      return new Promise(( resolve, reject ) => {
+        bcrypt.compare( authData.password, _user.password )
+          .then( isAuthenticated => {
+            if ( !isAuthenticated ) throw new Error( 'Senha do usuário está incorreta.' );
+            _user.isAuthenticated = isAuthenticated;
+            resolve( _user )
+          })
+          .catch( reject );
+      });
     }
 
     function createSession( req, _user ) {
