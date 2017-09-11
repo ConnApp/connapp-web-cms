@@ -1,6 +1,7 @@
 const
   express = require( 'express' ),
   session = require( 'express-session' ),
+  methodOverride = require( 'method-override' ),
   path = require( 'path' ),
   consign = require( 'consign' ),
   bodyParser = require( 'body-parser' ),
@@ -8,10 +9,9 @@ const
 
 module.exports = (function() {
   const
+    app = express(),
     PORT = process.env.PORT || 3000,
     ROOT_PATH = process.env.PWD;
-
-  let app = express();
 
   // ===# Set engine and views directory #=== //
   app.set( 'views', path.join( ROOT_PATH, 'app' ) );
@@ -27,6 +27,9 @@ module.exports = (function() {
   app.use( bodyParser.urlencoded( { extended: true } ) );
   app.use ( bodyParser.json() );
   app.use( session( { name: 'connapp', secret: 'super_secret', saveUninitialized: false } ) );
+  app.use( methodOverride( 'X-HTTP-Method' ) );
+  app.use( methodOverride( 'X-HTTP-Method-Override' ) );
+  app.use( methodOverride( 'X-Method-Override' ) );
 
   consign( { cwd: path.join( ROOT_PATH, 'api' ) } )
     .then( 'models' )
