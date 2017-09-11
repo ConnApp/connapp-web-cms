@@ -3,5 +3,6 @@ module.exports = function( app ) {
 
   app.get( '/auth/signin', authController.renderLogin );
   app.post( '/auth/signin', authController.signin );
+  app.get( '/auth/signout', authController.signout );
   
 };
