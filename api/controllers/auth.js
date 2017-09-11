@@ -58,7 +58,7 @@ module.exports = function( app ) {
      * @param {Object} _user 
      */
     function authUser( _user ) {
-      return new Promise(( resolve, reject ) => {
+      return new Promise( ( resolve, reject ) => {
         bcrypt.compare( authData.password, _user.password )
           .then( isAuthenticated => {
             if ( !isAuthenticated ) throw new Error( 'Senha do usuário está incorreta.' );
@@ -77,8 +77,18 @@ module.exports = function( app ) {
     }
   }
 
+  function signout( req, res, next ) {
+    if ( req.session.user ) {
+      req.session.destroy( error => {
+        if ( error ) return res.status( 500 ).send( { error } );
+        res.redirect( '/auth/signin' );
+      });
+    }
+  }
+
   return {
     renderLogin,
-    signin
+    signin,
+    signout
   }
 }
