@@ -10,78 +10,58 @@ const
   };
 
 
-test( 'Teste simples para o endpoint /user/new', done => {
+test( 'Teste simples para o endpoint POST /user', done => {
   request
-    .post( `${ HOST }/user/new` )
+    .post( `${ HOST }/user` )
     .send( user )
     .set( 'Accept', 'application/json' )
     .end(( error, res ) => {
-      // expect( error ).toBeFalsy();
+      expect( error ).toBeFalsy();
+      expect( res.error ).toBeFalsy();
+      expect( res.text ).toBeTruthy();
       done();
     });
 
 });
 
-test( 'Teste simples para o endpoint /user/list', done => {
+test( 'Teste simples para o endpoint GET /user', done => {
   request
-    .get( `${ HOST }/user/list` )
+    .get( `${ HOST }/user` )
     .set( 'Accept', 'application/json' )
-    .end(( error, res ) => {
-      // expect( error ).toBeFalsy();
-      // expect( res.text.length ).toHaveLength( 1 );
+    .end( ( error, res ) => {
+      expect( error ).toBeFalsy();
+      expect( res.error ).toBeFalsy();
+      expect( res.text ).toBeTruthy();
       done();
     });
 });
 
-test( 'Teste simples para o endpoint /user/disable/:email', done => {
-  request
-    .get( `${ HOST }/user/disable/${ user.email }` )
-    .set( 'Accept', 'application/json' )
-    .end(( error, res ) => {
-      // expect( error ).toBeFalsy();
-      done();
-    });
-});
-
-test( 'Teste simples para o endpoint /user/update', done => {
+test( 'Teste simples para o endpoint PUT /user', done => {
   // update only the property lastName
   user.lastName = 'S. Doe';
 
   request
-    .post( `${ HOST }/user/update` )
+    .put( `${ HOST }/user` )
     .send( user )
     .set( 'Accept', 'application/json' )
-    .end(( error, res ) => {
-      // expect( error ).toBeFalsy();
+    .end( ( error, res ) => {
+      expect( error ).toBeFalsy();
+      expect( res.error ).toBeFalsy();
+      expect( res.text ).toBeTruthy();
       done();
     });
 
 });
 
-test( 'Teste simples para o endpoint /auth/signin', done => {
-  // update only the property lastName
-  const authData = {
-    email: user.email,
-    password: user.password
-  }
-
+test( 'Teste simples para o endpoint DELETE /user', done => {
   request
-    .post( `${ HOST }/auth/signin` )
-    .send( authData )
+    .delete( `${ HOST }/user` )
+    .send( { email: user.email } )
     .set( 'Accept', 'application/json' )
     .end(( error, res ) => {
-      console.log( res.text );
+      expect( error ).toBeFalsy();
+      expect( res.error ).toBeFalsy();
+      expect( res.text ).toBeTruthy();
       done();
     });
-
 });
-
-// test( 'Teste simples para o endpoint /user/remove/:email', done => {
-//   request
-//     .get( `${ HOST }/user/remove/${ user.email }` )
-//     .set( 'Accept', 'application/json' )
-//     .end(( error, res ) => {
-//       // expect( error ).toBeFalsy();
-//       done();
-//     });
-// });
