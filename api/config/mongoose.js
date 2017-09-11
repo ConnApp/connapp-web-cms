@@ -1,8 +1,10 @@
 const
+  Promise = require( 'promise' ),
   log = require( 'debug' )( 'mongoose' ),
   mongoose = require( 'mongoose' );
 
 module.exports = function( url ) {
+  mongoose.Promise = Promise;
   mongoose.connect( url, { useMongoClient: true } );
 
   mongoose.connection.on( 'connected', () => console.log( `Database connected in ${url}` ) );
