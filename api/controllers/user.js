@@ -1,4 +1,6 @@
-const bcrypt = require( 'bcrypt' );
+const 
+  Promise = require( 'promise' ),
+  bcrypt = require( 'bcrypt' );
 
 module.exports = function( app ) {
   const
@@ -22,8 +24,8 @@ module.exports = function( app ) {
   * @private
   * @param {Object} error - Objeto com messagem e stack de erro.
   */
-  function _rejectResponse( res, error ) {
-    res.status( 500 ).json( error );
+  function _rejectResponse( res, { message, stack } ) {
+    res.status( 500 ).send( { message, stack } );
   }
   /**
   * Cria um nove usuário.
@@ -115,9 +117,15 @@ module.exports = function( app ) {
     * @return {Object} _doc - Dados do usuário
     */
     function makeHashWithPass( _doc ) {
-      const salt = 10;
-      _doc.password = bcrypt.hashSync( _doc.password, salt );
-      return _doc;
+      return new Promise( ( resolve, reject ) => {
+        const SALT = 10;
+        bcrypt.hash( _doc.password, SALT )
+          .then( hash => {
+            _doc.password = hash;
+            resolve( _doc );
+          })
+          .catch( reject );
+      });
     }
     /**
     * Armazena os dados do usuário no banco de dados.
@@ -130,7 +138,7 @@ module.exports = function( app ) {
       return new Promise( ( resolve, reject ) => {
         user.save( _doc )
           .then( _user => resolve( _user ) )
-          .catch( error => reject( error  ) );
+          .catch( error => reject( error ) );
       });
     }
   }
@@ -151,13 +159,13 @@ module.exports = function( app ) {
     * @return {Promise} Promise - Promise resolvida com um array de usuários.
     */
     function query() {
-      return new Promise( ( resolve ) => user.query( {} ).then( _users => resolve( _users ) ) );
+      return new Promise( ( resolve ) => user.query( {} ).then( resolve ) );
     }
   }
   /**
   * Remove um usuário fazendo uma busca pelo email.
   * @memberof User
-  * @method GET
+  * @method DELETE
   */
   function remove( req, res ) {
     const email = req.params.email;
@@ -171,10 +179,10 @@ module.exports = function( app ) {
   /**
   * Desativa o usuário fazendo uma busca pelo email.
   * @memberof User
-  * @method GET
+  * @method DELETE
   */
   function disable( req, res ) {
-    const email = req.params.email;
+    const email = req.body.email;
 
     if ( !email ) return _rejectResponse( new Error( 'Não foi possivel remover o usuário' ) );
 
@@ -185,7 +193,7 @@ module.exports = function( app ) {
   /**
   * Desativa o usuário fazendo uma busca pelo email.
   * @memberof User
-  * @method POST
+  * @method PUT
   */
   function update( req, res ) {
     const doc = req.body;
