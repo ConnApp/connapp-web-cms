@@ -1,7 +1,7 @@
 module.exports = function( app ) {
-  const auth = app.controllers.auth;
+  const authController = app.controllers.auth;
 
-  app.get( '/auth/signin', auth.renderLogin );
-  app.post( '/auth/signin', auth.signin );
+  app.get( '/auth/signin', authController.renderLogin );
+  app.post( '/auth/signin', authController.signin );
   
 };
