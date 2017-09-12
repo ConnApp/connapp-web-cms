@@ -1,6 +1,7 @@
 const
   express = require( 'express' ),
   session = require( 'express-session' ),
+  passport = require( 'passport' ),
   methodOverride = require( 'method-override' ),
   path = require( 'path' ),
   consign = require( 'consign' ),
@@ -19,17 +20,21 @@ module.exports = (function() {
 
   // ===# Set port #=== //
   app.set( 'port', PORT );
-
-  // ===# Set public directory #=== //
-  app.use( express.static( path.join( ROOT_PATH, 'app' ) ) );
-
+  
   // ===# Middlewares setup #=== //
-  app.use( bodyParser.urlencoded( { extended: true } ) );
   app.use ( bodyParser.json() );
-  app.use( session( { name: 'connapp', secret: 'super_secret', saveUninitialized: false } ) );
+  app.use( bodyParser.urlencoded( { extended: true } ) );
+  app.use( session( { name: 'connapp', secret: 'super_secret', saveUninitialized: false, resave: false } ) );
   app.use( methodOverride( 'X-HTTP-Method' ) );
   app.use( methodOverride( 'X-HTTP-Method-Override' ) );
   app.use( methodOverride( 'X-Method-Override' ) );
+
+  // ===# Set public directory #=== //
+  app.use( express.static( path.join( ROOT_PATH, 'app' ), { index: false } ) );
+  app.get( '/', function( req, res, next ) {
+      res.sendFile( path.join( ROOT_PATH, 'app/index' ) );
+      next();
+  });
 
   consign( { cwd: path.join( ROOT_PATH, 'api' ) } )
     .then( 'models' )
