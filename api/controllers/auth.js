@@ -48,7 +48,7 @@ module.exports = function( app ) {
           .then( _user => {
             if ( !_user ) throw new Error( 'Usuário não existe' );
 
-            resolve( _user );
+            resolve( _user._doc );
           })
           .catch( reject );
       });
@@ -81,9 +81,9 @@ module.exports = function( app ) {
     if ( req.session.user ) {
       req.session.destroy( error => {
         if ( error ) return res.status( 500 ).send( { error } );
-        res.redirect( '/auth/signin' );
       });
     }
+    res.redirect( '/auth/signin' );
   }
 
   return {
