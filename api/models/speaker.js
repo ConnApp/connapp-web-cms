@@ -35,6 +35,13 @@ const
       type: String
     },
     /**
+    * Descrição sobre o palestrante
+    * @type {String}
+    */
+    about: {
+      type: String
+    },
+    /**
     * Link para meios de comunicação do palestrante
     * @type {String}
     */
