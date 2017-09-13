@@ -4,6 +4,7 @@ module.exports = function( app ) {
   app.post( '/user', userController.create );
   app.put( '/user', userController.update );
   app.get( '/user', userController.list );
+  app.get( '/user/:_id', userController.findOne );
   app.delete( '/user', userController.disable );
   
 };

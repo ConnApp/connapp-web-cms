@@ -245,11 +245,35 @@ module.exports = function( app ) {
     }
   }
 
+  function findOne( req, res ) {
+    const userId = req.params._id;
+
+    Promise.resolve( userId )
+      .then( validateId )
+      .then( find )
+      .then( _resolveResponse.bind( null, res ) )
+      .catch( _rejectResponse.bind( null, res ) );
+
+    function validateId( _userId ) {
+      if ( typeof _userId !== 'string' || _userId.length < 24 ) {
+        throw new Error( 'A propriedade _id é inválida' );
+      }
+
+      return _userId;
+    }
+
+    function find( _userId ) {
+      return user.get( { _id: userId } );
+    }
+
+  }
+
   return {
     create,
     list,
     remove,
     disable,
-    update
+    update,
+    findOne
   };
 };
