@@ -3,5 +3,8 @@ module.exports = function( app ) {
 
   app.post( '/speaker', speakController.create );
   app.get( '/speaker', speakController.list );
+  app.get( '/speaker/:_id', speakController.findOne );
+  app.put( '/speaker', speakController.update );
+  app.delete( '/speaker', speakController.disable );
   
 };

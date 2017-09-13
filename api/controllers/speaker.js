@@ -11,7 +11,7 @@ module.exports = function( app ) {
     Promise.resolve( doc )
       .then( validateName )
       .then( save )
-      .then( _speaker => res.status( 200 ).json( _speaker ) )
+      .then( _speaker => res.status( 200 ).json( _speaker._doc ) )
       .catch( error => res.status( 500 ).send( { message: error.message, stack: error.stack } ) );
 
     function validateName( _doc ) {
@@ -23,11 +23,7 @@ module.exports = function( app ) {
     }
 
     function save( _doc ) {
-      return new Promise( ( resolve, reject ) => {
-        speaker.save( _doc )
-          .then( _speaker => resolve( _speaker._doc ) )
-          .catch( reject );
-      });
+      return speaker.save( _doc );
     }
   }
 
@@ -39,16 +35,88 @@ module.exports = function( app ) {
       .catch( error => res.status( 500 ).send( { message: error.message, stack: error.stack } ) );
 
     function query() {
-      return new Promise( ( resolve, reject ) => {
-        speaker.query()
-          .then( _speakers => resolve( _speakers ) )
-          .catch( reject );
-      });
+      return speaker.query();
     }
+  }
+
+  function update( req, res ) {
+    const doc = req.body;
+
+    Promise.resolve( doc )
+      .then( validateId )
+      .then( updateDate )
+      .then( setNewData )
+      .then( status => res.status( 200 ).json( status ) )
+      .catch( error => res.status( 500 ).send( { message: error.message, stack: error.stack } ) )
+
+    function validateId( _doc ) {
+      if ( !_doc._id ) {
+        throw new Error( 'A propriedade _id é obrigatória' );
+      }
+      return _doc;
+    }
+
+    function updateDate( _doc ) {
+      _doc.lastUpdate = Date.now();
+      return _doc;
+    }
+
+    function setNewData( _doc ) {
+      return speaker.update( { _id: _doc._id }, _doc );
+    }
+  }
+
+  function disable( req, res ) {
+    const speakerId = req.body._id;
+
+    Promise.resolve( speakerId )
+      .then( validateId )
+      .then( logicalRemove )
+      .then( status => res.status( 200 ).json( status ) )
+      .catch( error => res.status( 500 ).send( { message: error.message, stack: error.stack } ) );
+
+    function validateId( _speakerId ) {
+      if ( typeof _speakerId !== 'string' || _speakerId.length < 24 ) {
+        throw new Error( 'A propriedade _id é inválida' );
+      }
+
+      return _speakerId;
+    }
+
+    function logicalRemove( _speakerId ) {
+      return speaker.logicalRemove( { _id: speakerId } );
+    }
+
+  }
+
+  function findOne( req, res ) {
+    const speakerId = req.params._id;
+
+    Promise.resolve( speakerId )
+      .then( validateId )
+      .then( find )
+      .then( _speaker => res.status( 200 ).json( _speaker ) )
+      .catch( error => res.status( 500 ).send( { message: error.message, stack: error.stack } ) );
+
+    function validateId( _speakerId ) {
+      if ( typeof _speakerId !== 'string' || _speakerId.length < 24 ) {
+        throw new Error( 'A propriedade _id é inválida' );
+      }
+
+      return _speakerId;
+    }
+
+    function find( _speakerId ) {
+      return speaker.get( { _id: _speakerId } );
+    }
+
   }
   
   return {
     create,
-    list
-  }
+    list,
+    findOne,
+    update,
+    disable
+  };
 };
