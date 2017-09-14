@@ -47,7 +47,7 @@ module.exports = function( app ) {
       .then( updateDate )
       .then( setNewData )
       .then( status => res.status( 200 ).json( status ) )
-      .catch( error => res.status( 500 ).send( { message: error.message, stack: error.stack } ) )
+      .catch( error => res.status( 500 ).send( { message: error.message, stack: error.stack } ) );
 
     function validateId( _doc ) {
       if ( !_doc._id ) {
@@ -84,7 +84,7 @@ module.exports = function( app ) {
     }
 
     function logicalRemove( _speakerId ) {
-      return speaker.logicalRemove( { _id: speakerId } );
+      return speaker.logicalRemove( { _id: _speakerId } );
     }
 
   }
