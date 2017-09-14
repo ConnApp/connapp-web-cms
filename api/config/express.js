@@ -32,8 +32,8 @@ module.exports = (function() {
   // ===# Set public directory #=== //
   app.use( express.static( path.join( ROOT_PATH, 'app' ), { index: false } ) );
   app.get( '/', function( req, res, next ) {
-      res.sendFile( path.join( ROOT_PATH, 'app/index' ) );
-      next();
+    res.sendFile( path.join( ROOT_PATH, 'app/index' ) );
+    next();
   });
 
   consign( { cwd: path.join( ROOT_PATH, 'api' ) } )
