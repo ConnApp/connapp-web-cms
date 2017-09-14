@@ -263,7 +263,7 @@ module.exports = function( app ) {
     }
 
     function find( _userId ) {
-      return user.get( { _id: userId } );
+      return user.get( { _id: _userId } );
     }
 
   }
