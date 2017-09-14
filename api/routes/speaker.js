@@ -1,10 +1,10 @@
 module.exports = function( app ) {
-  const speakController = app.controllers.speaker;
+  const speakerController = app.controllers.speaker;
 
-  app.post( '/speaker', speakController.create );
-  app.get( '/speaker', speakController.list );
-  app.get( '/speaker/:_id', speakController.findOne );
-  app.put( '/speaker', speakController.update );
-  app.delete( '/speaker', speakController.disable );
+  app.post( '/speaker', speakerController.create );
+  app.get( '/speaker', speakerController.list );
+  app.get( '/speaker/:_id', speakerController.findOne );
+  app.put( '/speaker', speakerController.update );
+  app.delete( '/speaker', speakerController.disable );
   
 };
