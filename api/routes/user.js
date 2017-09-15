@@ -1,10 +1,10 @@
 module.exports = function( app ) {
   const userController = app.controllers.user;
 
-  app.post( '/user', userController.create );
-  app.put( '/user', userController.update );
-  app.get( '/user', userController.list );
-  app.get( '/user/:_id', userController.findOne );
-  app.delete( '/user', userController.disable );
+  app.post( '/users', userController.create );
+  app.put( '/users', userController.update );
+  app.get( '/users', userController.list );
+  app.get( '/users/:_id', userController.findOne );
+  app.delete( '/users', userController.disable );
   
 };
