@@ -4,7 +4,7 @@ const
 
 module.exports = function() {
   const
-    collectionName = 'local',
+    collectionName = 'place',
     userSchema = new Schema({
       /**
       * Nome do local.

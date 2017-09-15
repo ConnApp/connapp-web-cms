@@ -2,8 +2,8 @@ const Promise = require( 'promise' );
 
 module.exports = function( app ) {
   const
-    Model = app.models.local,
-    local = require( '../lib/mongoose' )( Model );
+    Model = app.models.place,
+    place = require( '../lib/mongoose' )( Model );
 
   function create( req, res ) {
     const doc = req.body;
@@ -11,7 +11,7 @@ module.exports = function( app ) {
     Promise.resolve( doc )
       .then( validateName )
       .then( save )
-      .then( _local => res.status( 200 ).json( _local._doc ) )
+      .then( _place => res.status( 200 ).json( _place._doc ) )
       .catch( error => res.status( 500 ).send( { message: error.message, stack: error.stack } ) );
 
     function validateName( _doc ) {
@@ -22,7 +22,7 @@ module.exports = function( app ) {
     }
 
     function save( _doc ) {
-      return local.save( _doc );
+      return place.save( _doc );
     }
 
   }
@@ -31,11 +31,11 @@ module.exports = function( app ) {
 
     Promise.resolve()
       .then( query )
-      .then( _locais => res.status( 200 ).json( _locais ) )
+      .then( _places => res.status( 200 ).json( _places ) )
       .catch( error => res.status( 500 ).send( { message: error.message, stack: error.stack } ) );
 
     function query() {
-      return local.query();
+      return place.query();
     }
   }
 
@@ -62,7 +62,7 @@ module.exports = function( app ) {
     }
 
     function setNewData( { _id, ..._doc } ) {
-      return local.update( { _id }, _doc );
+      return place.update( { _id }, _doc );
     }
   }
 
@@ -84,7 +84,7 @@ module.exports = function( app ) {
     }
 
     function logicalRemove( _id ) {
-      return local.logicalRemove( { _id } );
+      return place.logicalRemove( { _id } );
     }
 
   }
@@ -95,7 +95,7 @@ module.exports = function( app ) {
     Promise.resolve( _id )
       .then( validateId )
       .then( find )
-      .then( _local => res.status( 200 ).json( _local ) )
+      .then( _place => res.status( 200 ).json( _place ) )
       .catch( error => res.status( 500 ).send( { message: error.message, stack: error.stack } ) );
 
     function validateId( _id ) {
@@ -107,7 +107,7 @@ module.exports = function( app ) {
     }
 
     function find( _id ) {
-      return local.get( { _id } );
+      return place.get( { _id } );
     }
 
   }
