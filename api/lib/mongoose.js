@@ -23,7 +23,7 @@ module.exports = function( Model ) {
 
   }
 
-  function update( query = {}, doc, options = { multi: false } ) {
+  function update( query = { _id: undefined }, doc, options = { multi: false } ) {
     try {
       return Model.update( query, doc, options );
     } catch( error ) {
@@ -33,7 +33,7 @@ module.exports = function( Model ) {
   }
 
   function logicalRemove( query ) {
-    return Model.update( query, { $set: { active: false } } );
+    return Model.update( query, { $set: { active: false, lastUpdate: Date.now() } } );
   }
 
   return {
