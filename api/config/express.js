@@ -12,6 +12,7 @@ module.exports = (function() {
   const
     app = express(),
     { localStrategy, parseSession } = require( './passport' ),
+    { checkSession } = require( '../middlewares/authorize' ),
     PORT = process.env.PORT || 3000,
     ROOT_PATH = process.env.PWD;
 
@@ -44,7 +45,8 @@ module.exports = (function() {
   parseSession( app );
   
   // ===# Set public directory #=== //
-  app.use( express.static( path.join( ROOT_PATH, 'app' ) ) );
+  app.use( express.static( path.join( ROOT_PATH, 'app' ), { index: false } ) );
+  app.get( '/', checkSession, ( req, res ) => res.sendFile( path.join( ROOT_PATH, 'app/index.html' ) ) );
 
   // ===# Connect database #=== //
   databaseConnection( 'mongodb://super:admin@ds149763.mlab.com:49763/connapp-web-cms' );
