@@ -11,6 +11,7 @@ const
 module.exports = (function() {
   const
     app = express(),
+    { localStrategy, parseSession } = require( './passport' ),
     PORT = process.env.PORT || 3000,
     ROOT_PATH = process.env.PWD;
 
@@ -28,22 +29,25 @@ module.exports = (function() {
   app.use( methodOverride( 'X-HTTP-Method' ) );
   app.use( methodOverride( 'X-HTTP-Method-Override' ) );
   app.use( methodOverride( 'X-Method-Override' ) );
-
-  // ===# Set public directory #=== //
-  app.use( express.static( path.join( ROOT_PATH, 'app' ), { index: false } ) );
-  app.get( '/', function( req, res, next ) {
-    res.sendFile( path.join( ROOT_PATH, 'app/index' ) );
-    next();
-  });
-
+  app.use( passport.initialize() );
+  app.use( passport.session() );
+  
+  // ===# Loading model, controller and routes into app instance #=== //
   consign( { cwd: path.join( ROOT_PATH, 'api' ) } )
     .then( 'models' )
     .then( 'controllers' )
     .then( 'routes' )
     .into( app );
+  
+  // ===# Define passport setting #=== //
+  localStrategy( app );
+  parseSession( app );
+  
+  // ===# Set public directory #=== //
+  app.use( express.static( path.join( ROOT_PATH, 'app' ) ) );
 
   // ===# Connect database #=== //
   databaseConnection( 'mongodb://super:admin@ds149763.mlab.com:49763/connapp-web-cms' );
-
+  
   return app;
 })();
