@@ -5,7 +5,7 @@ const
 module.exports = function() {
   const
     collectionName = 'place',
-    userSchema = new Schema({
+    placeSchema = new Schema({
       /**
       * Nome do local.
       * @type {String}
@@ -47,5 +47,5 @@ module.exports = function() {
       }
     }, { collection: collectionName } );
 
-  return mongoose.model( collectionName, userSchema );
+  return mongoose.model( collectionName, placeSchema );
 };

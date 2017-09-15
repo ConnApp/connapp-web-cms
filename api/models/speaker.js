@@ -5,7 +5,7 @@ const
 module.exports = function() {
   const
     collectionName = 'speaker',
-    userSchema = new Schema({
+    speakerSchema = new Schema({
       /**
       * Nome do palestrante.
       * @type {String}
@@ -81,5 +81,5 @@ module.exports = function() {
       }
     }, { collection: collectionName } );
 
-  return mongoose.model( collectionName, userSchema );
+  return mongoose.model( collectionName, speakerSchema );
 };

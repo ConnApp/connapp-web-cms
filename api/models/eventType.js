@@ -5,7 +5,7 @@ const
 module.exports = function() {
   const
     collectionName = 'eventType',
-    userSchema = new Schema({
+    eventTypeSchema = new Schema({
       /**
       * Nome do eventType.
       * @type {String}
@@ -40,5 +40,5 @@ module.exports = function() {
       }
     }, { collection: collectionName } );
 
-  return mongoose.model( collectionName, userSchema );
+  return mongoose.model( collectionName, eventTypeSchema );
 };
