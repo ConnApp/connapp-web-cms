@@ -9,19 +9,20 @@
 
 <!-- form -->
 <div id="user-form">
-  <form name="userForm" novalidate>
+  <form name="userForm" novalidate autocomplete="off" ng-submit="vm.submitForm( vm.user )">
+    <div ng-bind="vm.test"></div>
     <div class="row">
       <div class="col-12 col-sm-12 col-md-6 col-lg-6 pull-lg-3">
         <div class="form-group">
           <label for="firstName">Nome</label>
-          <input type="text" class="form-control" name="firstName" id="firstName">
+          <input type="text" class="form-control" name="firstName" id="firstName" placeholder="John" ng-model="vm.user.firstName" ng-required="true">
         </div>
       </div>
 
       <div class="col-12 col-sm-12 col-md-6 col-lg-6">
         <div class="form-group">
           <label for="lastName">Sobrenome</label>
-          <input type="text" class="form-control" name="lastName" id="lastName">
+          <input type="text" class="form-control" name="lastName" id="lastName" placeholder="Doe" ng-model="vm.user.lastName" ng-required="true">
         </div>
       </div>
     </div>
@@ -29,14 +30,14 @@
       <div class="col-12 col-sm-12 col-md-6">
         <div class="form-group">
           <label for="email">Email</label>
-          <input type="email" class="form-control" name="email" id="email">
+          <input type="email" class="form-control" name="email" id="email" placeholder="johndoe@email.com" ng-model="vm.user.email" ng-required="true">
         </div>
       </div>
 
       <div class="col-12 col-sm-12 col-md-6">
         <div class="form-group">
           <label for="emailConfirm">Confirme o email</label>
-          <input type="email" class="form-control" name="emailConfirm" id="emailConfirm">
+          <input type="email" class="form-control" name="emailConfirm" id="emailConfirm" placeholder="johndoe@email.com" ng-model="vm.user.emailConfirm" ng-required="true">
         </div>
       </div>
     </div>
@@ -44,22 +45,23 @@
       <div class="col-12 col-sm-12 col-md-6">
         <div class="form-group">
           <label for="password">Senha</label>
-          <input type="password" class="form-control" name="password" id="password">
+          <input type="password" class="form-control" name="password" id="password" placeholder="********" ng-model="vm.user.password" ng-required="true">
         </div>
       </div>
 
       <div class="col-12 col-sm-12 col-md-6">
         <div class="form-group">
           <label for="type">Tipo de usuário</label>
-          <select class="form-control" name="type" id="type">
-            <option value="user" selected>Comum</option>
+          <select class="form-control" name="type" id="type" ng-model="vm.user.group" ng-required="true">
+            <<option value="">Selecione um tipo de usuário.</option>
+            <option value="user">Comum</option>
             <option value="admin">Administrador</option>
           </select>
         </div>
       </div>
     </div>
     <div class="row">
-      <div class="col-12 col-sm-12 col-md-12 col-lg-4">
+      <div class="col-12 col-sm-12 col-md-12 col-lg-4 ml-auto mr-auto">
         <button type="submit" name="send" class="margin-xs-top btn btn-primary btn-block pull-right">Finalizar</button>
       </div>
     </div>
