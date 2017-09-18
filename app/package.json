@@ -8,6 +8,7 @@
   "license": "MIT",
   "dependencies": {
     "angular": "^1.6.6",
+    "angular-resource": "^1.6.6",
     "angular-route": "^1.6.6",
     "bootstrap": "^4.0.0-beta",
     "datatables.net-bs4": "1.10.15",
