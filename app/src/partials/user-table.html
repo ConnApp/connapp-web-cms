@@ -1,0 +1,56 @@
+<!-- Breadcrumbs -->
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">
+    <a ng-href="#!/">Inicio</a>
+  </li>
+  <li class="breadcrumb-item">
+    <a ng-href="#!/user">Administrador</a>
+  </li>
+  <li class="breadcrumb-item active">Lista de usuários</li>
+</ol>
+<!-- ./breadcrumb -->
+
+<!-- options-field -->
+<div class="row mt-4">
+  <div class="col-6 col-sm-6 col-md-4 col-lg-4">
+    <div class="form-group">
+      <label for="orderBy">Ordenação</label>
+      <select name="order" id="orderBy" class="form-control" ng-model="vm.orderBy">
+        <option value="firstName" selected>Nome</option>
+        <option value="email">Email</option>
+        <option value="group">Grupo</option>
+      </select>
+    </div>
+  </div>
+  <div class="col-6 col-sm-6 col-md-4 col-lg-4 ml-md-auto">
+    <div class="form-group">
+      <label for="filter">Filtro</label>
+      <input type="text" name="filter" id="filter" class="form-control" placeholder="Filtro" ng-model="vm.filter">
+    </div>
+  </div>
+</div>
+<!-- ./options-field -->
+
+<!-- user-card -->
+<div class="row mt-2">
+  <div class="col-lg-6 mt-1" ng-repeat="user in vm.users | filter: vm.filter | orderBy: vm.orderBy track by user._id">
+    <div class="card-group">
+      <div class="card">
+        <div class="row">
+          <div class="col-12 col-sm-4 col-md-5 col-lg-4">
+            <img class="card-img img-fluid" src="./src/media/default-user.png" alt="user image">
+            <p class="card-text text-muted text-center">Grupo: {{user.group}}</p>
+          </div>
+          <div class="col-12 col-sm-8 col-md-7 col-lg-8">
+            <div class="card-body">
+              <a class="card-title text-muted" ng-href="#!/user/form/{{user.email}}" style="font-size: 2em;">{{user.firstName + ' ' + user.lastName}}</a>
+              <p class="card-text">{{user.email}}</p>
+              <p class="card-text text-muted"><small>Última atualização: {{user.lastUpdate | date: 'dd/MM/yyyy HH:mm'}}</small></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- ./user-card -->
