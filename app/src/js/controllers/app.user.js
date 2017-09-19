@@ -3,11 +3,12 @@
 
   'use strict';
   angular.module( 'app' )
-    .controller(  'newUserController', newUser  );
+    .controller(  'newUserController', newUser  )
+    .controller( 'listUserController', listUser );
   
   /**
   * Controller para criar novos usuários
-  * @memberof app.users
+  * @memberof app.user
   */
   function newUser( $log, $scope, $resource ) {
     const 
@@ -27,6 +28,24 @@
             throw error; 
           });
       }
+    }
+  }
+  /**
+   * Controller para listar todos os usuários ativos.
+   * @memberof app.user
+   */
+  function listUser( $log, $resource ) {
+    const 
+      vm = this,
+      userResource = $resource( '/users' );
+    
+    vm.orderBy = 'firstName';
+
+    // ===# Carga inicial #=== //
+    vm.users = listUsers();
+
+    function listUsers() {
+      return userResource.query();
     }
   }
 
