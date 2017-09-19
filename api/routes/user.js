@@ -1,12 +1,12 @@
 module.exports = function( app ) {
   const 
-    { checkAuthorization } = require( '../middlewares/authorize' ),
+    { isAuthorized } = require( '../middlewares/authorize' ),
     userController = app.controllers.user;
 
-  app.post( '/users', checkAuthorization, userController.create );
-  app.put( '/users', checkAuthorization, userController.update );
-  app.get( '/users', checkAuthorization, userController.list );
-  app.get( '/users/:_id', checkAuthorization, userController.findOne );
-  app.delete( '/users', checkAuthorization, userController.disable );
+  app.post( '/users', isAuthorized, userController.create );
+  app.put( '/users', isAuthorized, userController.update );
+  app.get( '/users', isAuthorized, userController.list );
+  app.get( '/users/:_id', isAuthorized, userController.findOne );
+  app.delete( '/users', isAuthorized, userController.disable );
   
 };
