@@ -6,9 +6,14 @@
 
   function routeProvider( $routeProvider ) {
     $routeProvider
-      .when( '/user/new', {
+      .when( '/user/form/:email', {
         templateUrl: '../src/partials/user-form.html',
         controller: 'newUserController',
+        controllerAs: 'vm'
+      })
+      .when( '/user/list', {
+        templateUrl: '../src/partials/user-table.html',
+        controller: 'listUserController',
         controllerAs: 'vm'
       })
       .otherwise({
