@@ -82,7 +82,7 @@ body.fixed-nav {
     #mainNav .navbar-collapse .navbar-sidenav .sidenav-second-level > li > a,
     #mainNav .navbar-collapse .navbar-sidenav .sidenav-third-level > li > a {
       display: block;
-      padding: 0.5em 0;
+      /* padding: 0.5em 0; */
       color: #868e96; }
       #mainNav .navbar-collapse .navbar-sidenav .sidenav-second-level > li > a:focus, #mainNav .navbar-collapse .navbar-sidenav .sidenav-second-level > li > a:hover,
       #mainNav .navbar-collapse .navbar-sidenav .sidenav-third-level > li > a:focus,
@@ -155,11 +155,11 @@ body.fixed-nav {
           #mainNav .navbar-collapse .navbar-sidenav > .nav-item .sidenav-second-level > li,
           #mainNav .navbar-collapse .navbar-sidenav > .nav-item .sidenav-third-level > li {
             width: 250px; }
-            #mainNav .navbar-collapse .navbar-sidenav > .nav-item .sidenav-second-level > li > a,
+            /* #mainNav .navbar-collapse .navbar-sidenav > .nav-item .sidenav-second-level > li > a,
             #mainNav .navbar-collapse .navbar-sidenav > .nav-item .sidenav-third-level > li > a {
-              padding: 1em; }
+              padding: 1em; } */
         #mainNav .navbar-collapse .navbar-sidenav > .nav-item .sidenav-second-level > li > a {
-          padding-left: 2em; }
+          padding-left: 4em; }
         #mainNav .navbar-collapse .navbar-sidenav > .nav-item .sidenav-third-level > li > a {
           padding-left: 3em; }
       #mainNav .navbar-collapse .navbar-sidenav li.active a {
