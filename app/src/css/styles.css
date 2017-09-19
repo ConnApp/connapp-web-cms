@@ -1,3 +1,10 @@
+body {
+  background-color: #f1f1f1;
+}
+
+.margin-top {
+  margin-top: 3%;
+}
 .margin-xs-top {
   margin-top: 5%;
 }
@@ -24,4 +31,27 @@
 
 .background-theme-gray {
   background-color: #f1f1f1;
+}
+
+/**
+* @medias
+*/
+
+/* SMARTPHONES */
+@media( max-width: 562px ) {
+  .margin-top {
+    margin-top: 10%;
+  }
+  .margin-top footer {
+    margin-top: 30%;
+  }
+}
+/* TABLETS */
+@media( min-width: 768px ) and ( max-width: 1024 ) {
+  .margin-top {
+    margin-top: 10%;
+  }
+  .margin-top footer {
+    margin-top: 30%;
+  }
 }

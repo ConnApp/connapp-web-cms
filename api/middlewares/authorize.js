@@ -1,12 +1,12 @@
 
-function checkSession( req, res, next ) {
-  if ( req.isAuthenticated() ) {
+function isAuthenticated( req, res, next ) {
+  if ( req.isAuthenticated() || req.originalUrl === '/auth/signin' ) {
     return next();
   }
   res.redirect( '/auth/signin' );
 }
 
-function checkAuthorization( req, res, next ) {
+function isAuthorized( req, res, next ) {
   if ( req.isAuthenticated() && req.user.group === 'admin' ) {
     return next();
   }
@@ -14,6 +14,6 @@ function checkAuthorization( req, res, next ) {
 }
 
 module.exports = {
-  checkSession,
-  checkAuthorization
+  isAuthenticated,
+  isAuthorized
 };

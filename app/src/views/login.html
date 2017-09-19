@@ -2,56 +2,54 @@
 <html lang="pt-BR">
   <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="../../node_modules/bootstrap/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="../../node_modules/font-awesome/css/font-awesome.min.css">
     <link rel="stylesheet" href="../../src/css/styles.css">
     <title>Connapp Web - Login</title>
   </head>
   <body>
-    <div class="jumbotron">
-      <div class="container-fluid">
-        <div class="row">
-          <main class="col-12 col-sm-8 col-md-6 col-lg-4 col-sm-offset-2 col-md-offset-3 col-lg-offset-4">
-            <div class="row">
-              <h1 class="title-main text-center">Acesso de usuário</h1>
-            </div>
+    <div class="container-fluid">
 
-            <div class="row margin-sm-top">
-              <form>
-                <div class="row">
-                  <div class="col-md-12 col-sm-12 col-lg-12 col-12">
-                    <div class="form-group">
-                      <label for="username">Email</label>
-                      <div class="input-group">
-                        <span class="input-group-addon"><i class="fa fa-user"></i></span>
-                        <input type="text" name="username" id="username" class="form-control">
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col-md-12 col-sm-12 col-lg-12 col-12">
-                    <div class="form-group">
-                      <label for="password">Senha</label>
-                      <div class="input-group">
-                        <span class="input-group-addon"><i class="fa fa-lock"></i></span>
-                        <input type="password" name="password" id="password" class="form-control">
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col-md-12 col-sm-12 col-lg-12 col-12">
-                    <button type="submit" name="submit" class="btn btn-block btn-primary">Entrar</button>
-                  </div>
-                </div>
-              </form>
+      <div class="row margin-top">
+        <div class="col-12 col-sm-12">
+          <h1 class="title-main text-center margin-top">Acesso de usuário</h1>
+        </div>
+      </div>
+      <form class="margin-top" method="POST" action="/auth/signin" autocomplete="off" novalidate>
+        <div class="row">
+          <div class="col-12 col-sm-12 col-md-6 ml-auto mr-auto">
+            <div class="form-group">
+              <label for="username">Email</label>
+              <div class="input-group">
+                <span class="input-group-addon"><i class="fa fa-user"></i></span>
+                <input type="text" name="email" id="username" class="form-control">
+              </div>
             </div>
-          </main>
+          </div>
         </div>
 
-        <div class="row margin-xs-top">
+          <div class="row">
+            <div class="col-12 col-sm-12 col-md-6 ml-auto mr-auto">
+              <div class="form-group">
+                <label for="password">Senha</label>
+                <div class="input-group">
+                  <span class="input-group-addon"><i class="fa fa-lock"></i></span>
+                  <input type="password" name="password" id="password" class="form-control">
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-12 col-sm-12 col-md-6 ml-auto mr-auto">
+              <button type="submit" name="submit" class="btn btn-block btn-primary">Entrar</button>
+            </div>
+          </div>
+
+      </form>
+      <div class="row margin-top">
+        <div class="col-12 col-sm-12 col-md-12">
           <footer class="text-center">
             <small>ConnApp &copy; Make with love by <a href="https://github.com/diego-leal" target="_blank">Diego Leal</a></small>
           </footer>
