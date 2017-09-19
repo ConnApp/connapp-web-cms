@@ -6,7 +6,7 @@
 
   function routeProvider( $routeProvider ) {
     $routeProvider
-      .when( '/user/form/:email', {
+      .when( '/user/form/:_id', {
         templateUrl: '../src/partials/user-form.html',
         controller: 'newUserController',
         controllerAs: 'vm'
