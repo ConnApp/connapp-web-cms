@@ -4,45 +4,74 @@
   'use strict';
   angular.module( 'app' )
     .controller(  'newUserController', newUser  )
-    .controller( 'listUserController', listUser );
+    .controller( 'listUserController', listUser )
+    .controller( 'updateUserController', updateUserController )
+    .controller( 'resetUserPasswordController', resetUserPasswordController );
   
   /**
   * Controller para criar novos usuários
   * @memberof app.user
   */
-  function newUser( $log, $scope, $resource, $routeParams ) {
-    const 
-      vm = this,
-      { _id } = $routeParams,
-      UserResource = $resource( '/users', null,  { update: { method: 'PUT' } } );
+  function newUser( $log, $scope, $location, userResource) {
+    const vm = this;
     
     // ===# View Model #=== //
     vm.user = {};
     vm.submitForm = submitForm;
 
-    if ( _id ) {
-      getUser( _id );
-    }
-
     function submitForm( user ) {
-      const userResource = new UserResource();
-      if ( $scope.userForm.$valid ) {
-        angular.merge( userResource, user );
-        userResource.$save()
-          .then( $log.info )
-          .catch( error => {
-            throw error; 
-          });
-      }
-    }
+      if ( $scope.userForm.$invalid ) return;
 
-    function getUser( _id ) {
-      const UserResource = $resource( '/users/:_id' );
-
-      UserResource.get( { _id } )
-        .$promise.then( user => {
-          angular.merge( vm.user, user );
+      userResource.save( user )
+        .then( () => {
+          $location.path( '/user/list' );
         })
+        .catch( $log.error );
+    }
+  }
+  /**
+   * 
+   */
+  function updateUserController( $scope, $log, $routeParams, userResource ) {
+    const
+      vm = this,
+      { _id } = $routeParams;
+    
+    // ===# View Model #=== //
+    vm.user = {};
+    vm.submitChanges = submitChanges;
+
+    // ===# Carga inicial #=== //
+    vm.user = userResource.get( _id );
+
+    /**
+     * 
+     * @param {Object} user 
+     */
+    function submitChanges( user ) {
+      if ( $scope.userChanges.$invalid ) return;
+
+      userResource.update( user )
+        .then( $log.info )
+        .catch( $log.error );
+    }
+  }
+  /**
+   * 
+   */
+  function resetUserPasswordController( $log, $scope, $routeParams, userResource ) {
+    const vm = this;
+
+    // ===# View Models #=== //
+    vm.user = {};
+    vm.user._id = $routeParams._id;
+    vm.submitChanges = submitChanges;
+
+    function submitChanges( user ) {
+      if ( $scope.resetPassword.$invalid ) return;
+
+      userResource.update( user )
+        .then( $log.info )
         .catch( $log.error );
     }
   }
@@ -50,11 +79,10 @@
    * Controller para listar todos os usuários ativos.
    * @memberof app.user
    */
-  function listUser( $log, $resource, $location ) {
+  function listUser( $log, $location, userResource ) {
     const 
       vm = this,
-      user = {},
-      userResource = $resource( '/users' );
+      user = {};
     
     // ===# View models #=== //
     vm.orderBy = 'firstName';
@@ -62,17 +90,8 @@
     vm.redirectToForm = redirectToForm;
 
     // ===# Carga inicial #=== //
-    vm.users = listUsers();
+    vm.users = userResource.query();
 
-    /**
-     * Função realiza um requisição no endpoint /users e retorna uma lista de usuários
-     * @method GET
-     * @type {Function}
-     * @return {Array}
-     */
-    function listUsers() {
-      return userResource.query();
-    }
     /**
      * Função define um usuário global.
      * @type {Function}
