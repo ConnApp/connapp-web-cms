@@ -117,14 +117,13 @@ module.exports = function( app ) {
     * @return {Object} _doc - Dados do usuário
     */
     function makeHashWithPass( _doc ) {
-      return new Promise( ( resolve, reject ) => {
+      return new Promise( resolve => {
         const SALT = 10;
         bcrypt.hash( _doc.password, SALT )
           .then( hash => {
             _doc.password = hash;
             resolve( _doc );
-          })
-          .catch( reject );
+          });
       });
     }
     /**
@@ -191,15 +190,18 @@ module.exports = function( app ) {
       .catch( _rejectResponse.bind( null, res ) );
   }
   /**
-  * Desativa o usuário fazendo uma busca pelo email.
+  * Atualiza o usuário fazendo uma busca pelo email.
   * @memberof User
   * @method PUT
   */
   function update( req, res ) {
-    const doc = req.body;
+    const { _id, firstName, lastName, password, group, ...doc } = req.body;
 
-    Promise.resolve( doc )
-      .then( validateEmail )
+    Promise.resolve( { _id, firstName, lastName, password, group } )
+      .then( validateId )
+      .then( validateName )
+      .then( validateGroup )
+      .then( makeHashWithPass )
       .then( updateDate )
       .then( setNewData )
       .then( _resolveResponse.bind( null, res ) )
@@ -213,12 +215,56 @@ module.exports = function( app ) {
     * @param {Object} _doc Dados do usuário que serão atualizados.
     * @return {Object}
     */
-    function validateEmail( _doc ) {
-      if ( !_doc.email ) {
-        throw new Error( 'Email do usuário não é valido.' );
+    function validateId( { _id, ..._doc } ) {
+      if ( !_id || _id.length < 24 ) {
+        throw new Error( 'A propriedade _id não é valido.' );
       }
 
-      return _doc;
+      return { _id, ..._doc };
+    }
+    /**
+     * Verifica se o nome e sobrenome existem para atribuir-los ao objeto _doc
+     * que está sendo manipulado.
+     * @param {Object} _doc
+     * @return {Object}
+     */
+    function validateName( { firstName, lastName, ..._doc } ) {
+      if ( firstName )  _doc.firstName = firstName;
+      if ( lastName ) _doc.lastName = lastName;
+      
+      return { ..._doc };
+    }
+    /**
+     * Verifica se o grupo e válido
+     * @param {Object}
+     * @return {Object}
+     */
+    function validateGroup( { group, ..._doc } ) {
+      const
+        groups = [ 'user', 'admin' ];
+        isValid = groups.some( _group => _group === group );
+
+      if ( isValid ) return { group, ..._doc };
+
+      return { ..._doc };
+    }
+    /**
+     * Verifica se existe algum password para ser criptografado. Se houver é geredo um hash
+     * dele senão o fluxo da promise segue normalmente.
+     * @param {Object} _doc
+     * @return {Object}
+     */
+    function makeHashWithPass( { password, ..._doc } ) {
+      if ( !password || password.length < 8 ) return { ...doc };
+
+      return new Promise( resolve => {
+        const SALT = 10;
+        bcrypt.hash( password, SALT )
+          .then( hash => {
+            password = hash;
+            resolve( { password, ..._doc } );
+          });
+      });
     }
     /**
     * Atualiza da data da propriedade lastUpdate.
@@ -240,8 +286,8 @@ module.exports = function( app ) {
     * @param {Object} _doc Dados do usuário que serão atualizados.
     * @return {Promise}
     */
-    function setNewData( _doc ) {
-      return user.update( { email: _doc.email }, _doc );
+    function setNewData( { _id, ..._doc } ) {
+      return user.update( { _id }, _doc );
     }
   }
 
