@@ -9,11 +9,13 @@ module.exports = function() {
     res.sendFile( path.join( ROOT_PATH, 'app/src/views/login.html' ) );
   }
 
-  function signin() {
-    return passport.authenticate( 'local', {
-      successRedirect: '/',
-      failureRedirect: '/auth/signin'
-    });
+  function signin( req, res, next ) {
+    passport.authenticate( 'local', ( error, user, info ) => {
+      if ( error ) return next( error );
+      if ( !user ) return res.status( 500 ).send( { ...info } );
+
+      res.status( 200 ).json( user );
+    })( req, res, next );
   }
 
   function signout( req, res ) {
