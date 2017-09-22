@@ -4,10 +4,8 @@
   angular.module( 'app' )
     .controller( 'sessionController', sessionController );
 
-  function sessionController( $log, $scope, $location, $resource ) {
-    const 
-      vm = this,
-      URL = 'http://localhost:3000';
+  function sessionController( $log, $scope, $resource ) {
+    const vm = this;
 
     // ===# View models #=== //
     vm.authenticate = authenticate;
@@ -35,7 +33,7 @@
     }
 
     function redirectToHome() {
-      $location.url( URL );
+      location.pathname = '/';
     }
 
   }

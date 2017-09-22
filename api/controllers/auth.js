@@ -14,7 +14,10 @@ module.exports = function() {
       if ( error ) return next( error );
       if ( !user ) return res.status( 500 ).send( { ...info } );
 
-      res.status( 200 ).json( user );
+      req.logIn( user, error => {
+        if ( error ) return res.status( 500 ).send( { ...error } );
+        res.status( 200 ).json( user );
+      });
     })( req, res, next );
   }
 
