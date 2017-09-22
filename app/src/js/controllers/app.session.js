@@ -9,9 +9,10 @@
 
     // ===# View models #=== //
     vm.authenticate = authenticate;
+    vm.alert = {};
 
     function authenticate( auth ) {
-      if ( $scope.formLogin.$invalid ) return;
+      if ( $scope.formLogin.$invalid ) return vm.formSubmitted = true;
       const
         AuthResource = $resource( '/auth/signin' ),
         authResource = new AuthResource( auth );
@@ -20,7 +21,7 @@
         .then( serializeResponse )
         .then( createSession )
         .then( redirectToHome )
-        .catch( $log.error );
+        .catch( error => alertHandler( error.data ) );
     }
 
     function createSession( user ) {
@@ -34,6 +35,10 @@
 
     function redirectToHome() {
       location.pathname = '/';
+    }
+
+    function alertHandler( { message = 'Erro inesperado ao tentar realizar login', type =  'alert-danger' } ) {
+      $scope.alert = { message, type };
     }
 
   }
