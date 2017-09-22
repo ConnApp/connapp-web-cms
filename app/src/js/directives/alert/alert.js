@@ -23,15 +23,11 @@
 
   function alertTemplate() {
     return (`
-      <div class="row mt-2" ng-show="message">
-        <div class="col-12 col-sm-12 col-md-6 col-lg-4 ml-auto mr-auto">
-          <div class="alert fade in show" role="alert" ng-class="type">
-            <button class="close" type="button" ng-click="hideAlert()">
-              <span>&times;</span>
-            </button>
-            <p class="alert-heading mb-0" ng-bind="message"></p>
-          </div>
-        </div>
+      <div class="alert fade in show" role="alert" ng-class="type" ng-show="message">
+        <button class="close" type="button" ng-click="hideAlert()">
+          <span>&times;</span>
+        </button>
+        <p class="alert-heading mb-0" ng-bind="message"></p>
       </div>
     `);
   }
