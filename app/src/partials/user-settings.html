@@ -30,7 +30,7 @@
           <div class="form-group">
             <label for="firstName">Nome</label>
             <input type="text" class="form-control" name="firstName" id="firstName" placeholder="John" ng-model="vm.user.firstName" ng-required="true">
-            <ui-message for="userChanges.firstName" when="required" submitted="vm.formSubmitted">
+            <ui-message for="userChanges.firstName" when="required" submitted="userChanges.$submitted">
               Campo obrigatório
             </ui-message>
           </div>
@@ -42,7 +42,7 @@
           <div class="form-group">
             <label for="lastName">Sobrenome</label>
             <input type="text" class="form-control" name="lastName" id="lastName" placeholder="Doe" ng-model="vm.user.lastName" ng-required="true">
-            <ui-message for="userChanges.lastName" when="required" submitted="vm.formSubmitted">
+            <ui-message for="userChanges.lastName" when="required" submitted="userChanges.$submitted">
               Campo obrigatório
             </ui-message>
           </div>
@@ -58,7 +58,7 @@
               <option value="user">Comum</option>
               <option value="admin">Administrador</option>
             </select>
-            <ui-message for="userChanges.group" when="required" submitted="vm.formSubmitted">
+            <ui-message for="userChanges.group" when="required" submitted="userChanges.$submitted">
               Campo obrigatório
             </ui-message>
           </div>
@@ -69,6 +69,12 @@
           <div class="col-md-6 ml-auto mr-auto">
             <button type="submit" name="send" class="margin-xs-top btn btn-primary btn-block pull-right">Confirmar</button>
           </div>
+      </div>
+
+      <div class="row mt-3">
+        <div class="col">
+          <ui-alert type="vm.alert.type" message="vm.alert.message"></ui-alert>
+        </div>
       </div>
     </form>
   </div>

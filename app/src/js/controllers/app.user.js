@@ -12,33 +12,47 @@
   * Controller para criar novos usuários
   * @memberof app.user
   */
-  function newUser( $log, $scope, $location, userResource) {
-    const vm = this;
+  function newUser( $log, $scope, $timeout, userResource, uiAlert) {
+    const 
+      vm = this;
     
     // ===# View Model #=== //
     vm.user = {};
+    vm.alert = {};
+    vm.alertEmiter = uiAlert( vm.alert );
     vm.submitForm = submitForm;
 
+    // ===# Set form validations #=== //
+    $timeout(() => {
+      $scope.userForm.emailConfirm.$validators.isEqual = compareEmailFields;
+    });
+
+    function compareEmailFields( modelValue, viewValue ) {
+      const email = modelValue || viewValue;
+      return email === vm.user.email;
+    }
+
+
     function submitForm( user ) {
-      if ( $scope.userForm.$invalid ) return vm.formSubmitted = true;
+      if ( $scope.userForm.$invalid ) return;
 
       userResource.save( user )
-        .then( () => {
-          $location.path( '/user/list' );
-        })
-        .catch( $log.error );
+        .then( () => vm.alertEmiter.success( 'Usuário cadastrado com sucesso!' ) )
+        .catch( error => vm.alertEmiter.danger( error.data.message ) );
     }
   }
   /**
    * 
    */
-  function updateUserController( $scope, $log, $routeParams, userResource ) {
+  function updateUserController( $scope, $log, $routeParams, userResource, uiAlert ) {
     const
       vm = this,
       { _id } = $routeParams;
     
     // ===# View Model #=== //
     vm.user = {};
+    vm.alert = {};
+    vm.alertEmiter = uiAlert( vm.alert );
     vm.submitChanges = submitChanges;
 
     // ===# Carga inicial #=== //
@@ -49,22 +63,23 @@
      * @param {Object} user 
      */
     function submitChanges( user ) {
-      if ( $scope.userChanges.$invalid ) return vm.formSubmitted = true;
+      if ( $scope.userChanges.$invalid ) return;
 
       userResource.update( user )
-        .then( $log.info )
-        .catch( $log.error );
+        .then( () => vm.alertEmiter.success( 'Dados alterado com sucesso!' ) )
+        .catch( error => vm.alertEmiter.danger( error.data.message ) );
     }
   }
   /**
    * 
    */
-  function resetUserPasswordController( $log, $scope, $routeParams, $timeout, userResource ) {
+  function resetUserPasswordController( $scope, $routeParams, $timeout, userResource ) {
     const vm = this;
 
     // ===# View Models #=== //
     vm.user = {};
     vm.user._id = $routeParams._id;
+    vm.alert = {};
     vm.submitChanges = submitChanges;
     vm.comparePasswordFields = comparePasswordFields;
 
@@ -83,8 +98,16 @@
       if ( $scope.resetPassword.$invalid ) return;
 
       userResource.update( user )
-        .then( $log.info )
-        .catch( $log.error );
+        .then( successAlert )
+        .catch( error => errorAlert( error.data ) );
+    }
+
+    function errorAlert( { message } ) {
+      vm.alert = { message, type: 'alert-danger' };
+    }
+
+    function successAlert() {
+      vm.alert = { message: 'Senha alterada com sucesso!', type: 'alert-success' };
     }
 
   }
