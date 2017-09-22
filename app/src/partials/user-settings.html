@@ -30,6 +30,9 @@
           <div class="form-group">
             <label for="firstName">Nome</label>
             <input type="text" class="form-control" name="firstName" id="firstName" placeholder="John" ng-model="vm.user.firstName" ng-required="true">
+            <ui-message for="userChanges.firstName" when="required" submitted="vm.formSubmitted">
+              Campo obrigatório
+            </ui-message>
           </div>
         </div>
       </div>
@@ -39,6 +42,9 @@
           <div class="form-group">
             <label for="lastName">Sobrenome</label>
             <input type="text" class="form-control" name="lastName" id="lastName" placeholder="Doe" ng-model="vm.user.lastName" ng-required="true">
+            <ui-message for="userChanges.lastName" when="required" submitted="vm.formSubmitted">
+              Campo obrigatório
+            </ui-message>
           </div>
         </div>
       </div>
@@ -46,12 +52,15 @@
       <div class="row">
         <div class="col">
           <div class="form-group">
-            <label for="type">Tipo de usuário</label>
-            <select class="form-control" name="type" id="type" ng-model="vm.user.group" ng-required="true">
+            <label for="group">Tipo de usuário</label>
+            <select class="form-control" name="group" id="group" ng-model="vm.user.group" ng-required="true">
               <option value="">Selecione um tipo de usuário.</option>
               <option value="user">Comum</option>
               <option value="admin">Administrador</option>
             </select>
+            <ui-message for="userChanges.group" when="required" submitted="vm.formSubmitted">
+              Campo obrigatório
+            </ui-message>
           </div>
         </div>
       </div>

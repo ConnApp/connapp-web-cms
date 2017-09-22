@@ -16,6 +16,9 @@
         <div class="form-group">
           <label for="firstName">Nome</label>
           <input type="text" class="form-control" name="firstName" id="firstName" placeholder="John" ng-model="vm.user.firstName" ng-required="true">
+          <ui-message for="userForm.firstName" when="required" submitted="vm.formSubmitted">
+            Campo obrigatório
+          </ui-message>
         </div>
       </div>
 
@@ -23,6 +26,9 @@
         <div class="form-group">
           <label for="lastName">Sobrenome</label>
           <input type="text" class="form-control" name="lastName" id="lastName" placeholder="Doe" ng-model="vm.user.lastName" ng-required="true">
+          <ui-message for="userForm.lastName" when="required" submitted="vm.formSubmitted">
+            Campo obrigatório
+          </ui-message>
         </div>
       </div>
     </div>
@@ -31,6 +37,12 @@
         <div class="form-group">
           <label for="email">Email</label>
           <input type="email" class="form-control" name="email" id="email" placeholder="johndoe@email.com" ng-model="vm.user.email" ng-required="true">
+          <ui-message for="userForm.email" when="required" submitted="vm.formSubmitted">
+            Campo obrigatório
+          </ui-message>
+          <ui-message for="userForm.email" when="email" submitted="vm.formSubmitted">
+            Email inválido
+          </ui-message>
         </div>
       </div>
 
@@ -38,6 +50,12 @@
         <div class="form-group">
           <label for="emailConfirm">Confirme o email</label>
           <input type="email" class="form-control" name="emailConfirm" id="emailConfirm" placeholder="johndoe@email.com" ng-model="vm.user.emailConfirm" ng-required="true">
+          <ui-message for="userForm.emailConfirm" when="required" submitted="vm.formSubmitted">
+            Campo obrigatório
+          </ui-message>
+          <ui-message for="userForm.emailConfirm" when="email" submitted="vm.formSubmitted">
+            Email inválido
+          </ui-message>
         </div>
       </div>
     </div>
@@ -45,18 +63,27 @@
       <div class="col-12 col-sm-12 col-md-6">
         <div class="form-group">
           <label for="password">Senha</label>
-          <input type="password" class="form-control" name="password" id="password" placeholder="********" ng-model="vm.user.password" ng-required="true">
+          <input type="password" class="form-control" name="password" id="password" placeholder="********" ng-model="vm.user.password" ng-required="true" ng-pattern="/\w{8}/">
+          <ui-message for="userForm.password" when="required" submitted="vm.formSubmitted">
+            Campo obrigatório
+          </ui-message>
+          <ui-message for="userForm.password" when="pattern" submitted="vm.formSubmitted">
+            Senha muito curta.
+          </ui-message>
         </div>
       </div>
 
       <div class="col-12 col-sm-12 col-md-6">
         <div class="form-group">
-          <label for="type">Tipo de usuário</label>
-          <select class="form-control" name="type" id="type" ng-model="vm.user.group" ng-required="true">
+          <label for="group">Tipo de usuário</label>
+          <select class="form-control" name="group" id="group" ng-model="vm.user.group" ng-required="true">
             <option value="">Selecione um tipo de usuário.</option>
             <option value="user">Comum</option>
             <option value="admin">Administrador</option>
           </select>
+          <ui-message for="userForm.group" when="required" submitted="vm.formSubmitted">
+            Campo obrigatório
+          </ui-message>
         </div>
       </div>
     </div>

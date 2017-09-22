@@ -20,7 +20,7 @@
     vm.submitForm = submitForm;
 
     function submitForm( user ) {
-      if ( $scope.userForm.$invalid ) return;
+      if ( $scope.userForm.$invalid ) return vm.formSubmitted = true;
 
       userResource.save( user )
         .then( () => {
@@ -49,7 +49,7 @@
      * @param {Object} user 
      */
     function submitChanges( user ) {
-      if ( $scope.userChanges.$invalid ) return;
+      if ( $scope.userChanges.$invalid ) return vm.formSubmitted = true;
 
       userResource.update( user )
         .then( $log.info )
@@ -59,14 +59,26 @@
   /**
    * 
    */
-  function resetUserPasswordController( $log, $scope, $routeParams, userResource ) {
+  function resetUserPasswordController( $log, $scope, $routeParams, $timeout, userResource ) {
     const vm = this;
 
     // ===# View Models #=== //
     vm.user = {};
     vm.user._id = $routeParams._id;
     vm.submitChanges = submitChanges;
+    vm.comparePasswordFields = comparePasswordFields;
 
+    // ===# Set form validation # === //
+    $timeout( () => {
+      $scope.resetPassword.confirmPassword.$validators.isEqual = comparePasswordFields;
+    });
+    
+    function comparePasswordFields( modelValue, viewValue ) {
+      const password = modelValue || viewValue;
+      return password === vm.user.password;
+    }
+
+    // ===# Setup #=== //
     function submitChanges( user ) {
       if ( $scope.resetPassword.$invalid ) return;
 
@@ -74,6 +86,7 @@
         .then( $log.info )
         .catch( $log.error );
     }
+
   }
   /**
    * Controller para listar todos os usuários ativos.

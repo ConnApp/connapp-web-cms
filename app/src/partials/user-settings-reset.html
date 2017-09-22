@@ -31,7 +31,10 @@
         <div class="col">
           <div class="form-group">
             <label for="password">Senha</label>
-            <input type="password" class="form-control" name="password" id="password" placeholder="********" ng-model="vm.user.password" ng-required="true">
+            <input type="password" class="form-control" name="password" id="password" placeholder="********" ng-model="vm.user.password" ng-required="true" ng-pattern="/\w{8}/">
+            <ui-message for="resetPassword.password" when="pattern">
+              Senha muito curta.
+            </ui-message>
           </div>
         </div>
       </div>
@@ -40,6 +43,9 @@
           <div class="form-group">
             <label for="confirmPassword">Confirme a senha</label>
             <input type="password" class="form-control" name="confirmPassword" id="confirmPassword" placeholder="********" ng-model="vm.user.confirmPassword" ng-required="true">
+            <ui-message for="resetPassword.confirmPassword" when="isEqual">
+              As senhas não são iguais.
+            </ui-message>
           </div>
         </div>
       </div>
