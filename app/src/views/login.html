@@ -27,6 +27,12 @@
                   <span class="input-group-addon"><i class="fa fa-user"></i></span>
                   <input type="email" name="email" id="username" class="form-control" ng-model="vm.auth.email" ng-required="true">
                 </div>
+                <ui-message for="formLogin.email" when="required">
+                  Campo obrigatório
+                </ui-message>
+                <ui-message for="formLogin.email" when="email">
+                  Email inválido
+                </ui-message>
               </div>
             </div>
           </div>
@@ -39,6 +45,9 @@
                     <span class="input-group-addon"><i class="fa fa-lock"></i></span>
                     <input type="password" name="password" id="password" class="form-control" ng-model="vm.auth.password" ng-required="true">
                   </div>
+                  <ui-message for="formLogin.password" when="required">
+                    Campo obrigatório
+                  </ui-message>
                 </div>
               </div>
             </div>
