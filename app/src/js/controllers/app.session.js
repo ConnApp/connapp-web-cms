@@ -19,12 +19,9 @@
         authResource = new AuthResource( auth );
 
       authResource.$save()
-        .then( user => {
-          Promise.resolve( user )
-            .then( serializeResponse )
-            .then( createSession )
-            .then( redirectToHome );
-        })
+        .then( serializeResponse )
+        .then( createSession )
+        .then( redirectToHome )
         .catch( $log.error );
     }
 
