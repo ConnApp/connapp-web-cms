@@ -44,17 +44,31 @@
               <span class="nav-link-text">Início</span>
             </a>
           </li>
-          <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Components" ng-if="vm.isAdmin">
-            <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" data-target="#collapseComponents" ng-href="#!/user">
-              <i class="fa fa-fw fa-wrench"></i>
+          <li class="nav-item active" data-toggle="tooltip" data-placement="right" title="Components" ng-if="vm.isAdmin">
+            <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" data-target="#collapseUser">
+              <i class="fa fa-fw fa-sliders"></i>
               <span class="nav-link-text">Administrador</span>
             </a>
-            <ul class="sidenav-second-level collapse" id="collapseComponents">
+            <ul class="sidenav-second-level collapse" id="collapseUser">
               <li>
                 <a ng-href="#!/user/form"><small>Novo usuário</small></a>
               </li>
               <li>
                 <a ng-href="#!/user/list"><small>Lista de usuários</small></a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-item active" data-toggle="tooltip" data-placement="right" title="Components">
+            <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" data-target="#collapseNews">
+              <i class="fa fa-fw fa-newspaper-o"></i>
+              <span class="nav-link-text">Notícias</span>
+            </a>
+            <ul class="sidenav-second-level collapse" id="collapseNews">
+              <li>
+                <a ng-href="#!/news/form"><small>Nova notícia</small></a>
+              </li>
+              <li>
+                <a ng-href="#"><small>Lista de notícias</small></a>
               </li>
             </ul>
           </li>
