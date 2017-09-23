@@ -1,5 +1,7 @@
 !(function( angular ) {
   if ( !angular ) throw new ReferenceError( 'Angular ^1.5 is required' );
+
+  'use strict';
   angular.module( 'app' )
     .factory( 'userResource', userResource );
 

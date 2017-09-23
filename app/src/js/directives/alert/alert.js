@@ -1,5 +1,7 @@
 !(function( angular ) {
   if ( !angular ) throw new ReferenceError( 'angularjs 1.5+ is required' );
+
+  'use strict';
   angular.module( 'uiAlert', [] );
   angular.module( 'uiAlert' )
     .directive( 'uiAlert', () => {
