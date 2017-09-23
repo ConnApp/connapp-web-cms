@@ -7,23 +7,28 @@
   function routeProvider( $routeProvider ) {
     $routeProvider
       .when( '/user/form', {
-        templateUrl: '../src/partials/user-form.html',
+        templateUrl: '../src/partials/user/user-form.html',
         controller: 'newUserController',
         controllerAs: 'vm'
       })
       .when( '/user/list', {
-        templateUrl: '../src/partials/user-table.html',
+        templateUrl: '../src/partials/user/user-table.html',
         controller: 'listUserController',
         controllerAs: 'vm'
       })
       .when( '/user/settings/:_id', {
-        templateUrl: '../src/partials/user-settings.html',
+        templateUrl: '../src/partials/user/user-settings.html',
         controller: 'updateUserController',
         controllerAs: 'vm'
       })
       .when( '/user/settings/:_id/reset', {
-        templateUrl: '../src/partials/user-settings-reset.html',
+        templateUrl: '../src/partials/user/user-settings-reset.html',
         controller: 'resetUserPasswordController',
+        controllerAs: 'vm'
+      })
+      .when( '/news/form', {
+        templateUrl: '../src/partials/news/news-form.html',
+        controller: 'createNewsController',
         controllerAs: 'vm'
       })
       .otherwise({
