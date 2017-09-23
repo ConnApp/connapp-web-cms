@@ -1,0 +1,36 @@
+<!-- Breadcrumbs -->
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">
+    <a ng-href="#!/">Inicio</a>
+  </li>
+  <li class="breadcrumb-item active">Nova notícia</li>
+</ol>
+<!-- ./breadcrumb -->
+
+<!-- form -->
+<div id="news-form">
+  <form name="newsForm" novalidate autocomplete="off" ng-submit="vm.submitForm( vm.news )">
+    <div class="row">
+      <div class="col-12 col-sm-12 col-md-8 col-lg-8 ml-auto mr-auto">
+        <div class="form-group">
+          <label for="title">Titulo</label>
+          <input type="text" class="form-control" name="title" id="title" placeholder="Coffee free!" ng-model="vm.news.title" ng-required="true">
+          <ui-message for="newsForm.title" when="required" submitted="newsForm.$submitted">
+            Campo obrigatório
+          </ui-message>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12 col-sm-12 col-md-12 col-lg-4 ml-auto mr-auto">
+        <button type="submit" name="send" class="margin-xs-top btn btn-primary btn-block pull-right">Finalizar</button>
+      </div>
+    </div>
+    <div class="row mt-3">
+      <div class="col-12 col-sm-12 col-md-8 col-lg-8 ml-auto mr-auto">
+        <ui-alert message="vm.alert.message" type="vm.alert.type"></ui-alert>
+      </div>
+    </div>
+  </form>
+  <!-- ./form -->
+</div>
