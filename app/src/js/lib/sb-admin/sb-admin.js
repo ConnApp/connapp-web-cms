@@ -1,4 +1,4 @@
-(function($) {
+!(function($) {
   "use strict"; // Start of use strict
 
   // Configure tooltips for collapsed side navigation
@@ -48,11 +48,6 @@
       scrollTop: ($($anchor.attr('href')).offset().top)
     }, 1000, 'easeInOutExpo');
     event.preventDefault();
-  });
-
-  // Call the dataTables jQuery plugin
-  $(document).ready(function() {
-    $('#dataTable').DataTable();
   });
 
 })(jQuery); // End of use strict
