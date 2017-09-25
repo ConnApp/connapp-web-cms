@@ -5852,13 +5852,14 @@ angular.module('wiz.markdown')
 		restrict: 'E',
 		scope: {
 			'content': '=',
-			'textareaclass':'@?'
+            'textareaclass':'@?',
+            'rows': '@?'
 		},
 		replace: true,
 		transclude: true,
 		template: '<div class="markdown-editor">' +
 		            '<div class="markdown-toolbar" ng-if="!toolbarBottom" ng-transclude></div>' +
-		            '<textarea class="markdown-input {{textareaclass}}" ng-model="content"></textarea>' +
+		            '<textarea class="markdown-input {{textareaclass}}" rows="{{rows}}" ng-model="content"></textarea>' +
 		            '<div class="markdown-toolbar" ng-if="toolbarBottom" ng-transclude></div>' +
 		          '</div>',
 		controller: ['$scope', '$element', '$attrs', function ($scope, $element, $attrs) { }],
