@@ -5,8 +5,18 @@
   angular.module( 'app' )
     .controller( 'createNewsController', createNewsController );
 
-  function createNewsController() {
+  function createNewsController( wizMarkdownSvc ) {
     const vm = this;
+
+    // ===# View models #=== //
+    vm.news = {};
+    vm.previewMode = false;
+    vm.previewNews = previewNews;
     
+
+    function previewNews( message ) {
+      vm.news.preview = wizMarkdownSvc.Transform( message );
+      vm.previewMode = !vm.previewMode;
+    }
   }
 })( angular );
