@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build": "./node_modules/webpack/bin/webpack.js",
+    "setup": "yarn && cd app && yarn",
     "build-watch": "./node_modules/webpack/bin/webpack.js --watch",
     "start-dev-server": "npm run start-api-watch && npm run start-webpack-server",
     "start-webpack-server": "./node_modules/webpack-dev-server/bin/webpack-dev-server.js --inline",
