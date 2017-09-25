@@ -10,6 +10,13 @@
   font-size: 2em;
 }
 
+.markdown-preview {
+  min-height: 100px;
+  padding-left: 10px;
+  padding-top: 5px;
+  border: 1px solid #ddd;
+}
+
 /**
 * @medias
 */
@@ -21,4 +28,10 @@
 /* TABLETS */
 @media( min-width: 768px ) and ( max-width: 1024 ) {
 
+}
+
+@media ( min-width: 1024 ) {
+  .preview-button {
+    margin-left: 200px;
+  }
 }
