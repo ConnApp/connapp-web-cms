@@ -9,4 +9,5 @@ import newsController from './js/controllers/app.news';
 import routeProvider from './js/providers/ngRoute.routeProvider';
 // ===# service imports #=== //
 import userResource from './js/services/app.userResource';
+import newsResource from './js/services/app.newsResource';
 import alertService from './js/services/uiAlert.alert';
