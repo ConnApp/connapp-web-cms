@@ -13,7 +13,7 @@ module.exports = function( app ) {
       .then( validateMessage )
       .then( save )
       .then( _news => res.status( 200 ).json( _news._doc ) )
-      .catch( error => res.status( 500 ).send( { message: error.message, stack: error.stack } ) );
+      .catch( error => res.status( 500 ).send( { ...error } ) );
 
     function validateTitle( _doc ) {
       if ( !_doc.title ) {
@@ -40,7 +40,7 @@ module.exports = function( app ) {
     Promise.resolve()
       .then( query )
       .then( _news => res.status( 200 ).json( _news ) )
-      .catch( error => res.status( 500 ).send( { message: error.message, stack: error.stack } ) );
+      .catch( error => res.status( 500 ).send( { ...error } ) );
 
     function query() {
       return news.query();
@@ -55,7 +55,7 @@ module.exports = function( app ) {
       .then( updateDate )
       .then( setNewData )
       .then( status => res.status( 200 ).json( status ) )
-      .catch( error => res.status( 500 ).send( { message: error.message, stack: error.stack } ) );
+      .catch( error => res.status( 500 ).send( { ...error } ) );
 
     function validateId( { _id, ..._doc } ) {
       if ( !_id ) {
@@ -81,7 +81,7 @@ module.exports = function( app ) {
       .then( validateId )
       .then( logicalRemove )
       .then( status => res.status( 200 ).json( status ) )
-      .catch( error => res.status( 500 ).send( { message: error.message, stack: error.stack } ) );
+      .catch( error => res.status( 500 ).send( { ...error } ) );
 
     function validateId( _id ) {
       if ( typeof _id !== 'string' || _id.length < 24 ) {
@@ -104,7 +104,7 @@ module.exports = function( app ) {
       .then( validateId )
       .then( find )
       .then( _news => res.status( 200 ).json( _news ) )
-      .catch( error => res.status( 500 ).send( { message: error.message, stack: error.stack } ) );
+      .catch( error => res.status( 500 ).send( { ...error } ) );
 
     function validateId( _id ) {
       if ( typeof _id !== 'string' || _id.length < 24 ) {

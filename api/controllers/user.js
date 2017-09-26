@@ -12,10 +12,12 @@ module.exports = function( app ) {
   * @memberof User
   * @type {Method}
   * @private
-  * @param {Object} _doc - Dados do usuário
+  * @param {Object} data - Dados do usuário
   */
-  function _resolveResponse( res, data ) {
-    res.status( 200 ).json( data );
+  function _resolveResponse( res ) {
+    return data => {
+      res.status( 200 ).json( data );
+    };
   }
   /**
   * Responde a requisição com status de error e envia um json com o objeto do erro.
@@ -24,8 +26,10 @@ module.exports = function( app ) {
   * @private
   * @param {Object} error - Objeto com messagem e stack de erro.
   */
-  function _rejectResponse( res, { message, stack } ) {
-    res.status( 500 ).send( { message, stack } );
+  function _rejectResponse( res ) {
+    return error => {
+      res.status( 500 ).send( { ...error } );
+    };
   }
   /**
   * Cria um nove usuário.
@@ -42,8 +46,8 @@ module.exports = function( app ) {
       .then( validateEmail )
       .then( makeHashWithPass )
       .then( save )
-      .then( _resolveResponse.bind( null, res ) )
-      .catch( _rejectResponse.bind( null, res ) );
+      .then( _resolveResponse( res ) )
+      .catch( _rejectResponse( res ) );
 
     /**
     * Verifica se o nome e sobrenome foi enviado.
@@ -149,8 +153,9 @@ module.exports = function( app ) {
   function list( req, res ) {
     Promise.resolve()
       .then( query )
-      .then( _resolveResponse.bind( null, res ) )
-      .catch( _rejectResponse.bind( null, res ) );
+      .then( selectUserPropertys )
+      .then( _resolveResponse( res ) )
+      .catch( _rejectResponse( res ) );
 
     /**
     * Busca todos os usuários do banco de dados.
@@ -158,7 +163,24 @@ module.exports = function( app ) {
     * @return {Promise} Promise - Promise resolvida com um array de usuários.
     */
     function query() {
-      return new Promise( ( resolve ) => user.query( {} ).then( resolve ) );
+      return user.query( {} );
+    }
+    /**
+     * Projeta as propriedades públicas do usuário.
+     * @memberof User.list
+     * @return {Object}
+     */
+    function selectUserPropertys( users ) {
+      return users.map( user => {
+        return {
+          _id: user._id,
+          firstName: user.firstName, 
+          lastName: user.lastName,
+          email: user.email,
+          group: user.group,
+          lastUpdate: user.lastUpdate
+        };
+      });
     }
   }
   /**
@@ -172,8 +194,8 @@ module.exports = function( app ) {
     if ( !email ) return _rejectResponse( new Error( 'Não foi possivel remover o usuário' ) );
 
     Model.remove( { email } )
-      .then( _resolveResponse.bind( null, res ) )
-      .catch( _rejectResponse.bind( null, res ) );
+      .then( _resolveResponse( res ) )
+      .catch( _rejectResponse( res ) );
   }
   /**
   * Desativa o usuário fazendo uma busca pelo email.
@@ -186,8 +208,8 @@ module.exports = function( app ) {
     if ( !email ) return _rejectResponse( new Error( 'Não foi possivel remover o usuário' ) );
 
     user.logicalRemove( { email } )
-      .then( _resolveResponse.bind( null, res ) )
-      .catch( _rejectResponse.bind( null, res ) );
+      .then( _resolveResponse( res ) )
+      .catch( _rejectResponse( res ) );
   }
   /**
   * Atualiza o usuário fazendo uma busca pelo email.
@@ -204,8 +226,8 @@ module.exports = function( app ) {
       .then( makeHashWithPass )
       .then( updateDate )
       .then( setNewData )
-      .then( _resolveResponse.bind( null, res ) )
-      .catch( _rejectResponse.bind( null, res) );
+      .then( _resolveResponse( res ) )
+      .catch( _rejectResponse( res) );
     
     /**
     * Verifica se o email existe.
@@ -241,7 +263,7 @@ module.exports = function( app ) {
      */
     function validateGroup( { group, ..._doc } ) {
       const
-        groups = [ 'user', 'admin' ];
+        groups = [ 'user', 'admin' ],
         isValid = groups.some( _group => _group === group );
 
       if ( isValid ) return { group, ..._doc };
@@ -297,8 +319,8 @@ module.exports = function( app ) {
     Promise.resolve( userId )
       .then( validateId )
       .then( find )
-      .then( _resolveResponse.bind( null, res ) )
-      .catch( _rejectResponse.bind( null, res ) );
+      .then( _resolveResponse( res ) )
+      .catch( _rejectResponse( res ) );
 
     function validateId( _userId ) {
       if ( typeof _userId !== 'string' || _userId.length < 24 ) {
