@@ -4,17 +4,27 @@
   min-width: 100%;
   overflow: hidden;
 }
-
 .title-main {
   color: gray;
-  font-size: 2em;
+  font-size: 1.5em;
 }
 
+.card-img {
+  max-height: 200px;
+}
+
+/* Formatação do conteúdo do markdown */
 .markdown-preview {
   min-height: 100px;
   padding-left: 10px;
+  padding-right: 10px;
   padding-top: 5px;
   border: 1px solid #ddd;
+  text-align: justify;
+}
+
+.markdown-preview img {
+  width: 100%;
 }
 
 /**
