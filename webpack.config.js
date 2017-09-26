@@ -8,5 +8,20 @@ module.exports = {
   },
   devServer: {
     contentBase: path.resolve( 'app')
+  },
+  module: {
+    rules: [
+      {
+        test: /\.js$/,
+        exclude: /(node_modules|bower_components|api|lib)/,
+        use: {
+          loader: 'babel-loader',
+          options: {
+            presets: [ 'env' ],
+            plugins: [ require( 'babel-plugin-transform-object-rest-spread' ) ]
+          }
+        }
+      }
+    ]
   }
-}
+};
