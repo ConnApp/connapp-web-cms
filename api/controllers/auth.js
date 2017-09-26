@@ -3,7 +3,7 @@ const
   passport = require( 'passport' );
 
 module.exports = function() {
-  const ROOT_PATH = process.env.PWD;
+  const { ROOT_PATH } = require( '../config/env' );
 
   function renderLogin( req, res ) {
     res.sendFile( path.join( ROOT_PATH, 'app/src/views/login.html' ) );

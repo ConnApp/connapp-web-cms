@@ -13,8 +13,7 @@ module.exports = (function() {
     app = express(),
     { localStrategy, parseSession } = require( './passport' ),
     { isAuthenticated } = require( '../middlewares/authorize' ),
-    PORT = process.env.PORT || 3000,
-    ROOT_PATH = process.env.PWD;
+    { ROOT_PATH, PORT, DATABASE_URL } = require( './env' );
 
   // ===# Set engine and views directory #=== //
   app.set( 'views', path.join( ROOT_PATH, 'app' ) );
@@ -54,7 +53,7 @@ module.exports = (function() {
   app.get( '/', ( req, res ) => res.sendFile( path.join( ROOT_PATH, 'app/index.html' ) ) );
 
   // ===# Connect database #=== //
-  databaseConnection( 'mongodb://super:admin@ds149763.mlab.com:49763/connapp-web-cms' );
+  databaseConnection( DATABASE_URL );
   
   return app;
 })();
