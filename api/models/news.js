@@ -23,12 +23,12 @@ module.exports = function() {
         required: true
       },
       /**
-      * Fotos da notícia.
+      * Capa da notícia.
       * @type {String}
       */
-      images: [{
+      cover: {
         type: String
-      }],
+      },
       /**
       * Define se o notícia está ativo.
       * @type {Boolean}
