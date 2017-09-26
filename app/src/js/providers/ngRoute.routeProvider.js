@@ -31,6 +31,11 @@
         controller: 'createNewsController',
         controllerAs: 'vm'
       })
+      .when( '/news/list', {
+        templateUrl: '../src/partials/news/news-table.html',
+        controller: 'listNewsController',
+        controllerAs: 'vm'
+      })
       .otherwise({
         redirectTo: '/'
       });

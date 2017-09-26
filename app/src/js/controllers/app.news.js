@@ -3,7 +3,8 @@
 
   'use strict';
   angular.module( 'app' )
-    .controller( 'createNewsController', createNewsController );
+    .controller( 'createNewsController', createNewsController )
+    .controller( 'listNewsController', listNewsController );
 
   function createNewsController( $scope, $timeout, $q, wizMarkdownSvc, newsResource, uiAlert ) {
     const vm = this;
@@ -71,5 +72,27 @@
       });
     }
 
+  }
+
+  function listNewsController( newsResource, wizMarkdownSvc ) {
+    const 
+      vm = this;
+    // ===# View Models #=== //
+    vm.orderBy = 'title';
+    vm.news = {};
+    vm.setNews = setNews;
+
+
+
+    // ===# Carga inicial #=== //
+    vm.newsFeed = newsResource.query();
+
+    // ===# Setup #=== //
+    function setNews( news ) {
+      if ( !news ) return;
+      news.content = wizMarkdownSvc.Transform( news.message );
+      angular.merge( vm.news, news );
+    }
+    
   }
 })( angular );

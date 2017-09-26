@@ -12,9 +12,14 @@
       const newsResource = new NewsResource( news );
       return newsResource.$save();
     }
+
+    function query() {
+      return NewsResource.query();
+    }
     
     return {
-      save
+      save,
+      query
     };
   }
 })( angular );
