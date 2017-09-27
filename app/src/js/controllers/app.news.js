@@ -4,7 +4,8 @@
   'use strict';
   angular.module( 'app' )
     .controller( 'createNewsController', createNewsController )
-    .controller( 'listNewsController', listNewsController );
+    .controller( 'listNewsController', listNewsController )
+    .controller( 'previewNewsController', previewNewsController );
 
   function createNewsController( $scope, $timeout, $q, wizMarkdownSvc, newsResource, uiAlert ) {
     const vm = this;
@@ -25,6 +26,7 @@
       const
         FILE_SIZE = 2,
         MAX_SIZE = FILE_SIZE * 1024 * 1024;
+
       if ( file.size > MAX_SIZE ) return $scope.newsForm.$setValidity( 'validSize', false );
       return $scope.newsForm.$setValidity( 'validSize', true );
     }
@@ -74,25 +76,41 @@
 
   }
 
-  function listNewsController( newsResource, wizMarkdownSvc ) {
+  function listNewsController( newsResource ) {
     const 
       vm = this;
     // ===# View Models #=== //
     vm.orderBy = 'title';
-    vm.news = {};
-    vm.setNews = setNews;
-
-
 
     // ===# Carga inicial #=== //
     vm.newsFeed = newsResource.query();
-
-    // ===# Setup #=== //
-    function setNews( news ) {
-      if ( !news ) return;
-      news.content = wizMarkdownSvc.Transform( news.message );
-      angular.merge( vm.news, news );
-    }
     
+  }
+
+  function previewNewsController( $log, $routeParams, $location, newsResource, wizMarkdownSvc ) {
+    const 
+      vm = this,
+      { _id } = $routeParams;
+    
+    // ===# View Models #=== //
+    vm.deleteNews = deleteNews;
+    
+    /**
+     * Buscando notícia.
+     */
+    newsResource.get( _id )
+      .$promise.then( news => {
+        news.content = wizMarkdownSvc.Transform( news.message );
+        vm.news = news;
+      })
+      .catch( $log.error );
+    
+    function deleteNews() {
+      newsResource.logicalRemove( _id )
+        .then( () => {
+          $location.path( '/news/list' );
+        })
+        .catch( $log.error );
+    }
   }
 })( angular );

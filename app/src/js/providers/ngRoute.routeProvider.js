@@ -36,6 +36,11 @@
         controller: 'listNewsController',
         controllerAs: 'vm'
       })
+      .when( '/news/list/preview/:_id', {
+        templateUrl: '../src/partials/news/news-preview.html',
+        controller: 'previewNewsController',
+        controllerAs: 'vm'
+      })
       .otherwise({
         redirectTo: '/'
       });
