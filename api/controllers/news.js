@@ -43,7 +43,7 @@ module.exports = function( app ) {
       .catch( error => res.status( 500 ).send( { ...error } ) );
 
     function query() {
-      return news.query();
+      return news.query( { active: true } );
     }
   }
 
@@ -81,7 +81,7 @@ module.exports = function( app ) {
       .then( validateId )
       .then( logicalRemove )
       .then( status => res.status( 200 ).json( status ) )
-      .catch( error => res.status( 500 ).send( { ...error } ) );
+      .catch( error => res.status( 500 ).json( { ...error } ) );
 
     function validateId( _id ) {
       if ( typeof _id !== 'string' || _id.length < 24 ) {
