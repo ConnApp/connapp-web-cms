@@ -40,35 +40,10 @@
       <img class="card-img-top" ng-src="{{news.cover}}" ng-show="news.cover" alt="título da notícia" style="height: 260px">
       <img class="card-img-top" src="./src/media/no-thumbnail.png" ng-hide="news.cover" alt="título da notícia" style="height: 260px">
       <div class="card-body">
-        <a class="card-title title-main" href="javascript:undefined" data-target="#newsContent" data-toggle="modal" ng-click="vm.setNews( news )">{{news.title}}</a>
+        <a class="card-title title-main" ng-href="#!/news/list/preview/{{news._id}}">{{news.title}}</a>
         <p class="card-text"><small class="text-muted">Criado em: {{news.createAt | date: 'dd/MM/yyyy HH:mm'}}</small></p>
       </div>
     </div>
   </div>
 </div>
 <!-- ./news-card -->
-
-<!-- news preview -->
-<div class="modal fade" id="newsContent" tabindex="-1" role="dialog" aria-labelledby="contentLabel" aria-hidden="true">
-  <div class="modal-dialog modal-lg" role="document">
-    <div class="modal-content">
-      <div class="modal-header" style="border-bottom: none;">
-        <div class="container-fluid">
-          <div class="row pull-right">
-            <a class="btn btn-primary" href="#"><i class="fa fa-pencil"></i></a>
-            <a class="btn btn-danger ml-1" href="#"><i class="fa fa-trash-o"></i></a>
-          </div>
-        </div>
-      </div>
-      <div class="modal-body">
-        <img ng-hide="vm.news.cover" ng-src="./src/media/no-thumbnail.png" alt="{{vm.news.title}}" class="img-fluid news-img">
-        <img ng-show="vm.news.cover" ng-src="{{vm.news.cover}}" alt="{{vm.news.title}}" class="img-fluid news-img">
-        <h1 class="text-muted text-center mt-2">{{vm.news.title}}</h1>
-        <div class="markdown-preview mt-5">
-          <div ng-bind-html="vm.news.content"></div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-<!-- ./ news preview -->
