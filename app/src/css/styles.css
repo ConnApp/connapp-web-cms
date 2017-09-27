@@ -27,6 +27,23 @@
   width: 100%;
 }
 
+.news-img {
+  display: block;
+  height: 350px;
+  margin: auto;
+}
+
+.spinner-container {
+  min-height: 400px;
+  margin-top: 10%;
+  z-index: 1050;
+}
+
+.fa-spin {
+  display: block;
+  margin: auto;
+}
+
 /**
 * @medias
 */
