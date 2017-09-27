@@ -12,10 +12,16 @@
     // ===# View Model #=== //
     vm.user = desserializeSession();
     vm.isAdmin = vm.user.group === 'admin';
+    vm.destroySession = destroySession;
 
     function desserializeSession() {
-      const user = sessionStorage.getItem( 'user' );
+      const user = localStorage.getItem( 'user' );
       return JSON.parse( user );
+    }
+
+    function destroySession() {
+      localStorage.clear();
+      location.href = '/auth/signout';
     }
   }
 })( angular );

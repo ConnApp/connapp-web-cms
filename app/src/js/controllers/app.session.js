@@ -27,7 +27,7 @@
     }
 
     function createSession( user ) {
-      sessionStorage.setItem( 'user', user );
+      localStorage.setItem( 'user', user );
       return user;
     }
 
