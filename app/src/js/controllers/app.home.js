@@ -6,22 +6,12 @@
   angular.module( 'app' )
     .controller( 'homeController', homeController );
 
-  function homeController() {
+  function homeController( session ) {
     const vm = this;
 
     // ===# View Model #=== //
-    vm.user = desserializeSession();
+    vm.user = session.getUser();
     vm.isAdmin = vm.user.group === 'admin';
-    vm.destroySession = destroySession;
-
-    function desserializeSession() {
-      const user = localStorage.getItem( 'user' );
-      return JSON.parse( user );
-    }
-
-    function destroySession() {
-      localStorage.clear();
-      location.href = '/auth/signout';
-    }
+    vm.logout = session.logout;
   }
 })( angular );

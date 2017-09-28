@@ -16,3 +16,4 @@ import httpProvider from './js/providers/app.httpProvider';
 import userResource from './js/services/app.userResource';
 import newsResource from './js/services/app.newsResource';
 import alertService from './js/services/uiAlert.alert';
+import sessionService from './js/services/app.session';
