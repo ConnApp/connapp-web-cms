@@ -90,9 +90,9 @@ body.fixed-nav {
         text-decoration: none;
         color: #adb5bd; }
   #mainNav .navbar-collapse .navbar-sidenav .sidenav-second-level > li > a {
-    padding-left: 1em; }
+    padding-left: 0.6em; }
   #mainNav .navbar-collapse .navbar-sidenav .sidenav-third-level > li > a {
-    padding-left: 2em; }
+    padding-left: 0.6em; }
   #mainNav .navbar-collapse .sidenav-toggler {
     display: none; }
   #mainNav .navbar-collapse .navbar-nav > .nav-item.dropdown > .nav-link {
@@ -159,9 +159,9 @@ body.fixed-nav {
             #mainNav .navbar-collapse .navbar-sidenav > .nav-item .sidenav-third-level > li > a {
               padding: 1em; } */
         #mainNav .navbar-collapse .navbar-sidenav > .nav-item .sidenav-second-level > li > a {
-          padding-left: 4em; }
+          padding-left: 2em; }
         #mainNav .navbar-collapse .navbar-sidenav > .nav-item .sidenav-third-level > li > a {
-          padding-left: 3em; }
+          padding-left: 2em; }
       #mainNav .navbar-collapse .navbar-sidenav li.active a {
         color: white;
         background-color: #495057; }
@@ -262,3 +262,11 @@ body.sidenav-toggled .navbar-sidenav {
 
 body.sidenav-toggled .navbar-sidenav-tooltip.show {
   display: flex; }
+
+
+.navbar-dark .navbar-nav .nav-link {
+  color: rgba(255,255,255, .8);
+}
+.navbar-dark .navbar-nav .nav-link:hover {
+  color: white;
+}

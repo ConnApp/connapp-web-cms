@@ -41,12 +41,19 @@
       const newsResource = new NewsResource( { _id } );
       return newsResource.$delete();
     }
+
+    function update( news ) {
+      if ( !news ) return $q.reject( new ReferenceError( 'expected an object but, received undefined' ) );
+      const newsResource = new NewsResource( news );
+      return newsResource.$update();
+    }
     
     return {
       save,
       query,
       get,
-      logicalRemove
+      logicalRemove,
+      update
     };
   }
 })( angular );

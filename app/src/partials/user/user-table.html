@@ -28,6 +28,12 @@
 </div>
 <!-- ./options-field -->
 
+<!-- spinner -->
+<div class="spinner-container" ng-show="loading">
+  <i class="fa fa-refresh fa-spin fa-5x fa-fw"></i>
+</div>
+<!-- ./spinner -->
+
 <!-- user-card -->
 <div class="row mt-2">
   <div class="col-lg-6 mt-1" ng-repeat="user in vm.users | filter: vm.search | orderBy: vm.orderBy track by user._id">

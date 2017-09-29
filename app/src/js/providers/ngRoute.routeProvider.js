@@ -28,7 +28,7 @@
       })
       .when( '/news/form', {
         templateUrl: '../src/partials/news/news-form.html',
-        controller: 'createNewsController',
+        controller: 'formNewsController',
         controllerAs: 'vm'
       })
       .when( '/news/list', {
@@ -39,6 +39,11 @@
       .when( '/news/list/preview/:_id', {
         templateUrl: '../src/partials/news/news-preview.html',
         controller: 'previewNewsController',
+        controllerAs: 'vm'
+      })
+      .when( '/news/update/:_id', {
+        templateUrl: '../src/partials/news/news-form.html',
+        controller: 'formNewsController',
         controllerAs: 'vm'
       })
       .otherwise({

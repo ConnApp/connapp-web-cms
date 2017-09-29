@@ -3,14 +3,17 @@
 
   'use strict';
   angular.module( 'app' )
-    .controller( 'createNewsController', createNewsController )
+    .controller( 'formNewsController', formNewsController )
     .controller( 'listNewsController', listNewsController )
     .controller( 'previewNewsController', previewNewsController );
 
-  function createNewsController( $scope, $timeout, $q, wizMarkdownSvc, newsResource, uiAlert ) {
-    const vm = this;
+  function formNewsController( $log, $scope, $timeout, $q, $routeParams, wizMarkdownSvc, newsResource, uiAlert ) {
+    const 
+      vm = this,
+      { _id } = $routeParams;
 
     // ===# View models #=== //
+    vm.breadcrumb = _id ? 'Editar notícia': 'Nova notícia';
     vm.news = {};
     vm.flow = {};
     vm.alert = {};
@@ -18,6 +21,15 @@
     vm.previewMode = false;
     vm.previewNews = previewNews;
     vm.submitForm = submitForm;
+
+    // ===# Get user #=== //
+    if ( _id ) {
+      newsResource.get( _id )
+        .$promise.then( news => {
+          vm.news = news;
+        })
+        .catch( $log.error );
+    }
 
     // ===# Set form validate #=== //
     vm.validateImageSize = validateImageSize;
@@ -44,15 +56,14 @@
       news.cover = vm.flow.files.length ? vm.flow.files[ 0 ].file: undefined;
       $q.resolve( news )
         .then( convertImageForBase64 )
-        .then( newsResource.save )
-        .then( cleanInput )
+        .then( saveForm() )
         .then( () => vm.alertEmiter.success( 'Notícia cadastrada com sucesso!' ) )
         .catch( () => vm.alertEmiter.danger( 'Erro inesperado ao tentar cadastrar notícia' ) );
     }
 
-    function cleanInput() {
-      vm.news = {};
-      $scope.newsForm.$setPristine( true );
+    function saveForm() {
+      if ( !_id ) return newsResource.save;
+      return newsResource.update;
     }
 
     function convertImageForBase64( { cover, ..._news } ) {
