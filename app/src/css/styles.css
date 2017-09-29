@@ -44,6 +44,17 @@
   margin: auto;
 }
 
+/* Table view */
+.table-view-title {
+  font-weight: bolder;
+}
+.table-view button {
+  cursor: pointer;
+}
+/* .table-view-actions {
+
+} */
+
 /**
 * @medias
 */
