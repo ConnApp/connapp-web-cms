@@ -46,6 +46,21 @@
         controller: 'formNewsController',
         controllerAs: 'vm'
       })
+      .when( '/event/types', {
+        templateUrl: '../src/partials/event/event-type.html',
+        controller: 'eventTypeController',
+        controllerAs: 'vm'
+      })
+      .when( '/event/types/form', {
+        templateUrl: '../src/partials/event/event-type-form.html',
+        controller: 'formEventTypeController',
+        controllerAs: 'vm'
+      })
+      .when( '/event/types/update/:_id', {
+        templateUrl: '../src/partials/event/event-type-form.html',
+        controller: 'formEventTypeController',
+        controllerAs: 'vm'
+      })
       .otherwise({
         redirectTo: '/'
       });

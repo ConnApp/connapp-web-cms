@@ -71,17 +71,24 @@
               </li>
             </ul>
           </li>
+          <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Eventos">
+            <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" data-target="#collapseEvent">
+              <i class="fa fa-fw fa-calendar"></i>
+              <span class="nav-link-text">Eventos</span>
+            </a>
+            <ul class="sidenav-second-level collapse" id="collapseEvent">
+              <li>
+                <a ng-href="#!/event/types"><small>Tipos de eventos</small></a>
+              </li>
+              <li>
+                <a ng-href="#!/event/list"><small>Lista de eventos</small></a>
+              </li>
+            </ul>
+          </li>
           <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Charts">
             <a class="nav-link" href="#">
               <i class="fa fa-fw fa-area-chart"></i>
               <span class="nav-link-text">...</span>
-            </a>
-          </li>
-          <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tables">
-            <a class="nav-link" href="#">
-              <i class="fa fa-fw fa-table"></i>
-              <span class="nav-link-text">
-                Tables</span>
             </a>
           </li>
         </ul>
@@ -97,7 +104,7 @@
             <div class="dropdown show">
               <a class="nav-link dropdown-toggle" data-toggle="dropdown" id="dropdownOptions" aria-haspopup="true" aria-expanded="false">
                 <i class="fa fa-fw fa-user"></i>
-                {{homeCtrl.user.firstName + ' ' +homeCtrl.user.lastName}}
+                <span ng-bind="homeCtrl.user.firstName + ' ' +homeCtrl.user.lastName"></span>
               </a>
 
               <div class="dropdown-menu" aria-labelledby="dropdownOptions">

@@ -1,0 +1,81 @@
+<!-- Breadcrumbs -->
+<div class="row">
+  <div class="col">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item">
+        <a ng-href="#!/">Inicio</a>
+      </li>
+      <li class="breadcrumb-item active">Tipo de eventos</li>
+    </ol>
+  </div>
+</div>
+<!-- ./breadcrumb -->
+
+<div class="row">
+  <div class="col-12 col-sm-12 col-md-6 col-lg-3 mr-auto">
+    <a class="btn btn-info btn-md btn-block mt-4" ng-href="#!/event/types/form">
+      <i class="fa fa-plus fa-fw"></i>Novo
+    </a>
+  </div>
+  <div class="col-12 col-sm-12 col-md-6 col-lg-6 mt-4 mt-md-0 mt-lg-0">
+    <div class="form-group">
+      <label for="filter">Pesquisa</label>
+      <input type="text" name="search" id="search" class="form-control" placeholder="Filtro" ng-model="vm.search">
+    </div>
+  </div>
+</div>
+
+<!-- spinner -->
+<div class="spinner-container" ng-show="loading">
+  <i class="fa fa-refresh fa-spin fa-5x fa-fw"></i>
+</div>
+<!-- ./spinner -->
+
+<div ng-if="!loading" class="row table-view mt-3">
+  <div class="col">
+    <table class="table table-hover">
+      <thead class="thead-default">
+        <th scope="row" class="text-center">Tipos de eventos</th>
+      </thead>
+      <tbody>
+        <tr ng-repeat=" eventType in vm.eventTypeList | orderBy: 'name' : -1 | filter: vm.search track by eventType._id">
+          <td>
+            <div class="row">
+              <div class="col-10">
+                <p class="table-view-title">{{::eventType.name}}</p>
+                <p class="text-muted">
+                  <small>Última atualização: {{::eventType.lastUpdate | date: 'dd/MM/yyyy'}}</small>
+                </p>
+              </div>
+              <div class="col-2">
+                <div class="table-view-actions"></div>
+                <a class="btn btn-sm btn-primary mt-1" ng-href="#!/event/types/update/{{::eventType._id}}"><i class="fa fa-pencil"></i></a>
+                <button type="button" class="btn btn-sm btn-danger mt-1" data-target="#confirmAction" data-toggle="modal" ng-click="vm.setCurrentEventType( eventType )"><i class="fa fa-trash-o"></i></button>
+              </div>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- delete confirm -->
+<div class="modal fade" id="confirmAction" tabindex="-3" role="dialog" aria-labelledby="confirmLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div class="col">
+          <h1 class="modal-title text-danger text-center" id="confirmLabel">ATENÇÃO!</h1>
+        </div>
+      </div>
+      <div class="modal-body">
+        <p>Você deseja realmente apagar <strong>{{vm.eventType.name}}</strong>?</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-danger" data-dismiss="modal" ng-click="vm.deleteEventType( vm.eventType )">Confirmar</button>
+      </div>
+    </div>
+  </div>
+</div>
