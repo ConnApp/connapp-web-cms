@@ -19,6 +19,7 @@
     function login( user ) {
       if ( !user ) return new ReferenceError( 'an user object is required' );
       serialize( 'user', user );
+      location.pathname = '/';
     }
     
     function deserialize( key ) {
