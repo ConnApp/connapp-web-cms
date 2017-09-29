@@ -6,7 +6,7 @@
   angular.module( 'app' )
     .controller( 'sessionController', sessionController );
 
-  function sessionController( $log, $scope, $resource ) {
+  function sessionController( $log, $scope, $resource, session ) {
     const vm = this;
 
     // ===# View models #=== //
@@ -20,23 +20,8 @@
         authResource = new AuthResource( auth );
 
       authResource.$save()
-        .then( serializeResponse )
-        .then( createSession )
-        .then( redirectToHome )
+        .then( session.login )
         .catch( error => alertHandler( error.data ) );
-    }
-
-    function createSession( user ) {
-      localStorage.setItem( 'user', user );
-      return user;
-    }
-
-    function serializeResponse( { _id, firstName, lastName, group, email } ) {
-      return JSON.stringify( { _id, firstName, lastName, group, email } );
-    }
-
-    function redirectToHome() {
-      location.pathname = '/';
     }
 
     function alertHandler( { message = 'Erro inesperado ao tentar realizar login', type =  'alert-danger' } ) {
