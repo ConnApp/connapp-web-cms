@@ -47,7 +47,7 @@
         controllerAs: 'vm'
       })
       .when( '/event/types', {
-        templateUrl: '../src/partials/event/event-type.html',
+        templateUrl: '../src/partials/event/event-type-table.html',
         controller: 'eventTypeController',
         controllerAs: 'vm'
       })
@@ -59,6 +59,16 @@
       .when( '/event/types/update/:_id', {
         templateUrl: '../src/partials/event/event-type-form.html',
         controller: 'formEventTypeController',
+        controllerAs: 'vm'
+      })
+      .when( '/place/list', {
+        templateUrl: '../src/partials/place/place-table.html',
+        controller: 'listPlaceController',
+        controllerAs: 'vm'
+      })
+      .when( '/place/form', {
+        templateUrl: '../src/partials/place/place-form.html',
+        controller: 'formPlaceController',
         controllerAs: 'vm'
       })
       .otherwise({
