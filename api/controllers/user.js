@@ -314,24 +314,32 @@ module.exports = function( app ) {
   }
 
   function findOne( req, res ) {
-    const userId = req.params._id;
+    const { _id } = req.params;
 
-    Promise.resolve( userId )
+    Promise.resolve( _id )
       .then( validateId )
       .then( find )
       .then( _resolveResponse( res ) )
       .catch( _rejectResponse( res ) );
 
-    function validateId( _userId ) {
-      if ( typeof _userId !== 'string' || _userId.length < 24 ) {
+    function validateId( _id ) {
+      if ( typeof _id !== 'string' || _id.length < 24 ) {
         throw new Error( 'A propriedade _id é inválida' );
       }
 
-      return _userId;
+      return _id;
     }
 
-    function find( _userId ) {
-      return user.get( { _id: _userId } );
+    function find( _id ) {
+      return new Promise( ( resolve, reject ) => {
+        user
+          .get( { _id } )
+          .select( '_id firstName lastName group lastUpdate createAt' )
+          .exec( ( error, user ) => {
+            if ( error ) return reject( error );
+            resolve( user );
+          });
+      });
     }
 
   }
