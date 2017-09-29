@@ -35,7 +35,7 @@ module.exports = function( app ) {
       .catch( error => res.status( 500 ).send( { message: error.message, stack: error.stack } ) );
 
     function query() {
-      return eventType.query();
+      return eventType.query( { active: true } );
     }
   }
 
