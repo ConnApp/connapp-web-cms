@@ -334,7 +334,7 @@ module.exports = function( app ) {
       return new Promise( ( resolve, reject ) => {
         user
           .get( { _id } )
-          .select( '_id firstName lastName group lastUpdate createAt' )
+          .select( '_id email firstName lastName group lastUpdate createAt' )
           .exec( ( error, user ) => {
             if ( error ) return reject( error );
             resolve( user );

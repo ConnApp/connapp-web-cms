@@ -28,12 +28,14 @@ function localStrategy( app ) {
     /**
      * Busca um usuário ativo no banco e verifica se a senha é equivalente ao hash armazenado.
      */
-    user.get( { email, active: true } )
+    user
+      .get( { email, active: true } )
       .then( _user => {
         if ( !_user ) return done( null, false, { message: 'usuário não existe ou está desativado' } );
         if ( !verifyPassword( password, _user.password ) ) return done( null, false, { message: 'a senha está incorreta' } );
-
-        done( null, _user );
+        
+        const { _id, email, firstName, lastName, group, lastUpdate } = _user;
+        done( null, { _id, email, firstName, lastName, group, lastUpdate } );
       })
       .catch( error => done( error ) );
 
@@ -56,7 +58,10 @@ function parseSession( app ) {
 
   passport.deserializeUser( ( user, callback ) => {
     const { _id } = user;
-    userModel.get( { _id, active: true } )
+    userModel
+      .get( { _id, active: true } )
+      .select( '_id email firstName lastName group lastUpdate active' )
+      .exec()
       .then( _user => callback( null, _user ) )
       .catch( callback );
   });
