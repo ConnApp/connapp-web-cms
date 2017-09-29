@@ -51,9 +51,12 @@
 .table-view button {
   cursor: pointer;
 }
-/* .table-view-actions {
 
-} */
+/* imagem do mapa */
+.img-container {
+  height: 250px;
+  background-color: #f1f1f1;
+}
 
 /**
 * @medias
