@@ -37,7 +37,7 @@
         .resolve( place )
         .then( saveForm )
         .then( redirectToPlacesList )
-        .catch( error => vm.alertEmitter.danger( error.data ) );  
+        .catch( error => vm.alertEmitter.danger( error.data.message ) );  
     }
 
     function redirectToPlacesList() {
