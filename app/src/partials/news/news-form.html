@@ -16,39 +16,41 @@
 <!-- form -->
 <div id="news-form" ng-show="!loading">
   <form name="newsForm" novalidate autocomplete="off" ng-submit="vm.submitForm( vm.news )">
-
-    <div class="row" flow-init flow-name="vm.flow" flow-file-added="vm.validateImageSize( $file )">
-      <div class="col-12 col-sm-8 col-md-7 col-lg-4 ml-auto mr-auto mr-lg-0 mr-md-0">
-        <div ng-hide="$flow.files.length || vm.news.cover">
-          <img class="img-thumbnail" src="./src/media/no-thumbnail.png" alt="no photo" width="100%" />
-        </div>
-        <div ng-show="$flow.files.length || !vm.news.cover">
-          <img class="img-thumbnail" flow-img="$flow.files[ 0 ]" alt="capa da notícia" width="100%">
-        </div>
-        <div ng-show="vm.news.cover && !$flow.files.length">
-          <img class="img-thumbnail" ng-src="{{vm.news.cover}}" alt="capa da notícia" width="100%">
+    <div flow-init flow-name="vm.flow" flow-file-added="vm.convertImageFile( $file )">
+      <div class="row">
+        <div class="col-12 col-sm-12 col-md-8 col-lg-6 ml-auto mr-auto">
+          <div class="img-container">
+            <figure ng-hide="$flow.files.length || vm.news.cover" class="figure">
+              <img class="figure-img img-fluid rounded" ng-src="./src/media/no-image.png" alt="Capa da notícia" width="100%">
+              <figcaption class="figure-caption text-right">Carregue um capa 480x250</figcaption>
+            </figure> 
+            <figure ng-show="$flow.files.length || vm.news.cover" class="figure">
+              <img class="figure-img img-fluid rounded" ng-src="{{vm.news.cover}}" alt="Capa da notícia" width="100%">
+              <figcaption class="figure-caption text-right">Carregue um capa 480x250</figcaption>
+            </figure> 
+          </div>
         </div>
       </div>
-      <div class="col-12 col-sm-4 col-md-3 col-lg-3 ml-auto mr-auto ml-md-0 ml-lg-0 mt-1">
-        <button type="button" class="btn btn-success btn-block" flow-btn flow-attrs="{accept:'image/*'}" ng-hide="$flow.files.length">
-          <i class="fa fa-picture-o"></i> Adicionar
-        </button>
-        <div ng-show="$flow.files.length">
-          <button type="button" class="btn btn-info btn-block" name="cover" flow-btn flow-attrs="{accept:'image/*'}" ng-click="$flow.cancel()">
-            <i class="fa fa-picture-o"></i> Alterar
+    
+      <div class="row mt-4">
+        <div class="col-12 col-sm-12 col-md-8 col-lg-6 ml-auto mr-auto">
+          <button ng-hide="$flow.files.length || vm.news.cover" type="button" class="btn btn-success btn-block" flow-btn flow-attrs="{accept:'image/*'}">
+            <i class="fa fa-plus fa-fw"></i>Adicionar
           </button>
-          <button type="button" class="btn btn-danger btn-block" ng-click="$flow.cancel()">
-            <i class="fa fa-trash"></i> Remover
+  
+          <button ng-show="$flow.files.length || vm.news.cover" type="button" class="btn btn-danger btn-block" ng-click="$flow.cancel(); vm.cleanImageModel();">
+            <i class="fa fa-times fa-fw"></i>Remover
           </button>
-        </div>
-        <div class="text-center" ng-show="newsForm.$error.validSize">
-          <small class="text-danger">A imagem não pode ser maior que 2MB</small>
+  
+          <div class="text-center" ng-show="newsForm.$error.validSize">
+            <small class="text-danger">A imagem não pode ser maior que 2MB</small>
+          </div>
         </div>
       </div>
     </div>
 
     <div class="row mt-3">
-      <div class="col-12 col-sm-12 col-md-10 col-lg-7 ml-auto mr-auto">
+      <div class="col-12 col-sm-12 col-md-10 col-lg-8 ml-auto mr-auto">
         <div class="form-group">
           <label for="title">Titulo</label>
           <input type="text" class="form-control" name="title" id="title" placeholder="Coffee free!" ng-model="vm.news.title" ng-required="true">
@@ -67,7 +69,7 @@
     </div>
 
     <div class="row">
-      <div class="col-12 col-sm-12 col-md-10 col-lg-7 ml-auto mr-auto">
+      <div class="col-12 col-sm-12 col-md-10 col-lg-8 ml-auto mr-auto">
         <!-- preview markdown content -->
         <div class="markdown-preview mt-4" ng-bind-html="vm.news.preview" ng-show="vm.previewMode"></div>
         <div class="form-group">
@@ -101,13 +103,13 @@
     </div>
 
     <div class="row">
-      <div class="col-12 col-sm-12 col-md-10 col-lg-4 ml-auto mr-auto">
+      <div class="col-12 col-sm-12 col-md-10 col-lg-5 ml-auto mr-auto">
         <button type="submit" name="send" class="margin-xs-top btn btn-primary btn-block pull-right">Publicar</button>
       </div>
     </div>
 
     <div class="row mt-3">
-      <div class="col-12 col-sm-12 col-md-10 col-lg-7 ml-auto mr-auto">
+      <div class="col-12 col-sm-12 col-md-10 col-lg-8 ml-auto mr-auto">
         <ui-alert message="vm.alert.message" type="vm.alert.type"></ui-alert>
       </div>
     </div>

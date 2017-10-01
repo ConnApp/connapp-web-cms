@@ -7,7 +7,7 @@
     .controller( 'listNewsController', listNewsController )
     .controller( 'previewNewsController', previewNewsController );
 
-  function formNewsController( $log, $scope, $timeout, $q, $routeParams, wizMarkdownSvc, newsResource, uiAlert ) {
+  function formNewsController( $log, $scope, $timeout, $q, $routeParams, $location, wizMarkdownSvc, newsResource, uiAlert ) {
     const 
       vm = this,
       { _id } = $routeParams;
@@ -21,26 +21,16 @@
     vm.previewMode = false;
     vm.previewNews = previewNews;
     vm.submitForm = submitForm;
+    vm.convertImageFile = convertImageFile;
+    vm.cleanImageModel = cleanImageModel;
 
-    // ===# Get user #=== //
+    // ===# Bootstraping data #=== //
     if ( _id ) {
-      newsResource.get( _id )
-        .$promise.then( news => {
-          vm.news = news;
-        })
+      newsResource
+        .get( _id )
+        .$promise
+        .then( news => vm.news = news )
         .catch( $log.error );
-    }
-
-    // ===# Set form validate #=== //
-    vm.validateImageSize = validateImageSize;
-
-    function validateImageSize( file ) {
-      const
-        FILE_SIZE = 2,
-        MAX_SIZE = FILE_SIZE * 1024 * 1024;
-
-      if ( file.size > MAX_SIZE ) return $scope.newsForm.$setValidity( 'validSize', false );
-      return $scope.newsForm.$setValidity( 'validSize', true );
     }
 
     // ===# Markdown setup #=== //
@@ -53,36 +43,54 @@
     function submitForm( news ) {
       if ( $scope.newsForm.$invalid ) return;
 
-      news.cover = vm.flow.files.length ? vm.flow.files[ 0 ].file: undefined;
       $q.resolve( news )
-        .then( convertImageForBase64 )
-        .then( saveForm() )
-        .then( () => vm.alertEmiter.success( 'Notícia cadastrada com sucesso!' ) )
+        .then( saveForm( news ) )     
+        .then( redirectToNewsList )
         .catch( () => vm.alertEmiter.danger( 'Erro inesperado ao tentar cadastrar notícia' ) );
     }
 
-    function saveForm() {
-      if ( !_id ) return newsResource.save;
-      return newsResource.update;
+    function saveForm( news ) {
+      if ( !_id ) return newsResource.save( news );
+      return newsResource.update( news );
     }
 
-    function convertImageForBase64( { cover, ..._news } ) {
-      return new Promise( ( resolve, reject ) => {
-        if ( !cover ) return resolve( { ..._news } );
+    function redirectToNewsList() {
+      $location.path( '/news/list' );
+    }
 
-        const reader = new FileReader();
+    function convertImageFile( { file } ) {
+      const reader = new FileReader();
+      
+      validateImageSize( file );
+      reader.readAsDataURL( file ); 
+  
+      reader.onload = event => {
+        vm.news.cover = event.target.result;
+        $scope.$apply();
+      };
 
-        reader.onload =  event => {
-          cover = event.target.result;
-          resolve( { cover, ..._news } );
-        };
+      reader.onerror = () => {
+        vm.alertEmitter.danger( 'Erro ao tentar carregar imagem' );
+        $scope.$apply();
+      };
+    }
 
-        reader.onerror = error => {
-          reject( error );
-        };
+    function cleanImageModel() {
+      vm.news.cover = null;
+    }
 
-        reader.readAsDataURL( cover );
-      });
+    function validateImageSize( file ) {
+      const
+        FILE_SIZE = 2,
+        MAX_SIZE = FILE_SIZE * 1024 * 1024;
+
+      if ( file.size > MAX_SIZE ) {
+        $scope.newsForm.$setValidity( 'validSize', false );
+        return false;
+      }
+
+      $scope.newsForm.$setValidity( 'validSize', true );
+      return true;
     }
 
   }
