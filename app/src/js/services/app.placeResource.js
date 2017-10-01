@@ -19,15 +19,15 @@
           headers: { 'Content-Type': 'application/json;charset=UTF-8' }
         }
       },
-      placeResource = $resource( '/places', null, resourceActions );
+      PlaceResource = $resource( '/places', null, resourceActions );
 
     function save( place ) {
-      const placeResource = new placeResource( place );
+      const placeResource = new PlaceResource( place );
       return placeResource.$save();
     }
 
     function query() {
-      return placeResource.query();
+      return PlaceResource.query();
     }
 
     function get( _id ) {
@@ -38,13 +38,13 @@
 
     function logicalRemove( _id ) {
       if ( !_id ) return $q.reject( new ReferenceError( 'expected an object but, received undefined' ) );
-      const placeResource = new placeResource( { _id } );
+      const placeResource = new PlaceResource( { _id } );
       return placeResource.$delete();
     }
 
     function update( place ) {
       if ( !place ) return $q.reject( new ReferenceError( 'expected an object but, received undefined' ) );
-      const placeResource = new placeResource( place );
+      const placeResource = new PlaceResource( place );
       return placeResource.$update();
     }
     

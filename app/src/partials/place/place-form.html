@@ -18,20 +18,36 @@
 
 <!-- form -->
 <form ng-hide="loading" class="mt-3" name="placeForm" novalidate autocomplete="off" ng-submit="vm.submitForm( vm.place )">
-  <div class="row">
-    <div class="col-12 col-sm-12 col-md-8 col-lg-6 ml-auto mr-auto">
-      <div class="img-container">
-        <figure class="figure">
-          <img class="figure-img img-fluid rounded" ng-src="./src/media/no-image.png" alt="Mapa do local" width="100%">
-          <figcaption class="figure-caption text-right">Carregue um mapa 480x250</figcaption>
-        </figure> 
+  <div flow-init flow-name="vm.flow" flow-file-added="vm.convertImageFile( $file )">
+    <div class="row">
+      <div class="col-12 col-sm-12 col-md-8 col-lg-6 ml-auto mr-auto">
+        <div class="img-container">
+          <figure ng-hide="$flow.files.length || vm.place.mapImage" class="figure">
+            <img class="figure-img img-fluid rounded" ng-src="./src/media/no-image.png" alt="Mapa do local" width="100%">
+            <figcaption class="figure-caption text-right">Carregue um mapa 480x250</figcaption>
+          </figure> 
+          <figure ng-show="$flow.files.length || vm.place.mapImage" class="figure">
+            <img class="figure-img img-fluid rounded" ng-src="{{vm.place.mapImage}}" alt="Mapa do local" width="100%">
+            <figcaption class="figure-caption text-right">Carregue um mapa 480x250</figcaption>
+          </figure> 
+        </div>
       </div>
     </div>
-  </div>
+  
+    <div class="row">
+      <div class="col-12 col-sm-12 col-md-8 col-lg-6 ml-auto mr-auto mt-5">
+        <button ng-hide="$flow.files.length || vm.place.mapImage" type="button" class="btn btn-success btn-block" flow-btn flow-attrs="{accept:'image/*'}">
+          <i class="fa fa-plus fa-fw"></i>Adicionar
+        </button>
 
-  <div class="row">
-    <div class="col-12 col-sm-12 col-md-8 col-lg-6 ml-auto mr-auto mt-5">
-      <button type="button" class="btn btn-success btn-block"><i class="fa fa-plus fa-fw"></i>Adicionar</button>
+        <button ng-show="$flow.files.length || vm.place.mapImage" type="button" class="btn btn-danger btn-block" ng-click="$flow.cancel(); vm.cleanImageModel();">
+          <i class="fa fa-times fa-fw"></i>Remover
+        </button>
+
+        <div class="text-center" ng-show="placeForm.$error.validSize">
+          <small class="text-danger">A imagem não pode ser maior que 2MB</small>
+        </div>
+      </div>
     </div>
   </div>
 

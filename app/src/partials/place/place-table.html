@@ -38,8 +38,8 @@
         <th scope="row" class="text-center">Lista de locais</th>
       </thead>
       <tbody>
-        <tr ng-repeat=" place in vm.places | orderBy: 'name' : -1 | filter: vm.search track by place._id">
-          <td>
+        <tr ng-repeat="place in vm.places | orderBy: 'name' : -1 | filter: vm.search track by place._id">
+          <td style="cursor: pointer">
             <div class="row">
               <div class="col-10">
                 <p class="table-view-title">{{::place.name}}</p>
@@ -74,7 +74,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-        <button type="button" class="btn btn-danger" data-dismiss="modal" ng-click="vm.deleteplace( vm.place )">Confirmar</button>
+        <button type="button" class="btn btn-danger" data-dismiss="modal" ng-click="vm.deletePlace( vm.place )">Confirmar</button>
       </div>
     </div>
   </div>

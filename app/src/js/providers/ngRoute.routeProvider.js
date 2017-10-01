@@ -71,6 +71,11 @@
         controller: 'formPlaceController',
         controllerAs: 'vm'
       })
+      .when( '/place/update/:_id', {
+        templateUrl: '../src/partials/place/place-form.html',
+        controller: 'formPlaceController',
+        controllerAs: 'vm'
+      })
       .otherwise({
         redirectTo: '/'
       });

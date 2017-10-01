@@ -16,6 +16,8 @@
     vm.alert = {};
     vm.flow = {};
     vm.alertEmitter = uiAlert( vm.alert );
+    vm.convertImageFile = convertImageFile;
+    vm.cleanImageModel = cleanImageModel;
     vm.submitForm = submitForm;
 
     // ===# Bootstraping data #=== //
@@ -34,11 +36,11 @@
       $q
         .resolve( place )
         .then( saveForm )
-        .then( redirectToPlaceList )
+        .then( redirectToPlacesList )
         .catch( error => vm.alertEmitter.danger( error.data ) );  
     }
 
-    function redirectToPlaceList() {
+    function redirectToPlacesList() {
       $location.path( '/place/list' );
     }
 
@@ -47,9 +49,44 @@
       return placeResource.update( place );
     }
 
+    function convertImageFile( { file } ) {
+      const reader = new FileReader();
+      
+      validateImageSize( file );
+      reader.readAsDataURL( file ); 
+  
+      reader.onload = event => {
+        vm.place.mapImage = event.target.result;
+        $scope.$apply();
+      };
+
+      reader.onerror = () => {
+        vm.alertEmitter.danger( 'Erro ao tentar carregar imagem' );
+        $scope.$apply();
+      };
+    }
+
+    function cleanImageModel() {
+      vm.place.mapImage = null;
+    }
+
+    function validateImageSize( file ) {
+      const
+        FILE_SIZE = 2,
+        MAX_SIZE = FILE_SIZE * 1024 * 1024;
+
+      if ( file.size > MAX_SIZE ) {
+        $scope.placeForm.$setValidity( 'validSize', false );
+        return false;
+      }
+
+      $scope.placeForm.$setValidity( 'validSize', true );
+      return true;
+    }
+
   }
 
-  function listPlaceController( $log, placeResource ) {
+  function listPlaceController( $log, $scope, placeResource ) {
     const vm = this;
 
     // ===# View Model ===# //
