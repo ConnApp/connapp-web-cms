@@ -6,9 +6,10 @@
     .controller( 'eventTypeController', eventTypeController )
     .controller( 'formEventTypeController', formEventTypeController );
 
-  function formEventTypeController( $log, $scope, $location, $routeParams, $q, eventTypeResource, uiAlert ) {
+  function formEventTypeController( $log, $scope, $location, $routeParams, $q, uiAlert, DataResource ) {
     const 
       vm = this,
+      eventTypeResource = new DataResource( '/eventTypes', '/:_id' ),
       { _id } = $routeParams;
 
     // ===# View Model #=== //
@@ -48,8 +49,10 @@
 
   }
 
-  function eventTypeController( $log, eventTypeResource ) {
-    const vm = this;
+  function eventTypeController( $log, DataResource ) {
+    const 
+      vm = this,
+      eventTypeResource = new DataResource( '/eventTypes', '/:_id' );
 
     // ===# View Model ===# //
     vm.eventType = {};
