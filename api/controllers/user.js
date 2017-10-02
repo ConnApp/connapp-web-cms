@@ -277,7 +277,7 @@ module.exports = function( app ) {
      * @return {Object}
      */
     function makeHashWithPass( { password, ..._doc } ) {
-      if ( !password || password.length < 8 ) return { ...doc };
+      if ( !password || password.length < 8 ) return { ..._doc };
 
       return new Promise( resolve => {
         const SALT = 10;
