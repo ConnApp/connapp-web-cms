@@ -44,9 +44,19 @@
   margin: auto;
 }
 
+.pointer {
+  cursor: pointer;
+}
+
 /* Table view */
 .table-view-title {
   font-weight: bolder;
+}
+.table-view-body {
+  margin-bottom: 0;
+}
+.table-view-footer {
+  font-size: .95rem;
 }
 .table-view button {
   cursor: pointer;
