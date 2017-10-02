@@ -48,25 +48,29 @@ module.exports = function() {
         ref: 'speaker'
       }],
       /**
-      * ??
+      * Tipo de evento
       * @type {ObjectId}
       */
       eventType: {
-        type: ObjectId
+        type: ObjectId,
+        ref: 'eventType',
+        required: true
       },
-      /**
-      * ??
-      * @type {ObjectId}
+      /*
+      * Ordem de precedência do evento
+      * @type {Number}
       */
       order: {
-        type: ObjectId
+        type: Number,
+        default: 0
       },
       /**
       * Local onde o evento será realizado.
       * @type {ObjectId}
       */
-      local: {
+      place: {
         type: ObjectId,
+        ref: 'place',
         required: true
       },
       /**
