@@ -46,6 +46,21 @@
         controller: 'formNewsController',
         controllerAs: 'vm'
       })
+      .when( '/event/list', {
+        templateUrl: '../src/partials/event/event-table.html',
+        controller: 'listEventController',
+        controllerAs: 'vm'
+      })
+      .when( '/event/form', {
+        templateUrl: '../src/partials/event/event-form.html',
+        controller: 'formEventController',
+        controllerAs: 'vm'
+      })
+      .when( '/event/update/:_id', {
+        templateUrl: '../src/partials/event/event-form.html',
+        controller: 'formEventController',
+        controllerAs: 'vm'
+      })
       .when( '/event/types', {
         templateUrl: '../src/partials/event/event-type-table.html',
         controller: 'eventTypeController',

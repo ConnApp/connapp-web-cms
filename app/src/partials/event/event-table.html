@@ -1,0 +1,57 @@
+<!-- spinner -->
+<div class="spinner-container" ng-show="loading">
+  <i class="fa fa-refresh fa-spin fa-5x fa-fw"></i>
+</div>
+  <!-- ./spinner -->
+  
+<div ng-if="!loading" class="row table-view mt-3">
+  <div class="col">
+    <table class="table table-hover">
+      <thead class="thead-default">
+        <th scope="row" class="text-center pointer">Eventos</th>
+      </thead>
+      <tbody>
+        <tr ng-repeat="event in vm.events | orderBy: vm.oderBy : -1 | filter: vm.search track by event._id">
+          <td>
+            <div class="row">
+              <div class="col-10">
+                <p class="table-view-title mb-0">{{::event.eventType.name + ' ' + event.name}}</p>
+                <div class="table-view-body text-secondary">
+                  <p class="mb-0">Local: {{::event.place.name}}</p>
+                </div>
+                <div class="table-view-footer">
+                  <p class="text-muted">Início em: {{::event.start | date: 'dd/MM/yyyy HH:mm'}}</p>
+                </div>
+              </div>
+              <div class="col-2">
+                <div class="table-view-actions"></div>
+                <a class="btn btn-sm btn-primary mt-1" ng-href="#!/event/update/{{::event._id}}"><i class="fa fa-pencil"></i></a>
+                <button type="button" class="btn btn-sm btn-danger mt-1" data-target="#confirmAction" data-toggle="modal" ng-click="vm.setCurrentPlace( event )"><i class="fa fa-trash-o"></i></button>
+              </div>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- delete confirm -->
+<div class="modal fade" id="confirmAction" tabindex="-3" role="dialog" aria-labelledby="confirmLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div class="col">
+          <h1 class="modal-title text-danger text-center" id="confirmLabel">ATENÇÃO!</h1>
+        </div>
+      </div>
+      <div class="modal-body">
+        <p>Você deseja realmente apagar <strong>{{vm.event.name}}</strong>?</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-danger" data-dismiss="modal" ng-click="vm.deleteEvent( vm.event )">Confirmar</button>
+      </div>
+    </div>
+  </div>
+</div>
