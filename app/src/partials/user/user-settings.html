@@ -10,7 +10,13 @@
 </ol>
 <!-- ./breadcrumb -->
 
-<div class="row mt-5">
+<!-- spinner -->
+<div class="spinner-container" ng-show="loading">
+  <i class="fa fa-refresh fa-spin fa-5x fa-fw"></i>
+</div>
+<!-- ./spinner -->
+
+<div ng-hide="loading" class="row mt-5">
 
   <div class="col-12 col-sm-4 col-md-3 col-lg-4">
     <div class="card">
