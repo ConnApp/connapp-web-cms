@@ -12,7 +12,8 @@ module.exports = function( app ) {
       .then( validateName )
       .then( validateStartDate )
       .then( validateEndDate )
-      .then( validateLocal )
+      .then( validateEventType )
+      .then( validatePlace )
       .then( save )
       .then( _event => res.status( 200 ).json( _event._doc ) )
       .catch( error => res.status( 500 ).send( { message: error.message, stack: error.stack } ) );
@@ -38,8 +39,15 @@ module.exports = function( app ) {
       return _doc;
     }
 
-    function validateLocal( _doc ) {
-      if ( !_doc.local || _doc.local.length < 24 ) {
+    function validateEventType( _doc ) {
+      if ( !_doc.eventType || _doc.eventType.length < 24 ) {
+        throw new ReferenceError( 'A propriedade local é obrigatoria' );
+      }
+      return _doc;
+    }
+
+    function validatePlace( _doc ) {
+      if ( !_doc.place || _doc.place.length < 24 ) {
         throw new ReferenceError( 'A propriedade local é obrigatoria' );
       }
       return _doc;
@@ -59,7 +67,10 @@ module.exports = function( app ) {
       .catch( error => res.status( 500 ).send( { message: error.message, stack: error.stack } ) );
 
     function query() {
-      return event.query();
+      return event
+        .query( { active: true } )
+        .populate( 'eventType', 'name _id lastUpdate' )
+        .populate( 'place', 'name _id lastUpdate' );
     }
   }
 
@@ -131,7 +142,10 @@ module.exports = function( app ) {
     }
 
     function find( _eventId ) {
-      return event.get( { _id: _eventId } );
+      return event
+        .get( { _id: _eventId } )
+        .populate( 'eventType' )
+        .populate( 'place', 'name _id' );
     }
 
   }
