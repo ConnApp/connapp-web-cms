@@ -29,7 +29,7 @@
         <button class="close" type="button" ng-click="hideAlert()">
           <span>&times;</span>
         </button>
-        <p class="alert-heading mb-0" ng-bind="message"></p>
+        <p class="alert-heading mb-0 text-center" ng-bind="message"></p>
       </div>
     `);
   }
