@@ -6,20 +6,20 @@
   angular.module( 'app' )
     .controller( 'sessionController', sessionController );
 
-  function sessionController( $log, $scope, $resource, session ) {
-    const vm = this;
+  function sessionController( $log, $scope, DataResource, session ) {
+    const 
+      vm = this,
+      authResource = new DataResource( '/auth/signin' );
 
     // ===# View models #=== //
     vm.authenticate = authenticate;
     vm.alert = {};
 
     function authenticate( auth ) {
-      if ( $scope.formLogin.$invalid ) return vm.formSubmitted = true;
-      const
-        AuthResource = $resource( '/auth/signin' ),
-        authResource = new AuthResource( auth );
+      if ( $scope.formLogin.$invalid ) return;
 
-      authResource.$save()
+      authResource
+        .save( auth )
         .then( session.login )
         .catch( error => alertHandler( error.data ) );
     }

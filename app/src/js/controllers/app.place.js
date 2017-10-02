@@ -6,9 +6,10 @@
     .controller( 'listPlaceController', listPlaceController )
     .controller( 'formPlaceController', formPlaceController );
 
-  function formPlaceController( $log, $scope, $location, $routeParams, $q, placeResource, uiAlert ) {
+  function formPlaceController( $log, $scope, $location, $routeParams, $q, DataResource, uiAlert ) {
     const 
       vm = this,
+      placeResource = new DataResource( '/places', '/:_id' ),
       { _id } = $routeParams;
 
     // ===# View Model #=== //
@@ -49,9 +50,11 @@
       return placeResource.update( place );
     }
 
-    function convertImageFile( { file } ) {
-      const reader = new FileReader();
-      
+    function convertImageFile( flow ) {
+      const
+        { file } = flow,
+        reader = new FileReader();
+
       validateImageSize( file );
       reader.readAsDataURL( file ); 
   
@@ -86,8 +89,10 @@
 
   }
 
-  function listPlaceController( $log, $scope, placeResource ) {
-    const vm = this;
+  function listPlaceController( $log, $scope, DataResource ) {
+    const 
+      vm = this,
+      placeResource = new DataResource( '/places' );
 
     // ===# View Model ===# //
     vm.place = {};
@@ -102,7 +107,8 @@
       vm.place = place;
     }
 
-    function deletePlace( { _id } ) {
+    function deletePlace( place ) {
+      const { _id } = place;
       if ( !_id ) return;
 
       placeResource

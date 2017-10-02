@@ -7,9 +7,10 @@
     .controller( 'listNewsController', listNewsController )
     .controller( 'previewNewsController', previewNewsController );
 
-  function formNewsController( $log, $scope, $timeout, $q, $routeParams, $location, wizMarkdownSvc, newsResource, uiAlert ) {
+  function formNewsController( $log, $scope, $timeout, $q, $routeParams, $location, wizMarkdownSvc, DataResource, uiAlert ) {
     const 
       vm = this,
+      newsResource = new DataResource( '/news', '/:_id' ),
       { _id } = $routeParams;
 
     // ===# View models #=== //
@@ -95,9 +96,11 @@
 
   }
 
-  function listNewsController( newsResource ) {
+  function listNewsController( DataResource ) {
     const 
-      vm = this;
+      vm = this,
+      newsResource = new DataResource( '/news' );
+
     // ===# View Models #=== //
     vm.orderBy = 'title';
 
@@ -106,30 +109,36 @@
     
   }
 
-  function previewNewsController( $log, $routeParams, $location, newsResource, wizMarkdownSvc ) {
+  function previewNewsController( $log, $routeParams, $location, DataResource, wizMarkdownSvc, uiAlert ) {
     const 
       vm = this,
+      newsResource = new DataResource( '/news', '/:_id' ),
       { _id } = $routeParams;
     
     // ===# View Models #=== //
+    vm.alert = {};
+    vm.alertEmitter = uiAlert( vm.alert );
     vm.deleteNews = deleteNews;
     
-    /**
-     * Buscando notícia.
-     */
-    newsResource.get( _id )
-      .$promise.then( news => {
+    // ===# Bootstraping data #=== //
+    newsResource
+      .get( _id )
+      .$promise
+      .then( news => {
         news.content = wizMarkdownSvc.Transform( news.message );
         vm.news = news;
       })
-      .catch( $log.error );
+      .catch( error => vm.alertEmitter.danger( error.data.message ) );
     
     function deleteNews() {
-      newsResource.logicalRemove( _id )
-        .then( () => {
-          $location.path( '/news/list' );
-        })
+      newsResource
+        .logicalRemove( _id )
+        .then( redirectToNewsList )
         .catch( $log.error );
+    }
+
+    function redirectToNewsList() {
+      $location.path( '/news/list' );
     }
   }
 })( angular );

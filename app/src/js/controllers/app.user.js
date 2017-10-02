@@ -12,9 +12,10 @@
   * Controller para criar novos usuários
   * @memberof app.user
   */
-  function newUser( $log, $scope, $timeout, userResource, uiAlert) {
+  function newUser( $log, $scope, $timeout, DataResource, uiAlert) {
     const 
-      vm = this;
+      vm = this,
+      userResource = new DataResource( '/users', '/:_id' );
     
     // ===# View Model #=== //
     vm.user = {};
@@ -32,21 +33,30 @@
       return email === vm.user.email;
     }
 
-
+    // ===# Setup #=== //
     function submitForm( user ) {
       if ( $scope.userForm.$invalid ) return;
 
-      userResource.save( user )
+      userResource
+        .save( user )
+        .then( cleanUserModel )
         .then( () => vm.alertEmiter.success( 'Usuário cadastrado com sucesso!' ) )
         .catch( error => vm.alertEmiter.danger( error.data.message ) );
+    }
+
+    function cleanUserModel() {
+      vm.user = {};
+      $scope.userForm.$setPristine( true );
+      return vm.user;
     }
   }
   /**
    * 
    */
-  function updateUserController( $scope, $log, $routeParams, userResource, uiAlert ) {
+  function updateUserController( $scope, $log, $routeParams, DataResource, uiAlert ) {
     const
       vm = this,
+      userResource = new DataResource( '/users', '/:_id' ),
       { _id } = $routeParams;
     
     // ===# View Model #=== //
@@ -56,7 +66,11 @@
     vm.submitChanges = submitChanges;
 
     // ===# Carga inicial #=== //
-    vm.user = userResource.get( _id );
+    userResource
+      .get( _id )
+      .$promise
+      .then( user => vm.user = user )
+      .catch( $log.error );
 
     /**
      * 
@@ -65,7 +79,8 @@
     function submitChanges( user ) {
       if ( $scope.userChanges.$invalid ) return;
 
-      userResource.update( user )
+      userResource
+        .update( user )
         .then( () => vm.alertEmiter.success( 'Dados alterado com sucesso!' ) )
         .catch( error => vm.alertEmiter.danger( error.data.message ) );
     }
@@ -73,8 +88,10 @@
   /**
    * 
    */
-  function resetUserPasswordController( $scope, $routeParams, $timeout, userResource ) {
-    const vm = this;
+  function resetUserPasswordController( $scope, $routeParams, $timeout, DataResource ) {
+    const 
+      vm = this,
+      userResource = new DataResource( '/users', '/:_id' );
 
     // ===# View Models #=== //
     vm.user = {};
@@ -97,7 +114,8 @@
     function submitChanges( user ) {
       if ( $scope.resetPassword.$invalid ) return;
 
-      userResource.update( user )
+      userResource
+        .update( user )
         .then( successAlert )
         .catch( error => errorAlert( error.data ) );
     }
