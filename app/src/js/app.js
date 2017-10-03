@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 import angular from 'angular';
 import angularRoute from 'angular-route';
 import angularSanitize from 'angular-sanitize';
