@@ -21,6 +21,9 @@
         <div class="form-group">
           <label for="order">Ordem</label>
           <input type="number" class="form-control" name="order" id="order" placeholder="Ordem de precedência" ng-model="vm.event.order" ng-pattern="/^[1-9]/">
+          <ui-message for="eventForm.order" when="number" submitted="eventForm.$submitted">
+            Digite apenas números.
+          </ui-message>
           <ui-message for="eventForm.order" when="pattern" submitted="eventForm.$submitted">
             Número inválido.
           </ui-message>
@@ -40,25 +43,52 @@
     <div class="row">
       <div class="col-12 col-sm-12 col-md-4 col-lg-4 ml-auto">
         <div class="form-group">
-          <label for="start">Data e hora de início</label>
-          <input type="datetime-local" class="form-control" name="start" id="start" ng-model="vm.event.start" ng-required="true">
-          <ui-message for="eventForm.start" when="required" submitted="eventForm.$submitted">
+          <label for="startDate">Data de início</label>
+          <input type="date" class="form-control" name="startDate" id="startDate" ng-model="vm.event.startDate" ng-required="true">
+          <ui-message for="eventForm.startDate" when="required" submitted="eventForm.$submitted">
             Campo obrigatório
           </ui-message>
-          <ui-message for="eventForm.start" when="date" submitted="eventForm.$submitted">
+          <ui-message for="eventForm.startDate" when="date" submitted="eventForm.$submitted">
             Data inválida
           </ui-message>
         </div>
       </div>
       <div class="col-12 col-sm-12 col-md-4 col-lg-4 mr-auto">
         <div class="form-group">
-          <label for="end">Data e hora de encerramento</label>
-          <input type="datetime-local" class="form-control" name="end" id="end" ng-model="vm.event.end" ng-required="true">
-          <ui-message for="eventForm.end" when="required" submitted="eventForm.$submitted">
+          <label for="startHour">Hora de início</label>
+          <input type="time" class="form-control" name="startHour" id="startHour" ng-model="vm.event.startHour" ng-required="true">
+          <ui-message for="eventForm.startHour" when="required" submitted="eventForm.$submitted">
             Campo obrigatório
           </ui-message>
-          <ui-message for="eventForm.end" when="date" submitted="eventForm.$submitted">
+          <ui-message for="eventForm.startHour" when="time" submitted="eventForm.$submitted">
+            Horário inválida
+          </ui-message>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-12 col-sm-12 col-md-4 col-lg-4 ml-auto">
+        <div class="form-group">
+          <label for="endDate">Data de encerramento</label>
+          <input type="date" class="form-control" name="endDate" id="endDate" ng-model="vm.event.endDate" ng-required="true">
+          <ui-message for="eventForm.endDate" when="required" submitted="eventForm.$submitted">
+            Campo obrigatório
+          </ui-message>
+          <ui-message for="eventForm.endDate" when="date" submitted="eventForm.$submitted">
             Data inválida
+          </ui-message>
+        </div>
+      </div>
+      <div class="col-12 col-sm-12 col-md-4 col-lg-4 mr-auto">
+        <div class="form-group">
+          <label for="endHour">Hora de encerramento</label>
+          <input type="time" class="form-control" name="endHour" id="endHour" ng-model="vm.event.endHour" ng-required="true">
+          <ui-message for="eventForm.endHour" when="required" submitted="eventForm.$submitted">
+            Campo obrigatório
+          </ui-message>
+          <ui-message for="eventForm.endHour" when="time" submitted="eventForm.$submitted">
+            Horário inválida
           </ui-message>
         </div>
       </div>
