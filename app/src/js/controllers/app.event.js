@@ -68,38 +68,50 @@
     }
 
     function parseDataToMs( event ) {
-      const { startDate, endDate, startHour, endHour } = event;
-      event.start = new Date( startDate ).getTime() + new Date( startHour ).getTime();
-      event.end = new Date( endDate ).getTime() + new Date( endHour ).getTime();
+      const 
+        startHour = getFullHours( event.startHour ).getTime(),
+        startDate = getFullDate( event.startDate ).getTime(),
+        endHour = getFullHours( event.endHour ).getTime(),
+        endDate = getFullDate( event.endDate ).getTime();
+
+      event.start = startDate + startHour;
+      event.end =  endDate + endHour;
       return event;
     }
 
     function parseMsToData( event ) {
-      const 
-        start = `${getFullDate( event.start )}T00:00:00.000Z`,
-        end = `${getFullDate( event.end )}T00:00:00.000Z`,
-        startHour = `1970-01-01T${getFullHours( event.start )}:00.000Z`,
-        endHour = `1970-01-01T${getFullHours( event.end )}:00.000Z`;
+      event.startDate = getFullDate( event.start );
+      event.startHour = getFullHours( event.start );
+      event.endDate = getFullDate( event.end );
+      event.endHour = getFullHours( event.end );
 
-      event.startDate = new Date( start );
-      event.startHour = new Date( startHour );
-      event.endDate = new Date( end );
-      event.endHour = new Date( endHour );
       return event;
     }
 
-    function getFullHours( date ) {
-      const regexp = /\d{2}:\d{2}/;
-      return date.match( regexp )[ 0 ];
+    function getFullHours( stringDate ) {
+      if ( typeof stringDate !== 'string' ) {
+        stringDate = Date.prototype.toISOString.call( stringDate );
+      }
+      const
+        regexp = /\d{2}:\d{2}/,
+        hourExp = stringDate.match( regexp )[ 0 ];
+
+      return new Date( `1970-01-01T${hourExp}:00.000Z` );
     }
 
-    function getFullDate( date ) {
-      const regexp = /\d{4}-\d{2}-\d{2}/;
-      return date.match( regexp )[ 0 ];
+    function getFullDate( stringDate ) {
+      if ( typeof stringDate !== 'string' ) {
+        stringDate = Date.prototype.toISOString.call( stringDate );
+      }
+      const 
+        regexp = /\d{4}-\d{2}-\d{2}/,
+        dateExp = stringDate.match( regexp )[ 0 ];
+
+      return new Date( `${dateExp}T00:00:00.000Z` );
     }
   }
 
-  function listEventController( $log, $scope, DataResource ) {
+  function listEventController( $log, $scope, $filter, DataResource ) {
     const
       vm = this,
       eventResource = new DataResource( '/events' );
@@ -137,7 +149,7 @@
 
     function formatDate( events ) {
       return events.map( event => {
-        event.start = moment( event.start ).calendar();
+        event.start = $filter( 'date' )( event.start, 'dd/MM/yyyy HH:mm' );
         return event;
       });
     }
