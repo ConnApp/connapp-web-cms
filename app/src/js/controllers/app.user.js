@@ -133,10 +133,11 @@
    * Controller para listar todos os usuários ativos.
    * @memberof app.user
    */
-  function listUser( $log, $location, userResource ) {
+  function listUser( $log, $location, DataResource ) {
     const 
       vm = this,
-      user = {};
+      user = {},
+      userResource = new DataResource( '/users' ); 
     
     // ===# View models #=== //
     vm.orderBy = 'firstName';
