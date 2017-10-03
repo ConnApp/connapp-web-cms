@@ -39,7 +39,7 @@
 
     function submitForm( event ) {
       if ( $scope.eventForm.$invalid ) return;
-
+      
       $q
         .resolve( event )
         .then( saveForm )
@@ -67,9 +67,11 @@
     }
 
     function parseData( event ) {
-      const { start, end } = event;
-      event.start = new Date( start );
-      event.end = new Date( end );
+      const { startDate, startHour, endDate, endHour } = event;
+      event.startHour = new Date( startHour );
+      event.startDate = new Date( startDate );
+      event.endDate = new Date( endDate );
+      event.endHour = new Date( endHour );
       return event;
     }
   }
@@ -80,7 +82,11 @@
       eventResource = new DataResource( '/events' );
   
     // ===# Bootstraping data #=== //
-    vm.events = eventResource.query();
+    eventResource
+      .query()
+      .$promise
+      .then( formatDate )
+      .then( events => vm.events = events );
 
     // ===# View model #=== //
     vm.event = {};
@@ -104,6 +110,15 @@
       return () => {
         vm.events = vm.events.filter( _event => _event._id !== event._id );
       };
+    }
+
+    function formatDate( events ) {
+      return events.map( event => {
+        const startTime = new Date( event.startDate ).getTime() + new Date( event.startHour ).getTime();
+
+        event.start = moment( startTime ).calendar();
+        return event;
+      });
     }
   }
 })( angular );
