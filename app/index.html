@@ -27,7 +27,7 @@
     <script src="./dist/bundle.js" charset="utf-8"></script>
 
     <!-- Bootstrap core JavaScript -->
-    <script async src="./node_modules/jquery/dist/jquery.min.js"></script>
+    <script src="./node_modules/jquery/dist/jquery.min.js"></script>
     <script defer src="./node_modules/popper.js/dist/umd/popper.min.js"></script>
     <script defer src="./node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
 
@@ -138,10 +138,8 @@
 
     <div class="content-wrapper py-3">
       <div class="container-fluid">
-        <div class="container">
-          <!-- render SPA views -->
-          <div ng-view=""></div>
-        </div>
+        <!-- render SPA views -->
+        <div ng-view=""></div>
       </div>
       <!-- /.container-fluid -->
     </div>
