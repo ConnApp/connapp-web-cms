@@ -26,29 +26,29 @@ module.exports = function( app ) {
     }
 
     function validateStartDate( _doc ) {
-      if ( !_doc.start ) {
-        throw new ReferenceError( 'A propriedade start é obrigatoria' );
+      if ( !( _doc.startDate && _doc.startHour ) ) {
+        throw new ReferenceError( 'A propriedade startDate e startHour é obrigatoria' );
       }
       return _doc;
     }
 
     function validateEndDate( _doc ) {
-      if ( !_doc.end ) {
-        throw new ReferenceError( 'A propriedade end é obrigatoria' );
+      if ( !( _doc.endDate && _doc.endHour ) ) {
+        throw new ReferenceError( 'A propriedade endData e andHour é obrigatoria' );
       }
       return _doc;
     }
 
     function validateEventType( _doc ) {
       if ( !_doc.eventType || _doc.eventType.length < 24 ) {
-        throw new ReferenceError( 'A propriedade local é obrigatoria' );
+        throw new ReferenceError( 'A propriedade eventType é obrigatoria' );
       }
       return _doc;
     }
 
     function validatePlace( _doc ) {
       if ( !_doc.place || _doc.place.length < 24 ) {
-        throw new ReferenceError( 'A propriedade local é obrigatoria' );
+        throw new ReferenceError( 'A propriedade place é obrigatoria' );
       }
       return _doc;
     }
