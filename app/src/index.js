@@ -20,3 +20,5 @@ import dataResource from './js/services/app.dataResource';
 // ===# service imports #=== //
 import alertService from './js/services/uiAlert.alert';
 import sessionService from './js/services/app.session';
+// ===# directive imports #=== //
+import ngModel from './js/directives/ng-model/app.ng-model';
