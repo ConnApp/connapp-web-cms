@@ -16,34 +16,18 @@ module.exports = function() {
         required: true
       },
       /**
-      * Data que o evento irá começar.
+      * Data e hora que o evento irá começar.
       * @type {Date}
       */
-      startDate: {
+      start: {
         type: Date,
         required: true
       },
       /**
-       * Hora que o evento irá começar
-       * @type {Date}
-       */
-      startHour: {
-        type: Date,
-        required: true
-      },
-      /**
-      * Data que o evento irá terminar.
+      * Data e hora que o evento irá terminar.
       * @type {Date}
       */
-      endDate: {
-        type: Date,
-        required: true
-      },
-      /**
-      * Hora que o evento irá terminar.
-      * @type {Date}
-      */
-      endHour: {
+      end: {
         type: Date,
         required: true
       },

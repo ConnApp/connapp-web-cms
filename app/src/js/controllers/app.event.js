@@ -23,7 +23,7 @@
       eventResource
         .get( _id )
         .$promise
-        .then( parseData )
+        .then( parseMsToData )
         .then( event => vm.event = event )
         .catch( error => vm.alertEmitter.danger( error.data.message ) );
     }
@@ -42,6 +42,7 @@
       
       $q
         .resolve( event )
+        .then( parseDataToMs )
         .then( saveForm )
         .then( cleanEventModel )
         .then( vm.alertEmitter.success( 'Evento foi armazenado com sucesso!' ) )
@@ -66,13 +67,35 @@
       }
     }
 
-    function parseData( event ) {
-      const { startDate, startHour, endDate, endHour } = event;
+    function parseDataToMs( event ) {
+      const { startDate, endDate, startHour, endHour } = event;
+      event.start = new Date( startDate ).getTime() + new Date( startHour ).getTime();
+      event.end = new Date( endDate ).getTime() + new Date( endHour ).getTime();
+      return event;
+    }
+
+    function parseMsToData( event ) {
+      const 
+        start = `${getFullDate( event.start )}T00:00:00.000Z`,
+        end = `${getFullDate( event.end )}T00:00:00.000Z`,
+        startHour = `1970-01-01T${getFullHours( event.start )}:00.000Z`,
+        endHour = `1970-01-01T${getFullHours( event.end )}:00.000Z`;
+
+      event.startDate = new Date( start );
       event.startHour = new Date( startHour );
-      event.startDate = new Date( startDate );
-      event.endDate = new Date( endDate );
+      event.endDate = new Date( end );
       event.endHour = new Date( endHour );
       return event;
+    }
+
+    function getFullHours( date ) {
+      const regexp = /\d{2}:\d{2}/;
+      return date.match( regexp )[ 0 ];
+    }
+
+    function getFullDate( date ) {
+      const regexp = /\d{4}-\d{2}-\d{2}/;
+      return date.match( regexp )[ 0 ];
     }
   }
 
@@ -114,9 +137,7 @@
 
     function formatDate( events ) {
       return events.map( event => {
-        const startTime = new Date( event.startDate ).getTime() + new Date( event.startHour ).getTime();
-
-        event.start = moment( startTime ).calendar();
+        event.start = moment( event.start ).calendar();
         return event;
       });
     }

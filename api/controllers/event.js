@@ -26,15 +26,15 @@ module.exports = function( app ) {
     }
 
     function validateStartDate( _doc ) {
-      if ( !( _doc.startDate && _doc.startHour ) ) {
-        throw new ReferenceError( 'A propriedade startDate e startHour é obrigatoria' );
+      if ( !_doc.start ) {
+        throw new ReferenceError( 'A propriedade start é obrigatoria' );
       }
       return _doc;
     }
 
     function validateEndDate( _doc ) {
-      if ( !( _doc.endDate && _doc.endHour ) ) {
-        throw new ReferenceError( 'A propriedade endData e andHour é obrigatoria' );
+      if ( !_doc.end ) {
+        throw new ReferenceError( 'A propriedade end é obrigatoria' );
       }
       return _doc;
     }
