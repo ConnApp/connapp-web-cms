@@ -35,7 +35,7 @@ module.exports = function() {
         type: String
       },
       /**
-      * ??
+      * Nome do local onde trabalha
       * @type {String}
       */
       institution: {
