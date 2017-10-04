@@ -134,7 +134,7 @@
     }
 
     function deleteEvent( event ) {
-      const _id = { event };
+      const { _id } = event;
       eventResource
         .logicalRemove( _id )
         .then( removeEventFromTable( event ) )
