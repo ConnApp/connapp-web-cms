@@ -75,8 +75,13 @@ body {
 }
 
 .img-container img {
-  width: 100%;
+  display: block;
+  margin: auto;
   height: 250px;
+}
+
+.img-container figure {
+  display: block;
 }
 
 /**
