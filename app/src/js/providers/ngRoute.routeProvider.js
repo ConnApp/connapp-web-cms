@@ -91,6 +91,21 @@
         controller: 'formPlaceController',
         controllerAs: 'vm'
       })
+      .when( '/speaker/form', {
+        templateUrl: '../src/partials/speaker/speaker-form.html',
+        controller: 'formSpeakerController',
+        controllerAs: 'vm'
+      })
+      .when( '/speaker/update/:_id', {
+        templateUrl: '../src/partials/speaker/speaker-form.html',
+        controller: 'formSpeakerController',
+        controllerAs: 'vm'
+      })
+      .when( '/speaker/list', {
+        templateUrl: '../src/partials/speaker/speaker-table.html',
+        controller: 'listSpeakerController',
+        controllerAs: 'vm'
+      })
       .otherwise({
         redirectTo: '/'
       });

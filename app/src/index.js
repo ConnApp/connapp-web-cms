@@ -10,6 +10,7 @@ import newsController from './js/controllers/app.news';
 import eventTypeController from './js/controllers/app.eventType';
 import eventController from './js/controllers/app.event';
 import placeController from './js/controllers/app.place';
+import speakerController from './js/controllers/app.speaker';
 // ===# interceptor imports #=== //
 import loadingInterceptor from './js/interceptors/app.loading';
 // ===# provider imports #=== //

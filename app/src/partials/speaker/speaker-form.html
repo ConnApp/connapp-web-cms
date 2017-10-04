@@ -1,0 +1,106 @@
+<!-- Breadcrumbs -->
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">
+    <a ng-href="#!/">Inicio</a>
+  </li>
+  <li class="breadcrumb-item active" ng-bind="::vm.breadcrumb"></li>
+</ol>
+<!-- ./breadcrumb -->
+
+<!-- spinner -->
+<div class="spinner-container" ng-show="loading">
+  <i class="fa fa-refresh fa-spin fa-5x fa-fw"></i>
+</div>
+<!-- ./spinner -->
+
+<!-- form -->
+<div id="speaker-form" ng-show="!loading">
+  <form name="speakerForm" novalidate autocomplete="off" ng-submit="vm.submitForm( vm.speaker )">
+    <div flow-init flow-name="vm.flow" flow-file-added="vm.convertImageFile( $file )">
+      <div class="row">
+        <div class="col-12 col-sm-12 col-md-8 col-lg-6 ml-auto mr-auto">
+          <div class="img-container">
+            <figure ng-hide="$flow.files.length || vm.speaker.image.perfil" class="figure">
+              <img class="figure-img img-fluid rounded" ng-src="./src/media/no-image.png" alt="Imagem de perfil">
+              <figcaption class="figure-caption text-right">Carregue uma imagem 480x250</figcaption>
+            </figure> 
+            <figure ng-show="$flow.files.length || vm.speaker.image.perfil" class="figure">
+              <img class="figure-img img-fluid rounded" ng-src="{{vm.speaker.image.perfil}}" alt="Imagem de perfil">
+              <figcaption class="figure-caption text-right">Carregue uma imagem 480x250</figcaption>
+            </figure> 
+          </div>
+        </div>
+      </div>
+    
+      <div class="row mt-4">
+        <div class="col-12 col-sm-12 col-md-8 col-lg-6 ml-auto mr-auto">
+          <button ng-hide="$flow.files.length || vm.speaker.image.perfil" type="button" class="btn btn-success btn-block" flow-btn flow-attrs="{accept:'image/*'}">
+            <i class="fa fa-plus fa-fw"></i>Adicionar
+          </button>
+  
+          <button ng-show="$flow.files.length || vm.speaker.image.perfil" type="button" class="btn btn-danger btn-block" ng-click="$flow.cancel(); vm.cleanImageModel();">
+            <i class="fa fa-times fa-fw"></i>Remover
+          </button>
+  
+          <div class="text-center" ng-show="speakerForm.$error.validSize">
+            <small class="text-danger">A imagem não pode ser maior que 2MB</small>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row mt-1">
+      <div class="col-12 col-sm-12 col-md-8 col-lg-8 ml-auto mr-auto">
+        <div class="form-group">
+          <label for="name">Nome</label>
+          <input type="text" class="form-control" name="name" id="name" ng-model="vm.speaker.name" ng-required="true">
+          <ui-message for="speakerForm.name" when="required" submitted="speakerForm.$submitted">
+            Campo obrigatório
+          </ui-message>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-12 col-sm-12 col-md-4 col-lg-4 ml-auto">
+        <div class="form-group">
+          <label for="profession">Profissão</label>
+          <input type="text" class="form-control" name="profession" id="profession" ng-model="vm.speaker.profession">
+        </div>
+      </div>
+
+      <div class="col-12 col-sm-12 col-md-4 col-lg-4 mr-auto">
+        <div class="form-group">
+          <label for="institution">Empresa onde trabalha</label>
+          <input type="text" class="form-control" name="institution" id="institution" ng-model="vm.speaker.institution">
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-12 col-sm-12 col-md-8 col-lg-8 ml-auto mr-auto">
+        <div class="form-group">
+          <label for="media">Contato</label>
+          <input type="text" class="form-control" name="media" id="media" ng-model="vm.speaker.media">
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-12 col-sm-12 col-md-8 col-lg-8 ml-auto mr-auto">
+        <div class="form-group">
+          <label for="about">Descrição sobre mim</label>
+          <textarea class="form-control" name="about" id="about" rows="8" ng-model="vm.speaker.about"></textarea>
+        </div>
+      </div>
+    </div>
+
+    <div class="row mt-2">
+      <div class="col-12 col-sm-12 col-md-6 col-lg-6 ml-auto mr-auto">
+        <button type="submit" class="btn btn-primary btn-block">Finalizar</button>
+      </div>
+    </div>
+
+  </form>
+</div>
+<!-- ./form -->
