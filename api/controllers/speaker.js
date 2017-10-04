@@ -35,7 +35,8 @@ module.exports = function( app ) {
       .catch( error => res.status( 500 ).send( { message: error.message, stack: error.stack } ) );
 
     function query() {
-      return speaker.query();
+      const query = speaker.query( { active: true } );
+      return query.select( '-image' );
     }
   }
 
