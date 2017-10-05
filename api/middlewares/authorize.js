@@ -7,10 +7,13 @@ function isAuthenticated( req, res, next ) {
 }
 
 function isAuthorized( req, res, next ) {
-  if ( req.isAuthenticated() && req.user.group === 'admin' ) {
-    return next();
-  }
-  res.status( 401 ).send( { message: 'Usuário não autorizado' } );
+  const 
+    { _id = req.body._id } = req.params,
+    isUser = _id === req.user._id.toString(),
+    isAdmin = req.user.group === 'admin';
+
+  if ( isUser || isAdmin ) return next();
+  return res.status( 401 ).send( { message: 'Usuário não autorizado' } );
 }
 
 module.exports = {

@@ -263,10 +263,11 @@ module.exports = function( app ) {
      */
     function validateGroup( { group, ..._doc } ) {
       const
+        isAdmin = group === 'admin',
         groups = [ 'user', 'admin' ],
         isValid = groups.some( _group => _group === group );
 
-      if ( isValid ) return { group, ..._doc };
+      if ( isValid && isAdmin ) return { group, ..._doc };
 
       return { ..._doc };
     }
