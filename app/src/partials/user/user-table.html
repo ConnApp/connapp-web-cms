@@ -35,8 +35,8 @@
 <!-- ./spinner -->
 
 <!-- user-card -->
-<div class="row mt-2">
-  <div class="col-lg-6 mt-1" ng-repeat="user in vm.users | filter: vm.search | orderBy: vm.orderBy track by user._id">
+<!-- <div class="row mt-2">
+  <div infinite-scroll="vm.nextPage()" infinite-scroll-disabled="loading" infinite-scroll-distance="0" class="col-lg-6 mt-1" ng-repeat="user in vm.users | filter: vm.search | orderBy: vm.orderBy track by user._id">
     <div class="card-group">
       <div class="card">
         <div class="row">
@@ -55,5 +55,8 @@
       </div>
     </div>
   </div>
-</div>
+</div> -->
+<table-view table-view-header="Usuários">
+  <table-view-content content-repeat="vm.users"></table-view-content>
+</table-view>
 <!-- ./user-card -->
