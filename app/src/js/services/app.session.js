@@ -5,10 +5,19 @@
   angular.module( 'app' )
     .factory( 'session', sessionService );
 
-  function sessionService() {
+  function sessionService( $rootScope, $q ) {
 
     function getUser() {
       return deserialize( 'user' );
+    }
+
+    function setUser( user ) {
+      $q
+        .resolve( user )
+        .then( serialize( 'user', user ) )
+        .then( $rootScope.$emit( 'user::update' ) );
+
+      return user;
     }
 
     function logout() {
@@ -50,6 +59,7 @@
       destroy,
       destroyAll,
       getUser,
+      setUser,
       logout,
       login
     };

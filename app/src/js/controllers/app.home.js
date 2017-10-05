@@ -6,12 +6,17 @@
   angular.module( 'app' )
     .controller( 'homeController', homeController );
 
-  function homeController( session ) {
+  function homeController( $rootScope, session ) {
     const vm = this;
 
     // ===# View Model #=== //
     vm.user = session.getUser();
     vm.isAdmin = vm.user.group === 'admin';
     vm.logout = session.logout;
+
+    // ===# Event listeners #=== //
+    $rootScope.$on( 'user::update', () => {
+      vm.user = session.getUser();
+    });
   }
 })( angular );
