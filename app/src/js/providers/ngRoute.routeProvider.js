@@ -46,6 +46,26 @@
         controller: 'formNewsController',
         controllerAs: 'vm'
       })
+      .when( '/info/form', {
+        templateUrl: '../src/partials/info/info-form.html',
+        controller: 'formInfoController',
+        controllerAs: 'vm'
+      })
+      .when( '/info/list', {
+        templateUrl: '../src/partials/info/info-table.html',
+        controller: 'listInfoController',
+        controllerAs: 'vm'
+      })
+      .when( '/info/list/preview/:_id', {
+        templateUrl: '../src/partials/info/info-preview.html',
+        controller: 'previewInfoController',
+        controllerAs: 'vm'
+      })
+      .when( '/info/update/:_id', {
+        templateUrl: '../src/partials/info/info-form.html',
+        controller: 'formInfoController',
+        controllerAs: 'vm'
+      })
       .when( '/event/list', {
         templateUrl: '../src/partials/event/event-table.html',
         controller: 'listEventController',

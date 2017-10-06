@@ -1,0 +1,67 @@
+<!-- Breadcrumbs -->
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">
+    <a ng-href="#!/">Inicio</a>
+  </li>
+  <li class="breadcrumb-item active">Lista de informações</li>
+</ol>
+<!-- ./breadcrumb -->
+
+<!-- options-field -->
+<div class="row mt-4">
+  <div class="col-6 col-sm-6 col-md-4 col-lg-4">
+    <div class="form-group">
+      <label for="orderBy">Ordenar por:</label>
+      <select name="order" id="orderBy" class="form-control" ng-model="vm.orderBy">
+        <option value="title" selected>Título</option>
+        <option value="createAt">Criado em</option>
+      </select>
+    </div>
+  </div>
+  <div class="col-6 col-sm-6 col-md-4 col-lg-4 ml-md-auto">
+    <div class="form-group">
+      <label for="filter">Pesquisa</label>
+      <input type="text" name="search" id="search" class="form-control" placeholder="Filtro" ng-model="vm.search">
+    </div>
+  </div>
+</div>
+<!-- ./options-field -->
+
+<!-- spinner -->
+<div class="spinner-container" ng-show="loading">
+  <i class="fa fa-refresh fa-spin fa-5x fa-fw"></i>
+</div>
+<!-- ./spinner -->
+
+
+<!-- info table -->
+<div ng-hide="loading" class="row table-view mt-3">
+  <div class="col">
+    <table class="table table-hover">
+      <thead class="thead-default">
+        <th scope="row" class="text-center pointer">Informações</th>
+      </thead>
+      <tbody>
+        <tr ng-repeat="info in vm.infoFeed | filter: vm.search | orderBy: vm.oderBy : -1  track by info._id">
+          <td>
+            <div class="row">
+              <div class="col-10">
+                <a class="table-view-title mb-0" ng-href="#!/info/list/preview/{{info._id}}">{{::info.title}}</a>
+                <div class="table-view-footer">
+                  <p class="text-muted">Criado em: {{::info.createAt | date: 'dd/MM/yyyy'}}</p>
+                </div>
+              </div>
+              <div class="col-2">
+                <div class="table-view-actions">
+                  <a class="btn btn-sm btn-info mt-1" ng-href="#!/info/list/preview/{{::info._id}}"><i class="fa fa-eye"></i></a>
+                  <a class="btn btn-sm btn-primary mt-1" ng-href="#!/info/update/{{::info._id}}"><i class="fa fa-pencil"></i></a>
+                </div>
+              </div>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+<!-- ./info table -->
