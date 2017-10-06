@@ -33,30 +33,36 @@
   <i class="fa fa-refresh fa-spin fa-5x fa-fw"></i>
 </div>
 <!-- ./spinner -->
-
-<!-- user-card -->
-<!-- <div class="row mt-2">
-  <div infinite-scroll="vm.nextPage()" infinite-scroll-disabled="loading" infinite-scroll-distance="0" class="col-lg-6 mt-1" ng-repeat="user in vm.users | filter: vm.search | orderBy: vm.orderBy track by user._id">
-    <div class="card-group">
-      <div class="card">
-        <div class="row">
-          <div class="col-12 col-sm-4 col-md-5 col-lg-4">
-            <img class="card-img img-fluid" src="./src/media/default-user.png" alt="user image">
-            <p class="card-text text-muted text-center">Grupo: {{user.group}}</p>
-          </div>
-          <div class="col-12 col-sm-8 col-md-7 col-lg-8">
-            <div class="card-body">
-              <a class="card-title text-muted" style="font-size: 1.4em;" ng-href="#!/user/settings/{{user._id}}">{{user.firstName + ' ' + user.lastName}}</a>
-              <p class="card-text">{{user.email}}</p>
-              <p class="card-text text-muted"><small>Última atualização: {{user.lastUpdate | date: 'dd/MM/yyyy HH:mm'}}</small></p>
+<!-- user table -->
+<div ng-hide="loading" class="row table-view mt-3">
+  <div class="col">
+    <table class="table table-hover">
+      <thead class="thead-default">
+        <th scope="row" class="text-center pointer">Usuários</th>
+      </thead>
+      <tbody>
+        <tr ng-repeat="user in vm.users | orderBy: vm.oderBy : -1 | filter: vm.search track by user._id">
+          <td>
+            <div class="row">
+              <div class="col-10">
+                <p class="table-view-title mb-0">{{::user.firstName + ' ' + user.lastName}}</p>
+                <div class="table-view-body text-secondary">
+                  <p class="mb-0">{{::user.email}}</p>
+                </div>
+                <div class="table-view-footer">
+                  <p class="text-muted mb-0">tipo do usuário: {{::user.group}}</p>
+                </div>
+              </div>
+              <div class="col-2">
+                <div class="table-view-actions">
+                  <a class="btn btn-sm btn-primary mt-1" ng-href="#!/user/settings/{{::user._id}}"><i class="fa fa-pencil"></i></a>
+                </div>
+              </div>
             </div>
-          </div>
-        </div>
-      </div>
-    </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
   </div>
-</div> -->
-<table-view table-view-header="Usuários">
-  <table-view-content content-repeat="vm.users"></table-view-content>
-</table-view>
-<!-- ./user-card -->
+</div>
+<!-- ./user table -->

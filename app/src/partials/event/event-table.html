@@ -1,10 +1,30 @@
+<!-- options-field -->
+<div class="row mt-4">
+  <div class="col-6 col-sm-6 col-md-4 col-lg-4">
+    <div class="form-group">
+      <label for="orderBy">Ordenar por:</label>
+      <select name="order" id="orderBy" class="form-control" ng-model="vm.orderBy">
+        <option value="name" selected>Nome</option>
+        <option value="start">Data</option>
+      </select>
+    </div>
+  </div>
+  <div class="col-6 col-sm-6 col-md-4 col-lg-4 ml-md-auto">
+    <div class="form-group">
+      <label for="filter">Pesquisa</label>
+      <input type="search" name="search" id="search" class="form-control" placeholder="Filtro" ng-model="vm.search">
+    </div>
+  </div>
+</div>
+<!-- ./options-field -->
+
 <!-- spinner -->
 <div class="spinner-container" ng-show="loading">
   <i class="fa fa-refresh fa-spin fa-5x fa-fw"></i>
 </div>
-  <!-- ./spinner -->
+<!-- ./spinner -->
   
-<div ng-if="!loading" class="row table-view mt-3">
+<div ng-hide="loading" class="row table-view mt-3">
   <div class="col">
     <table class="table table-hover">
       <thead class="thead-default">
@@ -20,7 +40,7 @@
                   <p class="mb-0">Local: {{::event.place.name}}</p>
                 </div>
                 <div class="table-view-footer">
-                  <p class="text-muted">Inicia {{::event.start}}</p>
+                  <p class="text-muted">Inicio em {{::event.start}}</p>
                 </div>
               </div>
               <div class="col-2">
