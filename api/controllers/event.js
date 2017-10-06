@@ -79,6 +79,12 @@ module.exports = function( app ) {
 
     Promise.resolve( doc )
       .then( validateId )
+      .then( validateName )
+      .then( validateStartDate )
+      .then( validateEndDate )
+      .then( validateEventType )
+      .then( validatePlace )
+      .then( validateSpeakersLen )
       .then( updateDate )
       .then( setNewData )
       .then( status => res.status( 200 ).json( status ) )
@@ -90,6 +96,44 @@ module.exports = function( app ) {
       }
       return { _id, ..._doc };
     }
+
+    function validateName( _doc ) {
+      const { name, ...docChunk } = _doc;
+
+      if ( !name ) return docChunk;
+      return _doc;
+    }
+
+    function validateStartDate( _doc ) {
+      const { start, ...docChunk } = _doc;
+      if ( !start ) return docChunk;
+      return _doc;
+    }
+
+    function validateEndDate( _doc ) {
+      const { end, ...docChunk } = _doc;
+      if ( !end ) return docChunk;
+      return _doc;
+    }
+
+    function validateEventType( _doc ) {
+      const { eventType, docChunk } = _doc;
+      if ( !eventType || eventType.length < 24 ) return docChunk;
+      return _doc;
+    }
+
+    function validatePlace( _doc ) {
+      const { place, ...docChunk } = _doc;
+      if ( !place || place.length < 24 ) return docChunk;
+      return _doc;
+    }
+    
+    function validateSpeakersLen( _doc ) {
+      const { speakers, docChunk } = _doc;
+      if ( !speakers.length ) return docChunk;
+      return _doc;
+    }
+    
 
     function updateDate( _doc ) {
       _doc.lastUpdate = Date.now();
