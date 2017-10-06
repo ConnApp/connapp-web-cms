@@ -37,38 +37,38 @@
             </div>
           </div>
   
-            <div class="row">
-              <div class="col-12 col-sm-12 col-md-6 col-lg-4 ml-auto mr-auto">
-                <div class="form-group">
-                  <label for="password">Senha</label>
-                  <div class="input-group">
-                    <span class="input-group-addon"><i class="fa fa-lock"></i></span>
-                    <input type="password" name="password" id="password" class="form-control" ng-model="vm.auth.password" ng-required="true">
-                  </div>
-                  <ui-message for="formLogin.password" when="required" submitted="formLogin.$submitted">
-                    Campo obrigatório
-                  </ui-message>
-                </div>
-              </div>
-            </div>
-  
-            <div class="row mt-1">
-              <div class="col-12 col-sm-12 col-md-6 col-lg-4 ml-auto mr-auto">
-                <button type="submit" class="btn btn-block btn-primary">Entrar</button>
-              </div>
-            </div>
-          </form>
-
-          <div class="row mt-3">
+          <div class="row">
             <div class="col-12 col-sm-12 col-md-6 col-lg-4 ml-auto mr-auto">
-              <ui-alert type="alert.type" message="alert.message"></ui-alert>
+              <div class="form-group">
+                <label for="password">Senha</label>
+                <div class="input-group">
+                  <span class="input-group-addon"><i class="fa fa-lock"></i></span>
+                  <input type="password" name="password" id="password" class="form-control" ng-model="vm.auth.password" ng-required="true">
+                </div>
+                <ui-message for="formLogin.password" when="required" submitted="formLogin.$submitted">
+                  Campo obrigatório
+                </ui-message>
+              </div>
             </div>
           </div>
+
+          <div class="row mt-1">
+            <div class="col-12 col-sm-12 col-md-6 col-lg-4 ml-auto mr-auto">
+              <button type="submit" class="btn btn-block btn-primary">Entrar</button>
+            </div>
+          </div>
+        </form>
+
+        <div class="row mt-3">
+          <div class="col-12 col-sm-12 col-md-6 col-lg-4 ml-auto mr-auto">
+            <ui-alert type="alert.type" message="alert.message"></ui-alert>
+          </div>
+        </div>
 
         <div class="row mt-3">
           <div class="col-12 col-sm-12 col-md-12">
             <footer class="text-center">
-              <small>ConnApp &copy; Make with love by <a href="https://github.com/diego-leal" target="_blank">Diego Leal</a></small>
+              <small>ConnApp &copy; Made with <i class="fa fa-heart fa-fw" style="color: #E63232"></i> by <a href="https://github.com/diego-leal" target="_blank">Diego Leal</a></small>
             </footer>
           </div>
         </div>
