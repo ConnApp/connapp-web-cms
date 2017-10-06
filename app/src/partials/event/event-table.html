@@ -1,3 +1,12 @@
+<!-- Breadcrumbs -->
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">
+    <a ng-href="#!/">Inicio</a>
+  </li>
+  <li class="breadcrumb-item active">Lista de eventos</li>
+</ol>
+<!-- ./breadcrumb -->
+
 <!-- options-field -->
 <div class="row mt-4">
   <div class="col-6 col-sm-6 col-md-4 col-lg-4">
@@ -40,11 +49,11 @@
                   <p class="mb-0">Local: {{::event.place.name}}</p>
                 </div>
                 <div class="table-view-footer">
-                  <p class="text-muted">Inicio em {{::event.start}}</p>
+                  <p class="text-muted mb-0">Inicio em {{::event.start}}</p>
                 </div>
               </div>
               <div class="col-2">
-                <div class="table-view-actions"></div>
+                <a class="btn btn-sm btn-info mt-1" ng-href="#!/event/list/speaker/{{::event._id}}"><i class="fa fa-bullhorn"></i></a>                
                 <a class="btn btn-sm btn-primary mt-1" ng-href="#!/event/update/{{::event._id}}"><i class="fa fa-pencil"></i></a>
                 <button type="button" class="btn btn-sm btn-danger mt-1" data-target="#confirmAction" data-toggle="modal" ng-click="vm.setCurrentEvent( event )"><i class="fa fa-trash-o"></i></button>
               </div>

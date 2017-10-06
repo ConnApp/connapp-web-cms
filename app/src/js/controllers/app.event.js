@@ -4,7 +4,8 @@
   'use strict';
   angular.module( 'app' )
     .controller( 'formEventController', formEventController )
-    .controller( 'listEventController', listEventController );
+    .controller( 'listEventController', listEventController )
+    .controller( 'appendSpeakerIntoEventController', appendSpeakerIntoEventController );
 
   function formEventController( $log, $scope, $routeParams, $q, DataResource, uiAlert ) {
     const 
@@ -125,26 +126,18 @@
 
     // ===# View model #=== //
     vm.event = {};
-    vm.setCurrentEvent = setCurrentEvent;
+    vm.setCurrentEvent = event => vm.event = event;
     vm.deleteEvent = deleteEvent;
 
     // ===# Setup #=== //
-    function setCurrentEvent( event ) {
-      vm.event = event;
-    }
 
     function deleteEvent( event ) {
       const { _id } = event;
+      const removeEventFromTable = event => () => vm.events = vm.events.filter( _event => _event._id !== event._id );
       eventResource
         .logicalRemove( _id )
         .then( removeEventFromTable( event ) )
         .catch( $log.error );
-    }
-
-    function removeEventFromTable( event ) {
-      return () => {
-        vm.events = vm.events.filter( _event => _event._id !== event._id );
-      };
     }
 
     function formatDate( events ) {
@@ -152,6 +145,44 @@
         event.start = $filter( 'date' )( event.start, 'dd/MM/yyyy HH:mm' );
         return event;
       });
+    }
+  }
+
+  function appendSpeakerIntoEventController( $log, $scope, $routeParams, $q, DataResource) {
+    const 
+      vm = this,
+      eventResource = new DataResource( '/events', '/:_id' ),
+      { _id } = $routeParams;
+
+
+    // ===# View Model #=== //
+    vm.event = {};
+    vm.speakers = [];
+    vm.appendSpeakerIntoEvent = appendSpeakerIntoEvent;
+
+    // ===# Bootstraping data #=== //
+    vm.speakers = speakersQuery();
+    eventResource
+      .get( _id )
+      .$promise
+      .then( event => vm.event = event )
+      .then( $log.info )
+      .catch( $log.error );
+
+    // ===# Setup #=== //
+    function speakersQuery() {
+      const speakerResource = new DataResource( '/speakers', '/:_id' );
+      return speakerResource.query();
+    }
+
+    function appendSpeakerIntoEvent( speaker ) {
+      if ( $scope.appendSpeakerForm.$invaid ) return;
+
+      vm.event.speakers.push( speaker );
+      eventResource
+        .update( vm.event )
+        .then( $log.info )
+        .catch( $log.error );
     }
   }
 })( angular );

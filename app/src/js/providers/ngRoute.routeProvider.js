@@ -71,6 +71,11 @@
         controller: 'listEventController',
         controllerAs: 'vm'
       })
+      .when( '/event/list/speaker/:_id', {
+        templateUrl: '../src/partials/event/event-table-speaker.html',
+        controller: 'appendSpeakerIntoEventController',
+        controllerAs: 'vm'
+      })
       .when( '/event/form', {
         templateUrl: '../src/partials/event/event-form.html',
         controller: 'formEventController',

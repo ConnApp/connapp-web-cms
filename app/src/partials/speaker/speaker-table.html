@@ -20,11 +20,11 @@
                   <p class="mb-0">{{::speaker.profession}}</p>
                 </div>
                 <div class="table-view-footer">
-                  <p class="text-muted">{{::speaker.about}}</p>
+                  <p class="text-muted mb-0">{{::speaker.about}}</p>
                 </div>
               </div>
               <div class="col-2">
-                <div class="table-view-actions"></div>
+                <div class="table-view-actions">
                 <a class="btn btn-sm btn-primary mt-1" ng-href="#!/speaker/update/{{::speaker._id}}"><i class="fa fa-pencil"></i></a>
                 <button type="button" class="btn btn-sm btn-danger mt-1" data-target="#confirmAction" data-toggle="modal" ng-click="vm.setCurrentSpeaker( speaker )">
                   <i class="fa fa-trash-o"></i>
