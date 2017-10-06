@@ -174,40 +174,7 @@
       const { _id } = getCurrentUser();
       $location.path( `/user/form/${ _id }` );
     }
-
-    // ===# infinite scroll test #=== //
-    vm.nextPage = nextPage;
-    const users = [
-      { _id: '1', firstName: 'test1', lastName: 'test1', email: 'test1@email.com', group: 'user' },
-      { _id: '2', firstName: 'test1', lastName: 'test1', email: 'test1@email.com', group: 'user' },
-      { _id: '3', firstName: 'test1', lastName: 'test1', email: 'test1@email.com', group: 'user' },
-      { _id: '4', firstName: 'test1', lastName: 'test1', email: 'test1@email.com', group: 'user' },
-      { _id: '5', firstName: 'test1', lastName: 'test1', email: 'test1@email.com', group: 'user' },
-      { _id: '6', firstName: 'test1', lastName: 'test1', email: 'test1@email.com', group: 'user' },
-      { _id: '7', firstName: 'test1', lastName: 'test1', email: 'test1@email.com', group: 'user' },
-      { _id: '8', firstName: 'test1', lastName: 'test1', email: 'test1@email.com', group: 'user' },
-      { _id: '9', firstName: 'test1', lastName: 'test1', email: 'test1@email.com', group: 'user' },
-      { _id: '10', firstName: 'test1', lastName: 'test1', email: 'test1@email.com', group: 'user' },
-      { _id: '11', firstName: 'test1', lastName: 'test1', email: 'test1@email.com', group: 'user' },
-      { _id: '12', firstName: 'test1', lastName: 'test1', email: 'test1@email.com', group: 'user' },
-      { _id: '13', firstName: 'test1', lastName: 'test1', email: 'test1@email.com', group: 'user' },
-      { _id: '14', firstName: 'test1', lastName: 'test1', email: 'test1@email.com', group: 'user' },
-      { _id: '15', firstName: 'test1', lastName: 'test1', email: 'test1@email.com', group: 'user' },
-      { _id: '16', firstName: 'test1', lastName: 'test1', email: 'test1@email.com', group: 'user' },
-      { _id: '17', firstName: 'test1', lastName: 'test1', email: 'test1@email.com', group: 'user' },
-      { _id: '18', firstName: 'test1', lastName: 'test1', email: 'test1@email.com', group: 'user' },
-      { _id: '19', firstName: 'test1', lastName: 'test1', email: 'test1@email.com', group: 'user' },
-      { _id: '20', firstName: 'test1', lastName: 'test1', email: 'test1@email.com', group: 'user' },
-      { _id: '21', firstName: 'test1', lastName: 'test1', email: 'test1@email.com', group: 'user' }
-    ];
-
-    let count = 0;
-    function nextPage() {
-      count++;
-      if ( count < users.length ) {
-        vm.users.push( users[ count ] );
-      }
-    }
+    
   }
 
 })( angular );
