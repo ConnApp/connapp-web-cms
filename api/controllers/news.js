@@ -43,7 +43,9 @@ module.exports = function( app ) {
       .catch( error => res.status( 500 ).send( { ...error } ) );
 
     function query() {
-      return news.query( { active: true } );
+      const query = news.query( { active: true } );
+      query.select( '-cover' );
+      return query.exec();
     }
   }
 
