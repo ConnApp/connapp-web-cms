@@ -35,7 +35,9 @@ module.exports = function( app ) {
       .catch( error => res.status( 500 ).send( { message: error.message, stack: error.stack } ) );
 
     function query() {
-      return place.query( { active: true } );
+      const query = place.query( { active: true } );
+      query.select( '-mapImage' );
+      return query.exec();
     }
   }
 
