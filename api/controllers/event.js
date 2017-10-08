@@ -90,11 +90,11 @@ module.exports = function( app ) {
       .then( status => res.status( 200 ).json( status ) )
       .catch( error => res.status( 500 ).send( { message: error.message, stack: error.stack } ) );
 
-    function validateId( { _id, ..._doc } ) {
-      if ( !_id ) {
-        throw new Error( 'A propriedade _id é obrigatória' );
-      }
-      return { _id, ..._doc };
+    function validateId( _doc ) {
+      const { _id } = _doc;
+      if ( !_id )  throw new Error( 'A propriedade _id é obrigatória' );
+
+      return _doc;
     }
 
     function validateName( _doc ) {
@@ -186,10 +186,14 @@ module.exports = function( app ) {
     }
 
     function find( _eventId ) {
-      return event
-        .get( { _id: _eventId } )
+      const query = event.get( { _id: _eventId } );
+
+      query
+        .populate( 'speakers', '-image' )
         .populate( 'eventType' )
         .populate( 'place', 'name _id' );
+
+      return query.exec();
     }
 
   }
