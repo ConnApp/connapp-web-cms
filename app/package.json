@@ -1,6 +1,6 @@
 {
   "name": "connapp-web-cms-app",
-  "version": "0.5.0",
+  "version": "0.7.0",
   "description": "Web CMS for the ConnApp",
   "main": "src/index.js",
   "repository": "\"git+https://github.com/ConnApp/connapp-web-cms.git\"",
