@@ -66,6 +66,8 @@
 
     // ===# View Models #=== //
     vm.orderBy = 'title';
+    vm.reverse = false;
+    vm.reverseOrderBy = () => vm.reverse = !vm.reverse;
 
     // ===# Carga inicial #=== //
     vm.infoFeed = infoResource.query();

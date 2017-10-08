@@ -56,6 +56,8 @@
 
     // ===# View Model ===# //
     vm.eventType = {};
+    vm.reverse = false;
+    vm.reverseOrderBy = () => vm.reverse = !vm.reverse;
     vm.setCurrentEventType = setCurrentEventType;
     vm.deleteEventType = deleteEventType;
 

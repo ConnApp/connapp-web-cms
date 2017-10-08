@@ -143,8 +143,10 @@
     
     // ===# View models #=== //
     vm.orderBy = 'firstName';
+    vm.reverse = false;
     vm.setCurrentUser = setCurrentUser;
     vm.redirectToForm = redirectToForm;
+    vm.reverseOrderBy = () => vm.reverse = !vm.reverse;
 
     // ===# Carga inicial #=== //
     vm.users = userResource.query();

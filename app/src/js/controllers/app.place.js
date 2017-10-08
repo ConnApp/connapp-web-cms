@@ -96,6 +96,8 @@
 
     // ===# View Model ===# //
     vm.place = {};
+    vm.reverse = false;
+    vm.reverseOrderBy = () => vm.reverse = !vm.reverse;
     vm.setCurrentPlace = setCurrentPlace;
     vm.deletePlace = deletePlace;
 

@@ -101,9 +101,10 @@
 
     // ===# View Models #=== //
     vm.speaker = {};
-    vm.orderBy = 'name';
+    vm.reverse = false;
     vm.setCurrentSpeaker = setCurrentSpeaker;
     vm.deleteSpeaker = deleteSpeaker;
+    vm.reverseOrderBy = () => vm.reverse = !vm.reverse;
 
     // ===# Bootstraping data #=== //
     vm.speakers = speakerResource.query();
