@@ -10,16 +10,23 @@
 </ol>
 <!-- ./breadcrumb -->
 
-
 <!-- spinner -->
 <div class="spinner-container" ng-show="loading">
   <i class="fa fa-refresh fa-spin fa-5x fa-fw"></i>
 </div>
 <!-- ./spinner -->
 
+<!-- alert message -->
+<div ng-hide="loading" class="row mt-3">
+  <div class="col-12 col-sm-12 col-md-12 col-lg-6 mx-auto">
+    <ui-alert message="vm.alert.message" type="vm.alert.type"></ui-alert>
+  </div>
+</div>
+<!-- ./alert message -->
+
 <div ng-hide="loading"  class="row mt-4">
   <div class="col">
-    <form name="appendSpeakerForm" novalidate autocomplete="off" ng-submit="vm.appendSpeakerIntoEvent( vm.speaker )">
+    <form name="appendSpeakerForm" novalidate autocomplete="off" ng-submit="vm.appendSpeaker( vm.speaker )">
       <div class="col-lg-12 mx-auto">
         <div class="row">
           <div class="col-lg-8">
@@ -27,8 +34,8 @@
               <select 
               name="speaker" id="speaker" class="form-control"
               ng-model="vm.speaker" ng-required="true"
-              ng-options="speaker as speaker.name for speaker in vm.speakers track by $index">
-                <option value="" selected>Selecione um palestrante</option>
+              ng-options="speaker as speaker.name for speaker in vm.speakers track by speaker._id">
+                <option value="" ng-selected>Selecione um palestrante</option>
               </select>
               <ui-message for="appendSpeakerForm.speaker" when="required" submitted="appendSpeakerForm.$submitted">
                 Escolha um palestrante
@@ -88,3 +95,19 @@
     </table>
   </div>
 </div>
+
+<!-- Confirme action modal -->
+<div class="modal fade" id="confirmAction" tabindex="-1" role="dialog"  aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Você deseja realmente remover <strong>{{vm.speaker.name}}</strong>?</h5>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-primary" data-dismiss="modal" ng-click="vm.removeSpeaker( vm.speaker )">Confirmar</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- ./Confirme action modal -->

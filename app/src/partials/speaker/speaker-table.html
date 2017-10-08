@@ -1,3 +1,23 @@
+<!-- Breadcrumbs -->
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">
+    <a ng-href="#!/">Início</a>
+  </li>
+  <li class="breadcrumb-item active">Lista de palestrantes</li>
+</ol>
+<!-- ./breadcrumb -->
+
+<!-- options-field -->
+<div class="row mt-4">
+  <div class="col-6 col-sm-6 col-md-4 col-lg-4 ml-auto">
+    <div class="form-group">
+      <label for="filter">Pesquisa</label>
+      <input type="text" name="search" id="search" class="form-control" placeholder="Filtro" ng-model="vm.search">
+    </div>
+  </div>
+</div>
+<!-- ./options-field -->
+
 <!-- spinner -->
 <div class="spinner-container" ng-show="loading">
   <i class="fa fa-refresh fa-spin fa-5x fa-fw"></i>
@@ -8,10 +28,10 @@
   <div class="col">
     <table class="table table-hover">
       <thead class="thead-default">
-        <th scope="row" class="text-center pointer">Palestranstes</th>
+        <th scope="row" class="text-center pointer" ng-click="vm.reverseOrderBy()">Palestranstes</th>
       </thead>
       <tbody>
-        <tr ng-repeat="speaker in vm.speakers | orderBy: vm.oderBy : -1 | filter: vm.search track by speaker._id">
+        <tr ng-repeat="speaker in vm.speakers | orderBy: 'name' : vm.reverse | filter: vm.search track by speaker._id">
           <td>
             <div class="row">
               <div class="col-10">

@@ -20,7 +20,7 @@
   <div class="col-12 col-sm-12 col-md-6 col-lg-6 mt-4 mt-md-0 mt-lg-0">
     <div class="form-group">
       <label for="filter">Pesquisa</label>
-      <input type="text" name="search" id="search" class="form-control" placeholder="Filtro" ng-model="vm.search">
+      <input type="search" name="search" id="search" class="form-control" placeholder="Filtro" ng-model="vm.search">
     </div>
   </div>
 </div>
@@ -31,26 +31,29 @@
 </div>
 <!-- ./spinner -->
 
-<div ng-if="!loading" class="row table-view mt-3">
+<div ng-hide="loading" class="row table-view mt-3">
   <div class="col">
     <table class="table table-hover">
       <thead class="thead-default">
-        <th scope="row" class="text-center">Tipos de eventos</th>
+        <th scope="row" class="text-center pointer" ng-click="vm.reverseOrderBy()">Tipos de eventos</th>
       </thead>
       <tbody>
-        <tr ng-repeat=" eventType in vm.eventTypeList | orderBy: 'name' : -1 | filter: vm.search track by eventType._id">
+        <tr ng-repeat=" eventType in vm.eventTypeList | orderBy: 'name' : vm.reverse | filter: vm.search track by eventType._id">
           <td>
             <div class="row">
               <div class="col-10">
-                <p class="table-view-title">{{::eventType.name}}</p>
-                <p class="text-muted">
-                  <small>Última atualização: {{::eventType.lastUpdate | date: 'dd/MM/yyyy'}}</small>
-                </p>
+                <p class="table-view-title mb-0">{{::eventType.name}}</p>
+                <div class="table-view-footer">
+                  <p class="text-muted mb-0">Última atualização: {{::eventType.lastUpdate | date: 'dd/MM/yyyy'}}</p>
+                </div>
               </div>
               <div class="col-2">
-                <div class="table-view-actions"></div>
-                <a class="btn btn-sm btn-primary mt-1" ng-href="#!/event/types/update/{{::eventType._id}}"><i class="fa fa-pencil"></i></a>
-                <button type="button" class="btn btn-sm btn-danger mt-1" data-target="#confirmAction" data-toggle="modal" ng-click="vm.setCurrentEventType( eventType )"><i class="fa fa-trash-o"></i></button>
+                <div class="table-view-actions">
+                  <a class="btn btn-sm btn-primary mt-1" ng-href="#!/event/types/update/{{::eventType._id}}"><i class="fa fa-pencil"></i></a>
+                  <button type="button" class="btn btn-sm btn-danger mt-1" data-target="#confirmAction" data-toggle="modal" ng-click="vm.setCurrentEventType( eventType )">
+                    <i class="fa fa-trash-o"></i>
+                  </button>
+                </div>
               </div>
             </div>
           </td>
