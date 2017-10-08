@@ -126,6 +126,9 @@
 
     // ===# View model #=== //
     vm.event = {};
+    vm.orderBy = 'name';
+    vm.reverse = false;
+    vm.reverseOrderBy = () => vm.reverse = !vm.reverse;
     vm.setCurrentEvent = event => vm.event = event;
     vm.deleteEvent = deleteEvent;
 
@@ -148,7 +151,7 @@
     }
   }
 
-  function appendSpeakerIntoEventController( $log, $scope, $routeParams, $q, DataResource) {
+  function appendSpeakerIntoEventController( $log, $scope, $routeParams, $q, uiAlert, DataResource) {
     const 
       vm = this,
       eventResource = new DataResource( '/events', '/:_id' ),
@@ -157,32 +160,66 @@
 
     // ===# View Model #=== //
     vm.event = {};
+    vm.speaker = {};
     vm.speakers = [];
-    vm.appendSpeakerIntoEvent = appendSpeakerIntoEvent;
+    vm.alert = {};
+    vm.alertEmitter = uiAlert( vm.alert );
+    vm.appendSpeaker = appendSpeaker;
+    vm.removeSpeaker = removeSpeaker;
+    vm.setCurrentSpeaker = setCurrentSpeaker;
 
     // ===# Bootstraping data #=== //
-    vm.speakers = speakersQuery();
     eventResource
       .get( _id )
       .$promise
       .then( event => vm.event = event )
+      .then( speakersQuery )
       .then( $log.info )
       .catch( $log.error );
 
     // ===# Setup #=== //
-    function speakersQuery() {
-      const speakerResource = new DataResource( '/speakers', '/:_id' );
-      return speakerResource.query();
+    const mapSpeakersId = speakers => speakers.map( speaker => speaker._id );
+
+    function speakersQuery( event ) {
+      const 
+        { speakers } = event,
+        speakersId = mapSpeakersId( speakers ),
+        speakerResource = new DataResource( '/speakers', '/:_id' );
+
+      const filterSpeakersAlreadyAdded = speakers => speakers.filter( speaker => speakersId.indexOf( speaker._id ) < 0 );
+      
+      speakerResource
+        .query()
+        .$promise
+        .then( filterSpeakersAlreadyAdded )
+        .then( speakers => vm.speakers = speakers );
     }
 
-    function appendSpeakerIntoEvent( speaker ) {
+    function appendSpeaker( speaker ) {
       if ( $scope.appendSpeakerForm.$invaid ) return;
 
       vm.event.speakers.push( speaker );
       eventResource
         .update( vm.event )
-        .then( $log.info )
-        .catch( $log.error );
+        .then( speakersQuery( vm.event ) )
+        .then( () => vm.alertEmitter.success( 'Palestrando adicionado com sucesso!' ) )
+        .catch( () => vm.alertEmitter.danger( 'Erro inesperado ao tentar adicionar palestrante' ) );
+    }
+
+    function removeSpeaker( speaker ) {
+      if ( !speaker ) return;
+      const filterSpeaker = _speaker => _speaker._id !== speaker._id;
+
+      vm.event.speakers = vm.event.speakers.filter( filterSpeaker );
+      eventResource
+        .update( vm.event )
+        .then( speakersQuery( vm.event ) )
+        .then( () => vm.alertEmitter.success( 'Palestrando removido com sucesso!' ) )
+        .catch( () => vm.alertEmitter.danger( 'Erro inesperado ao tentar remover palestrante' ) );
+    }
+
+    function setCurrentSpeaker( speaker ) {
+      vm.speaker = speaker;
     }
   }
 })( angular );
