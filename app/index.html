@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="pt-BR" ng-app="app">
+
+  <head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <meta name="description" content="Web CMS">
+    <meta name="author" content="Diego Leal">
+    <title>ConnApp - Web admin</title>
+    
+    <!-- Custom fonts for this template -->
+    <link href="./node_modules/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+    <!-- Bootstrap core CSS -->
+    <link href="./node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="./src/css/sb-admin.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="./src/css/styles.css" rel="stylesheet">
+
+    <!-- bundle -->
+    <script src="./dist/bundle.js" charset="utf-8"></script>
+
+    <!-- Bootstrap core JavaScript -->
+    <script src="./node_modules/jquery/dist/jquery.min.js"></script>
+    <script defer src="./node_modules/popper.js/dist/umd/popper.min.js"></script>
+    <script defer src="./node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+
+    <!-- angular plugins -->
+    <script defer src="./node_modules/ng-flow/dist/ng-flow-standalone.min.js"></script>
+
+    <!-- Custom scripts for this template -->
+    <script defer src="./src/js/lib/sb-admin/sb-admin.js"></script>
+
+    <!-- moment lib -->
+    <!-- <script defer src="./node_modules/moment/min/moment.min.js"></script>
+    <script defer src="./node_modules/moment/locale/pt-br.js"></script> -->
+  </head>
+
+  <body class="fixed-nav" id="page-top" ng-controller="homeController as homeCtrl">
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
+      <a class="navbar-brand" href="#!/">ConnApp</a>
+      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav navbar-sidenav">
+          <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Início">
+            <a class="nav-link" href="#!/">
+              <i class="fa fa-fw fa-home"></i>
+              <span class="nav-link-text">Início</span>
+            </a>
+          </li>
+          <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Usuários" ng-show="homeCtrl.isAdmin">
+            <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" data-target="#collapseUser">
+              <i class="fa fa-fw fa-sliders"></i>
+              <span class="nav-link-text">Administrador</span>
+            </a>
+            <ul class="sidenav-second-level collapse" id="collapseUser">
+              <li>
+                <a ng-href="#!/user/form"><small>Novo usuário</small></a>
+              </li>
+              <li>
+                <a ng-href="#!/user/list"><small>Lista de usuários</small></a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Notícias">
+            <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" data-target="#collapseNews">
+              <i class="fa fa-fw fa-newspaper-o"></i>
+              <span class="nav-link-text">Notícias</span>
+            </a>
+            <ul class="sidenav-second-level collapse" id="collapseNews">
+              <li>
+                <a ng-href="#!/news/form"><small>Nova notícia</small></a>
+              </li>
+              <li>
+                <a ng-href="#!/news/list"><small>Lista de notícias</small></a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Informações">
+            <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" data-target="#collapseInfo">
+              <i class="fa fa-fw fa-info-circle"></i>
+              <span class="nav-link-text">Informações</span>
+            </a>
+            <ul class="sidenav-second-level collapse" id="collapseInfo">
+              <li>
+                <a ng-href="#!/info/form"><small>Nova informação</small></a>
+              </li>
+              <li>
+                <a ng-href="#!/info/list"><small>Lista de informaçoes</small></a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Eventos">
+            <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" data-target="#collapseEvent">
+              <i class="fa fa-fw fa-calendar"></i>
+              <span class="nav-link-text">Eventos</span>
+            </a>
+            <ul class="sidenav-second-level collapse" id="collapseEvent">
+              <li>
+                <a ng-href="#!/event/types"><small>Tipos de eventos</small></a>
+              </li>
+              <li>
+                <a ng-href="#!/event/form"><small>Novo evento</small></a>
+              </li>
+              <li>
+                <a ng-href="#!/event/list"><small>Lista de eventos</small></a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Palestrantes">
+            <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" data-target="#collapseSpeaker">
+              <i class="fa fa-fw fa-bullhorn"></i>
+              <span class="nav-link-text">Palestrantes</span>
+            </a>
+            <ul class="sidenav-second-level collapse" id="collapseSpeaker">
+              <li>
+                <a ng-href="#!/speaker/form"><small>Novo palestrante</small></a>
+              </li>
+              <li>
+                <a ng-href="#!/speaker/list"><small>Lista de palestrantes</small></a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Locais">
+            <a class="nav-link" ng-href="#!/place/list">
+              <i class="fa fa-fw fa-map-marker"></i>
+              <span class="nav-link-text">Locais</span>
+            </a>
+          </li>
+        </ul>
+        <ul class="navbar-nav sidenav-toggler">
+          <li class="nav-item">
+            <a class="nav-link text-center" id="sidenavToggler">
+              <i class="fa fa-fw fa-angle-left"></i>
+            </a>
+          </li>
+        </ul>
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item mr-3">
+            <div class="dropdown show">
+              <a class="nav-link dropdown-toggle" data-toggle="dropdown" id="dropdownOptions" aria-haspopup="true" aria-expanded="false">
+                <i class="fa fa-fw fa-user"></i>
+                <span ng-bind="homeCtrl.user.firstName + ' ' +homeCtrl.user.lastName"></span>
+              </a>
+
+              <div class="dropdown-menu" aria-labelledby="dropdownOptions">
+                <a class="dropdown-item" ng-href="#!/user/settings/{{homeCtrl.user._id}}">Minha conta</a>
+                <div class="dropdown-divider"></div>
+                <a href="#" class="dropdown-item" data-toggle="modal" data-target="#logout">Sair</a>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </nav>
+
+    <div class="content-wrapper py-3">
+      <div class="container-fluid">
+        <!-- render SPA views -->
+        <div ng-view=""></div>
+      </div>
+      <!-- /.container-fluid -->
+    </div>
+    <!-- /.content-wrapper -->
+
+    <!-- Logout Modal -->
+    <div class="modal fade" id="logout" tabindex="-1" role="dialog" aria-labelledby="logoutLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="logoutLabel">Você deseja realmente sair?</h5>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+            <button type="button" class="btn btn-primary" ng-click="homeCtrl.logout()">Confirmar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </body>
+
+</html>

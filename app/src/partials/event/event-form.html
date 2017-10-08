@@ -1,0 +1,140 @@
+<!-- Breadcrumbs -->
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">
+    <a ng-href="#!/">Inicio</a>
+  </li>
+  <li class="breadcrumb-item active">Novo evento</li>
+</ol>
+<!-- ./breadcrumb -->
+
+<!-- spinner -->
+<div class="spinner-container" ng-show="loading">
+  <i class="fa fa-refresh fa-spin fa-5x fa-fw"></i>
+</div>
+<!-- ./spinner -->
+
+<!-- form -->
+<div class="mt-5" ng-hide="loading">
+  <form name="eventForm" novalidate autocomplete="off" ng-submit="vm.submitForm( vm.event )">
+    <div class="row">
+      <div class="col-12 col-sm-12 col-md-2 col-lg-2 ml-auto">
+        <div class="form-group">
+          <label for="order">Ordem</label>
+          <input type="number" class="form-control" name="order" id="order" placeholder="Ordem de precedência" ng-model="vm.event.order" ng-pattern="/^[1-9]/">
+          <ui-message for="eventForm.order" when="number" submitted="eventForm.$submitted">
+            Digite apenas números.
+          </ui-message>
+          <ui-message for="eventForm.order" when="pattern" submitted="eventForm.$submitted">
+            Número inválido.
+          </ui-message>
+        </div>
+      </div>
+      <div class="col-12 col-sm-12 col-md-6 col-lg-6 mr-auto">
+        <div class="form-group">
+          <label for="name">Nome</label>
+          <input type="text" class="form-control" name="name" id="name" placeholder="Nome do evento" ng-model="vm.event.name" ng-required="true">
+          <ui-message for="eventForm.name" when="required" submitted="eventForm.$submitted">
+            Campo obrigatório
+          </ui-message>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-12 col-sm-12 col-md-4 col-lg-4 ml-auto">
+        <div class="form-group">
+          <label for="startDate">Data de início</label>
+          <input type="date" class="form-control" name="startDate" id="startDate" ng-model="vm.event.startDate" ng-required="true">
+          <ui-message for="eventForm.startDate" when="required" submitted="eventForm.$submitted">
+            Campo obrigatório
+          </ui-message>
+          <ui-message for="eventForm.startDate" when="date" submitted="eventForm.$submitted">
+            Data inválida
+          </ui-message>
+        </div>
+      </div>
+      <div class="col-12 col-sm-12 col-md-4 col-lg-4 mr-auto">
+        <div class="form-group">
+          <label for="startHour">Hora de início</label>
+          <input type="time" class="form-control" name="startHour" id="startHour" ng-model="vm.event.startHour" ng-required="true">
+          <ui-message for="eventForm.startHour" when="required" submitted="eventForm.$submitted">
+            Campo obrigatório
+          </ui-message>
+          <ui-message for="eventForm.startHour" when="time" submitted="eventForm.$submitted">
+            Horário inválida
+          </ui-message>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-12 col-sm-12 col-md-4 col-lg-4 ml-auto">
+        <div class="form-group">
+          <label for="endDate">Data de encerramento</label>
+          <input type="date" class="form-control" name="endDate" id="endDate" ng-model="vm.event.endDate" ng-required="true">
+          <ui-message for="eventForm.endDate" when="required" submitted="eventForm.$submitted">
+            Campo obrigatório
+          </ui-message>
+          <ui-message for="eventForm.endDate" when="date" submitted="eventForm.$submitted">
+            Data inválida
+          </ui-message>
+        </div>
+      </div>
+      <div class="col-12 col-sm-12 col-md-4 col-lg-4 mr-auto">
+        <div class="form-group">
+          <label for="endHour">Hora de encerramento</label>
+          <input type="time" class="form-control" name="endHour" id="endHour" ng-model="vm.event.endHour" ng-required="true">
+          <ui-message for="eventForm.endHour" when="required" submitted="eventForm.$submitted">
+            Campo obrigatório
+          </ui-message>
+          <ui-message for="eventForm.endHour" when="time" submitted="eventForm.$submitted">
+            Horário inválida
+          </ui-message>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-12 col-sm-12 col-md-4 col-lg-4 ml-auto">
+        <div class="form-group">
+          <label for="eventType">Tipo de evento</label>
+          <select
+          name="eventType" class="form-control" id="eventType"
+          ng-options="eventType as eventType.name for eventType in vm.eventTypeList track by eventType._id"
+          ng-model="vm.event.eventType" ng-required="true">
+            <option value="">Selecione o tipo de evento</option>
+          </select>
+          <ui-message for="eventForm.eventType" when="required" submitted="eventForm.$submitted">
+            Campo obrigatório
+          </ui-message>
+        </div>
+      </div>
+      <div class="col-12 col-sm-12 col-md-4 col-lg-4 mr-auto">
+        <div class="form-group">
+          <label for="place">Local</label>
+          <select
+          name="place" class="form-control" id="place" 
+          ng-options="place as place.name for place in vm.places track by place._id"
+          ng-model="vm.event.place" ng-required="true">
+            <option value="">Selecione o local do evento</option>
+          </select>
+          <ui-message for="eventForm.place" when="required" submitted="eventForm.$submitted">
+            Campo obrigatório
+          </ui-message>
+        </div>
+      </div>
+    </div>
+
+    <div class="row mt-3">
+      <div class="col-12 col-sm-12 col-md-6 col-lg-6 mr-auto ml-auto">
+        <button type="submit" class="btn btn-primary btn-block">Finalizar</button>
+      </div>
+    </div>
+
+    <div class="row mt-3">
+      <div class="col-12 col-sm-12 col-md-8 col-lg-8 mr-auto ml-auto">
+        <ui-alert message="vm.alert.message" type="vm.alert.type"></ui-alert>
+      </div>
+    </div>
+  </form>
+</div>

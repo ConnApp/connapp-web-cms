@@ -1,0 +1,63 @@
+<!-- Breadcrumbs -->
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">
+    <a ng-href="#!/">Inicio</a>
+  </li>
+  <li class="breadcrumb-item">
+    <a ng-href="#!/info/list">Lista de informações</a>
+  </li>
+  <li class="breadcrumb-item active">Visualização</li>
+</ol>
+<!-- ./breadcrumb -->
+
+<!-- spinner -->
+<div class="spinner-container" ng-show="loading">
+  <i class="fa fa-refresh fa-spin fa-5x fa-fw"></i>
+</div>
+<!-- ./spinner -->
+
+<!-- info preview -->
+<div ng-hide="loading">
+  <div class="row">
+    <div class="col">
+      <div class="btn-group mb-4 mt-1 pull-right">
+        <a class="btn btn-primary" href="#!/info/update/{{vm.info._id}}"><i class="fa fa-pencil"></i></a>
+        <button type="button" class="btn btn-danger ml-1" data-target="#confirmAction" data-toggle="modal"><i class="fa fa-trash-o"></i></button>
+      </div>
+    </div>
+  </div>
+  <div class="row mt-3">
+    <div class="col">
+      <h1 class="text-muted text-center">{{vm.info.title}}</h1>
+    </div>
+  </div>
+  <div class="row mt-1">
+    <div class="col">
+      <div class="markdown-preview mt-5" style="border: none;">
+        <div ng-bind-html="vm.info.content"></div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- ./ info preview -->
+
+
+<!-- delete confirm -->
+<div class="modal fade" id="confirmAction" tabindex="-3" role="dialog" aria-labelledby="confirmLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div class="col">
+          <h1 class="modal-title text-danger text-center" id="confirmLabel">ATENÇÃO!</h1>
+        </div>
+      </div>
+      <div class="modal-body">
+        <p>Você deseja realmente apagar essa informação?</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-danger" data-dismiss="modal" ng-click="vm.deleteInfo()">Confirmar</button>
+      </div>
+    </div>
+  </div>
+</div>

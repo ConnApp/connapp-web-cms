@@ -1,0 +1,112 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto');
+
+body {
+  font-family: 'Roboto', sans-serif, Arial;
+}
+
+.fixed {
+  position: fixed;
+  min-height: 100%;
+  min-width: 100%;
+  overflow: hidden;
+}
+.content-wrapper {
+  min-height: 580px;
+}
+.title-main {
+  color: gray;
+  font-size: 1.5em;
+}
+
+.card-img {
+  max-height: 200px;
+}
+
+/* Formatação do conteúdo do markdown */
+.markdown-preview {
+  min-height: 100px;
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-top: 5px;
+  border: 1px solid #ddd;
+  text-align: justify;
+}
+.markdown-preview img {
+  width: 100%;
+}
+
+.news-img {
+  display: block;
+  height: 350px;
+  margin: auto;
+}
+
+.spinner-container {
+  margin-top: 10%;
+  z-index: 1050;
+}
+.fa-spin {
+  display: block;
+  margin: auto;
+}
+
+.pointer {
+  cursor: pointer;
+}
+
+/* Table view */
+.table-view-title {
+  color: #443E3E;
+  font-weight: bolder;
+}
+.table-view-body {
+  margin-bottom: 0;
+}
+.table-view-footer {
+  font-size: .95rem;
+}
+.table-view button {
+  cursor: pointer;
+}
+
+/* imagem do mapa */
+.img-container {
+  height: 250px;
+  background-color: #f1f1f1;
+}
+
+.img-container img {
+  display: block;
+  margin: auto;
+  height: 250px;
+}
+
+.img-container figure {
+  display: block;
+}
+
+/**
+* @medias
+*/
+
+/* SMARTPHONES */
+@media( max-width: 562px ) {
+  .img-container {
+    height: 160px;
+    background-color: #f1f1f1;
+  }
+  .img-container img {
+    width: 100%;
+    height: 160px;
+  }
+}
+/* TABLETS */
+@media( min-width: 768px ) and ( max-width: 1024 ) {
+
+}
+
+@media ( min-width: 1024 ) {
+  .preview-button {
+    margin-left: 200px;
+  }
+}

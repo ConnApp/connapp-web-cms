@@ -1,36 +1,59 @@
 const
   express = require( 'express' ),
-  pug = require( 'pug' ),
+  session = require( 'express-session' ),
+  passport = require( 'passport' ),
+  methodOverride = require( 'method-override' ),
   path = require( 'path' ),
-  consign = require( 'consign' )
-  bodyParser = require( 'body-parser' );
+  consign = require( 'consign' ),
+  bodyParser = require( 'body-parser' ),
+  databaseConnection = require( './mongoose' );
 
 module.exports = (function() {
   const
-    PORT = process.env.PORT || 3000,
-    ROOT_PATH = process.env.PWD;
-
-  let app = express();
+    app = express(),
+    { localStrategy, parseSession } = require( './passport' ),
+    { isAuthenticated } = require( '../middlewares/authorize' ),
+    { ROOT_PATH, PORT, DATABASE_URL } = require( './env' );
 
   // ===# Set engine and views directory #=== //
-  app.set( 'views', path.join( ROOT_PATH, 'app/views' ) );
-  app.set ( 'view engine', 'pug' );
+  app.set( 'views', path.join( ROOT_PATH, 'app' ) );
+  app.set ( 'view engine', 'html' );
 
   // ===# Set port #=== //
   app.set( 'port', PORT );
-
-  // ===# Set public directory #=== //
-  app.use( express.static( path.join( ROOT_PATH, 'app' ) ) );
-
+  
   // ===# Middlewares setup #=== //
+  app.use ( bodyParser.json( { limit: '5mb' } ) );
   app.use( bodyParser.urlencoded( { extended: true } ) );
-  app.use ( bodyParser.json() );
-
+  app.use( session( { name: 'connapp', secret: 'super_secret', saveUninitialized: false, resave: false } ) );
+  app.use( methodOverride( 'X-HTTP-Method' ) );
+  app.use( methodOverride( 'X-HTTP-Method-Override' ) );
+  app.use( methodOverride( 'X-Method-Override' ) );
+  app.use( passport.initialize() );
+  app.use( passport.session() );
+  
+  // ===# Loading model, controller and routes into app instance #=== //
   consign( { cwd: path.join( ROOT_PATH, 'api' ) } )
-    .include( 'models' )
+    .then( 'models' )
     .then( 'controllers' )
     .then( 'routes' )
     .into( app );
+  
+  // ===# Define passport setting #=== //
+  localStrategy( app );
+  parseSession( app );
+  
+  // ===# Set public directory #=== //
+  app.use( express.static( path.join( ROOT_PATH, 'app' ), { index: false } ) );
 
+  // ===# Authorize moddleware #=== // 
+  app.use( isAuthenticated );
+
+  // ===# Send index html #=== //
+  app.get( '/', ( req, res ) => res.sendFile( path.join( ROOT_PATH, 'app/index.html' ) ) );
+
+  // ===# Connect database #=== //
+  databaseConnection( DATABASE_URL );
+  
   return app;
 })();

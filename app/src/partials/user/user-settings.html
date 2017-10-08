@@ -1,0 +1,87 @@
+<!-- Breadcrumbs -->
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">
+    <a ng-href="#!/">Inicio</a>
+  </li>
+  <li class="breadcrumb-item">
+    <a ng-href="#!/user/list"> Lista de usuários</a>
+  </li>
+  <li class="breadcrumb-item active">Configurações</li>
+</ol>
+<!-- ./breadcrumb -->
+
+<!-- spinner -->
+<div class="spinner-container" ng-show="loading">
+  <i class="fa fa-refresh fa-spin fa-5x fa-fw"></i>
+</div>
+<!-- ./spinner -->
+
+<div ng-hide="loading" class="row mt-5">
+
+  <div class="col-12 col-sm-4 col-md-3 col-lg-4">
+    <div class="card">
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item"><a class="text-primary" ng-href="#!/user/settings/{{vm.user._id}}">Dados</a></li>
+        <li class="list-group-item"><a class="text-primary" ng-href="#!/user/settings/{{vm.user._id}}/reset">Redefinir senha</a></li>
+        <!-- <li class="list-group-item"></li> -->
+        <!-- <button class="btn btn-danger btn-block">Desativar</button> -->
+      </ul>
+    </div>
+  </div>
+
+  <div class="col-12 col-sm-8 col-md-9 col-lg-8 mt-4 mt-md-0 mt-sm-0 mt-lg-0">
+    <form name="userChanges" novalidate autocomplete="off" ng-submit="vm.submitChanges( vm.user )">
+      <div class="row">
+        <div class="col">
+          <div class="form-group">
+            <label for="firstName">Nome</label>
+            <input type="text" class="form-control" name="firstName" id="firstName" placeholder="John" ng-model="vm.user.firstName" ng-required="true">
+            <ui-message for="userChanges.firstName" when="required" submitted="userChanges.$submitted">
+              Campo obrigatório
+            </ui-message>
+          </div>
+        </div>
+      </div>
+  
+      <div class="row">
+        <div class="col">
+          <div class="form-group">
+            <label for="lastName">Sobrenome</label>
+            <input type="text" class="form-control" name="lastName" id="lastName" placeholder="Doe" ng-model="vm.user.lastName" ng-required="true">
+            <ui-message for="userChanges.lastName" when="required" submitted="userChanges.$submitted">
+              Campo obrigatório
+            </ui-message>
+          </div>
+        </div>
+      </div>
+  
+      <div ng-if="vm.isAdmin" class="row">
+        <div class="col">
+          <div class="form-group">
+            <label for="group">Tipo de usuário</label>
+            <select class="form-control" name="group" id="group" ng-model="vm.user.group" ng-required="true">
+              <option value="">Selecione um tipo de usuário.</option>
+              <option value="user">Comum</option>
+              <option value="admin">Administrador</option>
+            </select>
+            <ui-message for="userChanges.group" when="required" submitted="userChanges.$submitted">
+              Campo obrigatório
+            </ui-message>
+          </div>
+        </div>
+      </div>
+  
+      <div class="row">
+          <div class="col-md-6 ml-auto mr-auto">
+            <button type="submit" name="send" class="margin-xs-top btn btn-primary btn-block pull-right">Confirmar</button>
+          </div>
+      </div>
+
+      <div class="row mt-3">
+        <div class="col">
+          <ui-alert type="vm.alert.type" message="vm.alert.message"></ui-alert>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

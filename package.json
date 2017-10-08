@@ -1,27 +1,27 @@
 {
-  "name": "connapp-web-cms",
-  "version": "0.1.0",
+  "name": "connapp-web-api",
+  "version": "0.8.0",
   "description": "Web CMS for the ConnApp",
   "main": "index.js",
   "scripts": {
-    "test": "mocha test/unit/**/*.spec.js"
+    "start": "./startup.sh",
+    "build": "./node_modules/webpack/bin/webpack.js",
+    "setup": "yarn && cd app && yarn",
+    "build-watch": "./node_modules/webpack/bin/webpack.js --watch",
+    "start-dev-server": "npm run start-api-watch && npm run start-webpack-server",
+    "start-webpack-server": "./node_modules/webpack-dev-server/bin/webpack-dev-server.js --inline",
+    "start-api-watch": "./node_modules/nodemon/bin/nodemon.js",
+    "test": "./node_modules/jest/bin/jest.js --runInBand"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/ConnApp/connapp-web-cms.git"
-  },
+  "repository": "git+https://github.com/ConnApp/connapp-web-cms.git",
   "keywords": [
     "javascript",
     "node",
     "MEAN",
     "mongodb",
     "angular",
-    "cms",
+    "CMS",
     "express"
-  ],
-  "author": [
-    "Diego Leal",
-    "Yan Nunes"
   ],
   "license": "MIT",
   "bugs": {
@@ -29,9 +29,29 @@
   },
   "homepage": "https://github.com/ConnApp/connapp-web-cms#readme",
   "dependencies": {
+    "bcrypt": "^1.0.3",
     "body-parser": "^1.17.2",
     "consign": "^0.1.6",
+    "debug": "^3.0.0",
     "express": "^4.15.3",
-    "pug": "^2.0.0-rc.3"
-  }
+    "express-session": "1.5.x",
+    "method-override": "^2.3.9",
+    "mongoose": "^4.11.9",
+    "passport": "^0.4.0",
+    "passport-local": "^1.0.0",
+    "promise": "^8.0.1"
+  },
+  "devDependencies": {
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.2",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
+    "babel-preset-env": "^1.6.0",
+    "eslint": "^4.6.1",
+    "jest": "^20.0.4",
+    "nodemon": "^1.11.0",
+    "superagent": "^3.6.0",
+    "webpack": "^3.5.5",
+    "webpack-dev-server": "^2.7.1"
+  },
+  "author": "Diego Leal <leal.banks@gmail.com>"
 }

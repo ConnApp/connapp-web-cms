@@ -31,9 +31,13 @@ bower_components
 
 # Compiled binary addons (http://nodejs.org/api/addons.html)
 build/Release
+app/dist
 
 # Dependency directories
 node_modules/
+app/node_modules/
+app/vendor/
+
 jspm_packages/
 
 # Typescript v1 declaration files
@@ -56,4 +60,3 @@ typings/
 
 # dotenv environment variables file
 .env
-

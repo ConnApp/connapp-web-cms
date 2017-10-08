@@ -1,0 +1,86 @@
+<!-- Breadcrumbs -->
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">
+    <a ng-href="#!/">Inicio</a>
+  </li>
+  <li class="breadcrumb-item active">Lista de eventos</li>
+</ol>
+<!-- ./breadcrumb -->
+
+<!-- options-field -->
+<div class="row mt-4">
+  <div class="col-6 col-sm-6 col-md-4 col-lg-4">
+    <div class="form-group">
+      <label for="orderBy">Ordenar por:</label>
+      <select name="order" id="orderBy" class="form-control" ng-model="vm.orderBy">
+        <option value="name" selected>Nome</option>
+        <option value="start">Data</option>
+      </select>
+    </div>
+  </div>
+  <div class="col-6 col-sm-6 col-md-4 col-lg-4 ml-md-auto">
+    <div class="form-group">
+      <label for="filter">Pesquisa</label>
+      <input type="search" name="search" id="search" class="form-control" placeholder="Filtro" ng-model="vm.search">
+    </div>
+  </div>
+</div>
+<!-- ./options-field -->
+
+<!-- spinner -->
+<div class="spinner-container" ng-show="loading">
+  <i class="fa fa-refresh fa-spin fa-5x fa-fw"></i>
+</div>
+<!-- ./spinner -->
+  
+<div ng-hide="loading" class="row table-view mt-3">
+  <div class="col">
+    <table class="table table-hover">
+      <thead class="thead-default">
+        <th scope="row" class="text-center pointer" ng-click="vm.reverseOrderBy()">Eventos</th>
+      </thead>
+      <tbody>
+        <tr ng-repeat="event in vm.events | orderBy: vm.orderBy : vm.reverse | filter: vm.search track by event._id">
+          <td>
+            <div class="row">
+              <div class="col-10">
+                <p class="table-view-title mb-0">{{::event.eventType.name + ' ' + event.name}}</p>
+                <div class="table-view-body text-secondary">
+                  <p class="mb-0">Local: {{::event.place.name}}</p>
+                </div>
+                <div class="table-view-footer">
+                  <p class="text-muted mb-0">Inicio em {{::event.start}}</p>
+                </div>
+              </div>
+              <div class="col-2">
+                <a class="btn btn-sm btn-info mt-1" ng-href="#!/event/list/speaker/{{::event._id}}"><i class="fa fa-bullhorn"></i></a>                
+                <a class="btn btn-sm btn-primary mt-1" ng-href="#!/event/update/{{::event._id}}"><i class="fa fa-pencil"></i></a>
+                <button type="button" class="btn btn-sm btn-danger mt-1" data-target="#confirmAction" data-toggle="modal" ng-click="vm.setCurrentEvent( event )"><i class="fa fa-trash-o"></i></button>
+              </div>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- delete confirm -->
+<div class="modal fade" id="confirmAction" tabindex="-3" role="dialog" aria-labelledby="confirmLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div class="col">
+          <h1 class="modal-title text-danger text-center" id="confirmLabel">ATENÇÃO!</h1>
+        </div>
+      </div>
+      <div class="modal-body">
+        <p>Você deseja realmente apagar <strong>{{vm.event.name}}</strong>?</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-danger" data-dismiss="modal" ng-click="vm.deleteEvent( vm.event )">Confirmar</button>
+      </div>
+    </div>
+  </div>
+</div>

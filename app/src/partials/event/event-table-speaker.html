@@ -1,0 +1,113 @@
+<!-- Breadcrumbs -->
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">
+    <a ng-href="#!/">Inicio</a>
+  </li>
+  <li class="breadcrumb-item">
+    <a ng-href="#!/event/list">Lista de eventos</a>
+  </li>
+  <li class="breadcrumb-item active">Adiconar palestrantes</li>
+</ol>
+<!-- ./breadcrumb -->
+
+<!-- spinner -->
+<div class="spinner-container" ng-show="loading">
+  <i class="fa fa-refresh fa-spin fa-5x fa-fw"></i>
+</div>
+<!-- ./spinner -->
+
+<!-- alert message -->
+<div ng-hide="loading" class="row mt-3">
+  <div class="col-12 col-sm-12 col-md-12 col-lg-6 mx-auto">
+    <ui-alert message="vm.alert.message" type="vm.alert.type"></ui-alert>
+  </div>
+</div>
+<!-- ./alert message -->
+
+<div ng-hide="loading"  class="row mt-4">
+  <div class="col">
+    <form name="appendSpeakerForm" novalidate autocomplete="off" ng-submit="vm.appendSpeaker( vm.speaker )">
+      <div class="col-lg-12 mx-auto">
+        <div class="row">
+          <div class="col-lg-8">
+            <div class="form-group">
+              <select 
+              name="speaker" id="speaker" class="form-control"
+              ng-model="vm.speaker" ng-required="true"
+              ng-options="speaker as speaker.name for speaker in vm.speakers track by speaker._id">
+                <option value="" ng-selected>Selecione um palestrante</option>
+              </select>
+              <ui-message for="appendSpeakerForm.speaker" when="required" submitted="appendSpeakerForm.$submitted">
+                Escolha um palestrante
+              </ui-message>
+            </div>
+          </div>
+          <div class="col-lg-4">
+            <button type="submit" class="btn btn-primary"><i class="fa fa-plus fa-fw"></i> Adicionar</button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+
+<!-- options-field -->
+<div ng-hide="loading" class="row mt-3 mb-0">
+  <div class="col-6 col-sm-6 col-md-4 col-lg-4 ml-md-auto">
+    <div class="form-group">
+      <label for="filter">Pesquisa</label>
+      <input type="search" name="search" id="search" class="form-control" placeholder="Filtro" ng-model="vm.search">
+    </div>
+  </div>
+</div>
+<!-- ./options-field -->
+
+<div ng-hide="loading" class="row table-view">
+  <div class="col">
+    <table class="table table-hover">
+      <thead class="thead-default">
+        <th scope="row" class="text-center pointer">Palestranstes</th>
+      </thead>
+      <tbody>
+        <tr ng-repeat="speaker in vm.event.speakers | orderBy: vm.oderBy : -1 | filter: vm.search track by speaker._id">
+          <td>
+            <div class="row">
+              <div class="col-10">
+                <p class="table-view-title mb-0">{{::speaker.name}}</p>
+                <div class="table-view-body text-secondary">
+                  <p class="mb-0">{{::speaker.profession}}</p>
+                </div>
+                <div class="table-view-footer">
+                  <p class="text-muted mb-0">{{::speaker.about}}</p>
+                </div>
+              </div>
+              <div class="col-2">
+                <div class="table-view-actions">
+                <button type="button" class="btn btn-sm btn-danger mt-1" data-target="#confirmAction" data-toggle="modal" ng-click="vm.setCurrentSpeaker( speaker )">
+                  <i class="fa fa-trash-o"></i>
+                </button>
+              </div>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- Confirme action modal -->
+<div class="modal fade" id="confirmAction" tabindex="-1" role="dialog"  aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Você deseja realmente remover <strong>{{vm.speaker.name}}</strong>?</h5>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-primary" data-dismiss="modal" ng-click="vm.removeSpeaker( vm.speaker )">Confirmar</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- ./Confirme action modal -->

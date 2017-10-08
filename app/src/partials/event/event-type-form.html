@@ -1,0 +1,47 @@
+<!-- Breadcrumbs -->
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">
+    <a ng-href="#!/">Inicio</a>
+  </li>
+  <li class="breadcrumb-item">
+    <a ng-href="#!/event/types">Tipo de eventos</a>
+  </li>
+  <li class="breadcrumb-item active">Novo tipo de evento</li>
+</ol>
+<!-- ./breadcrumb -->
+
+<!-- spinner -->
+<div class="spinner-container" ng-show="loading">
+  <i class="fa fa-refresh fa-spin fa-5x fa-fw"></i>
+</div>
+<!-- ./spinner -->
+
+<!-- form -->
+<form ng-hide="loading" class="mt-5" name="eventTypeForm" novalidate autocomplete="off" ng-submit="vm.submitForm( vm.eventType )">
+  <div class="row">
+    <div class="col-12 col-sm-12 col-md-8 col-lg-6 ml-auto mr-auto">
+      <div class="form-group">
+        <label for="name">Nome</label>
+        <input type="text" class="form-control" name="name" id="name" placeholder="Tipo de evento " ng-model="vm.eventType.name" ng-required="true">
+        <ui-message for="eventTypeForm.name" when="required" submitted="eventTypeForm.$submitted">
+          Campo obrigatório
+        </ui-message>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-12 col-sm-12 col-md-8 col-lg-6 ml-auto mr-auto">
+      <button type="submit" name="send" class="btn btn-primary btn-block pull-right">
+        Finalizar <i ng-if="loading" class="fa fa-refresh fa-spin fa-fw ml-3" style="display: inline-block;"></i>
+      </button>
+    </div>
+  </div>
+
+  <div class="row mt-3">
+    <div class="col-12 col-sm-12 col-md-12 col-lg-6">
+      <ui-alert message="vm.alert.message" type="vm.alert.type"></ui-alert>
+    </div>
+  </div>
+</form>
+<!-- ./form -->
