@@ -53,7 +53,7 @@
       <div class="col-12 col-sm-12 col-md-8 col-lg-8 ml-auto mr-auto">
         <div class="form-group">
           <label for="name">Nome</label>
-          <input type="text" class="form-control" name="name" id="name" ng-model="vm.speaker.name" ng-required="true">
+          <input type="text" class="form-control" name="name" id="name" ng-model="vm.speaker.name" placeholder="John Doe" ng-required="true">
           <ui-message for="speakerForm.name" when="required" submitted="speakerForm.$submitted">
             Campo obrigatório
           </ui-message>
@@ -65,14 +65,14 @@
       <div class="col-12 col-sm-12 col-md-4 col-lg-4 ml-auto">
         <div class="form-group">
           <label for="profession">Profissão</label>
-          <input type="text" class="form-control" name="profession" id="profession" ng-model="vm.speaker.profession">
+          <input type="text" class="form-control" name="profession" id="profession" placeholder="Software developer" ng-model="vm.speaker.profession">
         </div>
       </div>
 
       <div class="col-12 col-sm-12 col-md-4 col-lg-4 mr-auto">
         <div class="form-group">
           <label for="institution">Empresa onde trabalha</label>
-          <input type="text" class="form-control" name="institution" id="institution" ng-model="vm.speaker.institution">
+          <input type="text" class="form-control" name="institution" id="institution" placeholder="Doe's DEV Ideas" ng-model="vm.speaker.institution">
         </div>
       </div>
     </div>
@@ -81,7 +81,7 @@
       <div class="col-12 col-sm-12 col-md-8 col-lg-8 ml-auto mr-auto">
         <div class="form-group">
           <label for="media">Contato</label>
-          <input type="text" class="form-control" name="media" id="media" ng-model="vm.speaker.media">
+          <input type="text" class="form-control" name="media" id="media" placeholder="Informe a principal mídia social" ng-model="vm.speaker.media">
         </div>
       </div>
     </div>
@@ -90,7 +90,7 @@
       <div class="col-12 col-sm-12 col-md-8 col-lg-8 ml-auto mr-auto">
         <div class="form-group">
           <label for="about">Descrição sobre mim</label>
-          <textarea class="form-control" name="about" id="about" rows="8" ng-model="vm.speaker.about"></textarea>
+          <textarea class="form-control" name="about" id="about" placeholder="Fale um pouco sobre você aqui..." rows="8" ng-model="vm.speaker.about"></textarea>
         </div>
       </div>
     </div>
