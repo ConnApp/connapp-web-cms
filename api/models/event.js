@@ -53,7 +53,7 @@ module.exports = function() {
       */
       eventType: {
         type: ObjectId,
-        ref: 'eventType',
+        ref: 'eventtype',
         required: true
       },
       /*
