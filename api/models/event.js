@@ -5,7 +5,7 @@ const
 
 module.exports = function() {
   const
-    collectionName = 'event',
+    collectionName = 'events',
     eventSchema = new Schema({
       /**
       * Nome do evento.
@@ -45,7 +45,7 @@ module.exports = function() {
       */
       speakers: [{
         type: ObjectId,
-        ref: 'speaker'
+        ref: 'speakers'
       }],
       /**
       * Tipo de evento
@@ -53,7 +53,7 @@ module.exports = function() {
       */
       eventType: {
         type: ObjectId,
-        ref: 'eventtype',
+        ref: 'eventtypes',
         required: true
       },
       /*
@@ -70,7 +70,7 @@ module.exports = function() {
       */
       place: {
         type: ObjectId,
-        ref: 'place',
+        ref: 'places',
         required: true
       },
       /**

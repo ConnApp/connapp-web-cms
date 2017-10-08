@@ -4,7 +4,7 @@ const
 
 module.exports = function() {
   const
-    collectionName = 'speaker',
+    collectionName = 'speakers',
     speakerSchema = new Schema({
       /**
       * Nome do palestrante.

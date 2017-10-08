@@ -4,7 +4,7 @@ const
 
 module.exports = function() {
   const
-    collectionName = 'eventtype',
+    collectionName = 'eventtypes',
     eventTypeSchema = new Schema({
       /**
       * Nome do eventType.
