@@ -4,6 +4,7 @@
   "description": "Web CMS for the ConnApp",
   "main": "index.js",
   "scripts": {
+    "start": "./startup.sh",
     "build": "./node_modules/webpack/bin/webpack.js",
     "setup": "yarn && cd app && yarn",
     "build-watch": "./node_modules/webpack/bin/webpack.js --watch",
