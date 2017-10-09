@@ -16,6 +16,14 @@ module.exports = function() {
         required: true
       },
       /**
+      * Nome do evento.
+      * @type {String}
+      */
+      description: {
+        type: String,
+        required: false
+      },
+      /**
       * Data e hora que o evento irá começar.
       * @type {Date}
       */

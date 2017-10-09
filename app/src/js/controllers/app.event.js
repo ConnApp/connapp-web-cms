@@ -7,8 +7,8 @@
     .controller( 'listEventController', listEventController )
     .controller( 'appendSpeakerIntoEventController', appendSpeakerIntoEventController );
 
-  function formEventController( $log, $scope, $routeParams, $q, DataResource, uiAlert ) {
-    const 
+  function formEventController( $log, $scope, $routeParams, wizMarkdownSvc, $q, DataResource, uiAlert ) {
+    const
       vm = this,
       { _id } = $routeParams,
       eventResource = new DataResource( '/events', '/:_id' ),
@@ -16,7 +16,7 @@
       placeResource = new DataResource( '/places' );
 
     // ===# Bootstraping data #=== //
-  
+
     vm.places = placeResource.query();
     vm.eventTypeList = eventTypeResource.query();
 
@@ -28,19 +28,21 @@
         .then( event => vm.event = event )
         .catch( error => vm.alertEmitter.danger( error.data.message ) );
     }
-    
+
 
     // ===# View model #=== //
     vm.place = {};
     vm.alert = {};
     vm.alertEmitter = uiAlert( vm.alert );
     vm.submitForm = submitForm;
+    vm.previewMode = false;
+    vm.previewNews = previewNews;
 
     // ===# Setup #=== //
 
     function submitForm( event ) {
       if ( $scope.eventForm.$invalid ) return;
-      
+
       $q
         .resolve( event )
         .then( parseDataToMs )
@@ -69,7 +71,7 @@
     }
 
     function parseDataToMs( event ) {
-      const 
+      const
         startHour = getFullHours( event.startHour ).getTime(),
         startDate = getFullDate( event.startDate ).getTime(),
         endHour = getFullHours( event.endHour ).getTime(),
@@ -89,6 +91,12 @@
       return event;
     }
 
+    function previewNews( message ) {
+      console.log(message)
+      vm.previewMode = !vm.previewMode;
+      vm.event.preview = wizMarkdownSvc.Transform( message );
+    }
+
     function getFullHours( stringDate ) {
       if ( typeof stringDate !== 'string' ) {
         stringDate = Date.prototype.toISOString.call( stringDate );
@@ -104,7 +112,7 @@
       if ( typeof stringDate !== 'string' ) {
         stringDate = Date.prototype.toISOString.call( stringDate );
       }
-      const 
+      const
         regexp = /\d{4}-\d{2}-\d{2}/,
         dateExp = stringDate.match( regexp )[ 0 ];
 
@@ -116,7 +124,7 @@
     const
       vm = this,
       eventResource = new DataResource( '/events' );
-  
+
     // ===# Bootstraping data #=== //
     eventResource
       .query()
@@ -152,7 +160,7 @@
   }
 
   function appendSpeakerIntoEventController( $log, $scope, $routeParams, $q, uiAlert, DataResource) {
-    const 
+    const
       vm = this,
       eventResource = new DataResource( '/events', '/:_id' ),
       { _id } = $routeParams;
@@ -181,13 +189,13 @@
     const mapSpeakersId = speakers => speakers.map( speaker => speaker._id );
 
     function speakersQuery( event ) {
-      const 
+      const
         { speakers } = event,
         speakersId = mapSpeakersId( speakers ),
         speakerResource = new DataResource( '/speakers', '/:_id' );
 
       const filterSpeakersAlreadyAdded = speakers => speakers.filter( speaker => speakersId.indexOf( speaker._id ) < 0 );
-      
+
       speakerResource
         .query()
         .$promise

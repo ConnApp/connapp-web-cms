@@ -113,7 +113,7 @@
         <div class="form-group">
           <label for="place">Local</label>
           <select
-          name="place" class="form-control" id="place" 
+          name="place" class="form-control" id="place"
           ng-options="place as place.name for place in vm.places track by place._id"
           ng-model="vm.event.place" ng-required="true">
             <option value="">Selecione o local do evento</option>
@@ -121,6 +121,47 @@
           <ui-message for="eventForm.place" when="required" submitted="eventForm.$submitted">
             Campo obrigatório
           </ui-message>
+        </div>
+      </div>
+    </div>
+
+    <div class="row mb-1">
+      <div class="col-12 col-sm-12 col-md-10 col-lg-3 ml-auto mr-auto ml-lg-auto mr-lg-0">
+        <button class="btn btn-sm btn-primary btn-block" type="button" ng-click="vm.previewNews( vm.event.description )"><i class="fa fa-search"></i> Visualizar</button>
+      </div>
+      <div class="col-lg-3"></div>
+    </div>
+
+    <div class="row">
+      <div class="col-12 col-sm-12 col-md-10 col-lg-8 ml-auto mr-auto">
+        <!-- preview markdown content -->
+        <div class="markdown-preview mt-4" ng-bind-html="vm.event.preview" ng-show="vm.previewMode"></div>
+        <div class="form-group">
+          <!-- markdown editor -->
+          <wiz-markdown-editor textareaclass="form-control mt-1" rows="10" content="vm.event.description" ng-show="!vm.previewMode">
+            <div class="btn-group" role="group" aria-label="Basic example">
+              <wiz-toolbar-button buttonclass="btn btn-sm btn-light" command="bold" title="negrito"><i class="fa fa-bold"></i></wiz-toolbar-button>
+              <wiz-toolbar-button buttonclass="btn btn-sm btn-light" command="italic" title="italico"><i class="fa fa-italic"></i></wiz-toolbar-button>
+              <div class="btn-group" role="group">
+                <button id="hgroup" type="button" class="btn btn-light dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" title="titulos">
+                  <i class="fa fa-header"></i>
+                </button>
+                <div class="dropdown-menu" aria-labelledby="hgroup">
+                  <wiz-toolbar-button buttonclass="dropdown-item" command="h1">H1</wiz-toolbar-button>
+                  <wiz-toolbar-button buttonclass="dropdown-item" command="h2">H2</wiz-toolbar-button>
+                  <wiz-toolbar-button buttonclass="dropdown-item" command="h3">H3</wiz-toolbar-button>
+                  <wiz-toolbar-button buttonclass="dropdown-item" command="h4">H4</wiz-toolbar-button>
+                  <wiz-toolbar-button buttonclass="dropdown-item" command="h5">H5</wiz-toolbar-button>
+                  <wiz-toolbar-button buttonclass="dropdown-item" command="h6">H6</wiz-toolbar-button>
+                </div>
+              </div>
+              <wiz-toolbar-button buttonclass="btn btn-sm btn-light" command="ullist" title="lista não númerada"><i class="fa fa-list-ul"></i></wiz-toolbar-button>
+              <wiz-toolbar-button buttonclass="btn btn-sm btn-light" command="ollist" title="lista númerada"><i class="fa fa-list-ol"></i></wiz-toolbar-button>
+              <wiz-toolbar-button buttonclass="btn btn-sm btn-light" command="code" title="código"><i class="fa fa-code"></i></wiz-toolbar-button>
+              <wiz-toolbar-button buttonclass="btn btn-sm btn-light" command="img" title="imagem"><i class="fa fa-picture-o"></i></wiz-toolbar-button>
+              <wiz-toolbar-button buttonclass="btn btn-sm btn-light" command="link" title="link"><i class="fa fa-link"></i></wiz-toolbar-button>
+            </div>
+          </wiz-markdown-editor>
         </div>
       </div>
     </div>
