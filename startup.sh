@@ -2,7 +2,7 @@
 
 #Inicializando dados dos usuários
 echo "Criando usuários..."
-mongoimport -d connapp-web-cms -c user ./api/collections/user.json
+mongoimport -d enegep -c user ./api/collections/user.json
 echo "Done."
 
 #Instalando dependências
