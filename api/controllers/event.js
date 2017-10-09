@@ -117,7 +117,7 @@ module.exports = function( app ) {
     }
 
     function validateEventType( _doc ) {
-      const { eventType, docChunk } = _doc;
+      const { eventType, ...docChunk } = _doc;
       if ( !eventType || eventType.length < 24 ) return docChunk;
       return _doc;
     }
@@ -127,15 +127,16 @@ module.exports = function( app ) {
       if ( !place || place.length < 24 ) return docChunk;
       return _doc;
     }
-    
+
     function validateSpeakersLen( _doc ) {
-      const { speakers, docChunk } = _doc;
+      const { speakers, ...docChunk } = _doc;
+      console.log(docChunk)
       if ( !speakers.length ) return docChunk;
       return _doc;
     }
-    
 
     function updateDate( _doc ) {
+
       _doc.lastUpdate = Date.now();
       return _doc;
     }
@@ -197,7 +198,7 @@ module.exports = function( app ) {
     }
 
   }
-  
+
   return {
     create,
     list,
