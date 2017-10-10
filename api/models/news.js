@@ -1,5 +1,6 @@
 const
   mongoose = require( 'mongoose' ),
+  dispatcher = require('../wamp/index.js').dispatcher
   Schema = mongoose.Schema;
 
 const dispatchOnSave = (doc, modelName) => {
