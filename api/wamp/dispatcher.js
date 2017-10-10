@@ -16,7 +16,7 @@ const insertToApp = (model, data = {}, length = undefined, session = undefined) 
   console.log('Starting insert dispatch')
   const event = session?
     `connapp.app.${session}.${model.toLowerCase()}.insert` :
-    `connapp.app.${model.toLowerCase()}.insert`
+    `connapp.app.${model.toLowerCase()}.insert.test`
 
   const isLengthValid = typeof length !== 'undefined'
 
