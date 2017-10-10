@@ -2,6 +2,18 @@ const
   mongoose = require( 'mongoose' ),
   Schema = mongoose.Schema;
 
+const dispatchOnSave = (doc, modelName) => {
+  const _id = doc._id.toString(),
+        data = _.cloneDeep(doc)
+
+  // Dispatches for realtimeUpdate
+  if (doc.__v == 0) {
+    dispatcher.insertToApp(modelName, data)
+  } else {
+    dispatcher.updateDocumentToApp(modelName, _id, data)
+  }
+}
+
 module.exports = function() {
   const
     collectionName = 'news',
@@ -54,6 +66,12 @@ module.exports = function() {
         default: Date.now
       }
     }, { collection: collectionName } );
+
+  newsSchema.pre('save', function(next){
+    this.lastUpdated = new Date()
+    dispatchOnSave(this, collectionName)
+    next()
+  })
 
   return mongoose.model( collectionName, newsSchema );
 };
