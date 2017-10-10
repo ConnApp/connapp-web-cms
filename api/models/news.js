@@ -4,8 +4,8 @@ const
 
 const dispatchOnSave = (doc, modelName) => {
   const _id = doc._id.toString(),
-        data = _.cloneDeep(doc)
-
+        data = {...doc}
+  console.log(data)
   // Dispatches for realtimeUpdate
   if (doc.__v == 0) {
     dispatcher.insertToApp(modelName, data)
