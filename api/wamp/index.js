@@ -14,8 +14,6 @@ const wsOptions = {
   realm: CONFIG.WEBSOCKET.REALM
 }
 
-
-
 // Exports connection object
 module.exports.connection = new Wampy(CONFIG.WEBSOCKET.URL, wsOptions)
 

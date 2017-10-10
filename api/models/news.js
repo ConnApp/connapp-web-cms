@@ -8,7 +8,7 @@ const dispatchOnSave = (doc, modelName) => {
         data = {...doc}
   console.log(data)
   // Dispatches for realtimeUpdate
-  if (doc.__v == 0) {
+  if (doc.isNew) {
     dispatcher.insertToApp(modelName, data)
   } else {
     dispatcher.updateDocumentToApp(modelName, _id, data)
