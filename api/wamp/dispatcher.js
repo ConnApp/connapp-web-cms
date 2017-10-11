@@ -18,6 +18,10 @@ const insertToApp = (model, data = {}, length = undefined, session = undefined) 
     `connapp.app.${session}.${model.toLowerCase()}.insert` :
     `connapp.app.${model.toLowerCase()}.insert`
 
+  if (Array.isArray(data)) {
+    data = {...data[0]}
+  }
+
   const isLengthValid = typeof length !== 'undefined'
 
   const publishArray = isLengthValid? [data, length] : [data]
@@ -28,7 +32,7 @@ const insertToApp = (model, data = {}, length = undefined, session = undefined) 
     publishArray
   )
 
-  console.log(event + ' was published. Total of: ' + length)
+  console.log(event + ' was published. Total of: ' + (length || ''))
 }
 
 // FUnction to tell the App to update local documento o model
@@ -39,6 +43,10 @@ const updateDocumentToApp = (model, _id, data = {}, session = undefined) => {
   const event = session?
     `connapp.app.${session}.${model.toLowerCase()}.update.${_id}` :
     `connapp.app.${model.toLowerCase()}.update.${_id}`
+
+  if (Array.isArray(data)) {
+    data = {...data[0]}
+  }
 
   // console.log(event, data)
   // Publish the event

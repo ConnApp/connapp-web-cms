@@ -1,7 +1,20 @@
 const
   mongoose = require( 'mongoose' ),
   Schema = mongoose.Schema,
-  ObjectId = Schema.Types.ObjectId;
+  ObjectId = Schema.Types.ObjectId,
+  dispatcher = require('../wamp/index.js').dispatcher;
+
+const dispatchOnSave = (doc, modelName) => {
+  const _id = doc._id.toString(),
+        data = {...doc._doc}
+
+  // Dispatches for realtimeUpdate
+  if (doc.isNew) {
+    dispatcher.insertToApp(modelName, data)
+  } else {
+    dispatcher.updateDocumentToApp(modelName, _id, data)
+  }
+}
 
 module.exports = function() {
   const
@@ -106,6 +119,12 @@ module.exports = function() {
         default: Date.now
       }
     }, { collection: collectionName } );
+
+  eventSchema.pre('save', function(next){
+    this.lastUpdated = new Date()
+    dispatchOnSave(this, collectionName)
+    next()
+  })
 
   return mongoose.model( collectionName, eventSchema );
 };

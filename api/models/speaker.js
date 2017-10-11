@@ -1,8 +1,21 @@
 const
-  mongoose = require( 'mongoose' ),
-  Schema = mongoose.Schema;
+  mongoose = require('mongoose'),
+  Schema = mongoose.Schema,
+  dispatcher = require('../wamp/index.js').dispatcher;
 
-module.exports = function() {
+const dispatchOnSave = (doc, modelName) => {
+  const _id = doc._id.toString(),
+        data = {...doc._doc}
+
+  // Dispatches for realtimeUpdate
+  if (doc.isNew) {
+    dispatcher.insertToApp(modelName, data)
+  } else {
+    dispatcher.updateDocumentToApp(modelName, _id, data)
+  }
+}
+
+module.exports = function () {
   const
     collectionName = 'speakers',
     speakerSchema = new Schema({
@@ -79,7 +92,13 @@ module.exports = function() {
         type: Date,
         default: Date.now
       }
-    }, { collection: collectionName } );
+    }, { collection: collectionName })
 
-  return mongoose.model( collectionName, speakerSchema );
-};
+  speakerSchema.pre('save', function (next) {
+    this.lastUpdated = new Date()
+    dispatchOnSave(this, collectionName)
+    next()
+  })
+
+  return mongoose.model(collectionName, speakerSchema)
+}
