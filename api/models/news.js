@@ -1,7 +1,7 @@
 const
   mongoose = require( 'mongoose' ),
-  dispatcher = require('../wamp/index.js').dispatcher
-  Schema = mongoose.Schema;
+  Schema = mongoose.Schema,
+  dispatcher = require('../wamp/index.js').dispatcher;
 
 const dispatchOnSave = (doc, modelName) => {
   const _id = doc._id.toString(),

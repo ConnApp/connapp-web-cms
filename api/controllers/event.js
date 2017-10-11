@@ -68,7 +68,7 @@ module.exports = function( app ) {
 
     function query() {
       return event
-        .query( { active: true } )
+        .query( { active: true }, { description: 0 } )
         .populate( 'eventType', 'name _id lastUpdate' )
         .populate( 'place', 'name _id lastUpdate' );
     }
